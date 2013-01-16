@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database name="tarot" defaultIdMethod="native">
+    <table name="Player" phpName="Player" isCrossRef="true">
+        <column name="idPlayer" type="integer" required="true" primaryKey="true" />
+        <column name="namePlayer" type="varchar" size="255" required="true" />
+        <column name="mailPlayer" type="varchar" size="255" required="true" />
+    </table>
+    <table name="Bonus" phpName="Bonus" isCrossRef="true">
+        <column name="idBonus" type="integer" required="true" primaryKey="true" />
+        <column name="nameBonus" type="varchar" size="255" required="true" />
+        <column name="valueBonus" type="integer" required="true" />
+    </table>
+    <table name="Tournament" phpName="Tournament" isCrossRef="true">
+        <column name="idTournament" type="integer" required="true" primaryKey="true" />
+        <column name="dateStart" type="timestamp" required="true" />
+        <column name="active" type="boolean" required="true" />
+    </table>
+    <table name="Game" phpName="Game" isCrossRef="true">
+        <column name="idGame" type="integer" required="true" primaryKey="true" />
+        <column name="idCall" type="integer" required="true" />
+        <column name="idCalled" type="integer" />
+        <column name="idTournament" type="integer" required="true" />
+        <column name="bids" type="varchar" size="255" required="true" />
+        <column name="score" type="integer" required="true" />
+        <foreign-key foreignTable="Game_List" onDelete="CASCADE">
+            <reference local="idGame" foreign="idGame"/>
+        </foreign-key>
+        <foreign-key foreignTable="Player" onDelete="CASCADE">
+            <reference local="idCall" foreign="idPlayer"/>
+        </foreign-key>
+        <foreign-key foreignTable="Player" onDelete="CASCADE">
+            <reference local="idCalled" foreign="idPlayer"/>
+        </foreign-key>
+    </table>
+    <table name="Game_List" phpName="GameList" isCrossRef="true">
+        <column name="idGame" type="integer" required="true" primaryKey="true" />
+        <column name="idPlayer" type="integer" required="true" primaryKey="true" />
+        <column name="idBonus" type="integer" required="true" primaryKey="true" />
+        <foreign-key foreignTable="Bonus" onDelete="CASCADE">
+            <reference local="idBonus" foreign="idBonus"/>
+        </foreign-key>
+        <foreign-key foreignTable="Player" onDelete="CASCADE">
+            <reference local="idPlayer" foreign="idPlayer"/>
+        </foreign-key>
+        <foreign-key foreignTable="Game" onDelete="CASCADE">
+            <reference local="idGame" foreign="idGame"/>
+        </foreign-key>
+    </table>
+</database>

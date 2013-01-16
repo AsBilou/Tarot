@@ -16,7 +16,10 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 ));
 
 //Mise en route de propel
-$app->register(new Propel\Silex\PropelServiceProvider());
+$app->register(new Propel\Silex\PropelServiceProvider(), array(
+	'propel.config_file' => __DIR__ . '/../config/tarot-conf.php',
+	'propel.model_path'  => __DIR__ . '/../src',
+));
 
 //Appel le fichier twig en fonction de la page
 $app->get('/{name}', function ($name) use ($app) {
