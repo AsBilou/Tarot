@@ -39,24 +39,16 @@ $app->get('/', function () use ($app) {
     $tournaments = TournamentQuery::create()
         ->filterByActive(true)
         ->find();
-    
+    //Recupere les game de tous les tournois actif.
+
+    return $app['twig']->render('template/index.twig', array(
+        'tournaments' => $tournaments,
+        scor
+    ));
     //Récuperer tous les tournois
     
     //var_dump($tournaments);
-
-    try{
-        return $app['twig']->render('template/index.twig', array(
-            'tournaments' => $tournaments,
-        ));
-    }catch(Exception $e){
-        if('Twig_Error_Loader'==get_class($e)){
-            $app->abort(404,'Twig template does not exist.');
-        }
-        else
-        {
-            throw $e;
-        }
-    }
+    
 });
 
 $app->get('/tournament', function () use ($app) {

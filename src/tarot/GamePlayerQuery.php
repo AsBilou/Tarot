@@ -3,7 +3,7 @@
 
 
 /**
- * Skeleton subclass for representing a row from the 'Game_List' table.
+ * Skeleton subclass for performing query and update operations on the 'game_player' table.
  *
  *
  *
@@ -13,6 +13,6 @@
  *
  * @package    propel.generator.tarot
  */
-class GameList extends BaseGameList
+class GamePlayerQuery extends BaseGamePlayerQuery
 {
 }

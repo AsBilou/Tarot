@@ -3,7 +3,7 @@
 
 
 /**
- * Skeleton subclass for performing query and update operations on the 'Score_Tournament' table.
+ * Skeleton subclass for performing query and update operations on the 'tournament_player' table.
  *
  *
  *
@@ -13,6 +13,6 @@
  *
  * @package    propel.generator.tarot
  */
-class ScoreTournamentPeer extends BaseScoreTournamentPeer
+class TournamentPlayerQuery extends BaseTournamentPlayerQuery
 {
 }

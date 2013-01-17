@@ -3,7 +3,7 @@
 
 
 /**
- * This class defines the structure of the 'Game' table.
+ * This class defines the structure of the 'game' table.
  *
  *
  *
@@ -32,17 +32,16 @@ class GameTableMap extends TableMap
     public function initialize()
     {
         // attributes
-        $this->setName('Game');
+        $this->setName('game');
         $this->setPhpName('Game');
         $this->setClassname('Game');
         $this->setPackage('tarot');
         $this->setUseIdGenerator(true);
-        $this->setIsCrossRef(true);
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
-        $this->addForeignKey('idCall', 'Idcall', 'INTEGER', 'Player', 'id', true, null, null);
-        $this->addForeignKey('idCalled', 'Idcalled', 'INTEGER', 'Player', 'id', false, null, null);
-        $this->addForeignKey('idTournament', 'Idtournament', 'INTEGER', 'Tournament', 'id', true, null, null);
+        $this->addForeignKey('call_id', 'CallId', 'INTEGER', 'player', 'id', true, null, null);
+        $this->addForeignKey('called_id', 'CalledId', 'INTEGER', 'player', 'id', false, null, null);
+        $this->addForeignKey('tournament_id', 'TournamentId', 'INTEGER', 'tournament', 'id', true, null, null);
         $this->addColumn('bids', 'Bids', 'VARCHAR', true, 255, null);
         $this->addColumn('score', 'Score', 'INTEGER', true, null, null);
         // validators
@@ -53,9 +52,10 @@ class GameTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('Tournament', 'Tournament', RelationMap::MANY_TO_ONE, array('idTournament' => 'id', ), 'CASCADE', null);
-        $this->addRelation('Player', 'Player', RelationMap::MANY_TO_ONE, array('idCall' => 'id', 'idCalled' => 'id', ), 'CASCADE', null);
-        $this->addRelation('GameList', 'GameList', RelationMap::ONE_TO_MANY, array('id' => 'idGame', ), 'CASCADE', null, 'GameLists');
+        $this->addRelation('Tournament', 'Tournament', RelationMap::MANY_TO_ONE, array('tournament_id' => 'id', ), 'CASCADE', null);
+        $this->addRelation('caller', 'Player', RelationMap::MANY_TO_ONE, array('call_id' => 'id', ), 'CASCADE', null);
+        $this->addRelation('called', 'Player', RelationMap::MANY_TO_ONE, array('called_id' => 'id', ), 'CASCADE', null);
+        $this->addRelation('GamePlayer', 'GamePlayer', RelationMap::ONE_TO_MANY, array('id' => 'game_id', ), 'CASCADE', null, 'GamePlayers');
         $this->addRelation('Bonus', 'Bonus', RelationMap::MANY_TO_MANY, array(), 'CASCADE', null, 'Bonuses');
         $this->addRelation('Player', 'Player', RelationMap::MANY_TO_MANY, array(), 'CASCADE', null, 'Players');
     } // buildRelations()

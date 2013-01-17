@@ -2,7 +2,7 @@
 
 
 /**
- * Base class that represents a row from the 'Game' table.
+ * Base class that represents a row from the 'game' table.
  *
  *
  *
@@ -36,22 +36,22 @@ abstract class BaseGame extends BaseObject implements Persistent
     protected $id;
 
     /**
-     * The value for the idcall field.
+     * The value for the call_id field.
      * @var        int
      */
-    protected $idcall;
+    protected $call_id;
 
     /**
-     * The value for the idcalled field.
+     * The value for the called_id field.
      * @var        int
      */
-    protected $idcalled;
+    protected $called_id;
 
     /**
-     * The value for the idtournament field.
+     * The value for the tournament_id field.
      * @var        int
      */
-    protected $idtournament;
+    protected $tournament_id;
 
     /**
      * The value for the bids field.
@@ -73,13 +73,18 @@ abstract class BaseGame extends BaseObject implements Persistent
     /**
      * @var        Player
      */
-    protected $aPlayer;
+    protected $acaller;
 
     /**
-     * @var        PropelObjectCollection|GameList[] Collection to store aggregation of GameList objects.
+     * @var        Player
      */
-    protected $collGameLists;
-    protected $collGameListsPartial;
+    protected $acalled;
+
+    /**
+     * @var        PropelObjectCollection|GamePlayer[] Collection to store aggregation of GamePlayer objects.
+     */
+    protected $collGamePlayers;
+    protected $collGamePlayersPartial;
 
     /**
      * @var        PropelObjectCollection|Bonus[] Collection to store aggregation of Bonus objects.
@@ -127,7 +132,7 @@ abstract class BaseGame extends BaseObject implements Persistent
      * An array of objects scheduled for deletion.
      * @var		PropelObjectCollection
      */
-    protected $gameListsScheduledForDeletion = null;
+    protected $gamePlayersScheduledForDeletion = null;
 
     /**
      * Get the [id] column value.
@@ -140,33 +145,33 @@ abstract class BaseGame extends BaseObject implements Persistent
     }
 
     /**
-     * Get the [idcall] column value.
+     * Get the [call_id] column value.
      *
      * @return int
      */
-    public function getIdcall()
+    public function getCallId()
     {
-        return $this->idcall;
+        return $this->call_id;
     }
 
     /**
-     * Get the [idcalled] column value.
+     * Get the [called_id] column value.
      *
      * @return int
      */
-    public function getIdcalled()
+    public function getCalledId()
     {
-        return $this->idcalled;
+        return $this->called_id;
     }
 
     /**
-     * Get the [idtournament] column value.
+     * Get the [tournament_id] column value.
      *
      * @return int
      */
-    public function getIdtournament()
+    public function getTournamentId()
     {
-        return $this->idtournament;
+        return $this->tournament_id;
     }
 
     /**
@@ -211,70 +216,70 @@ abstract class BaseGame extends BaseObject implements Persistent
     } // setId()
 
     /**
-     * Set the value of [idcall] column.
+     * Set the value of [call_id] column.
      *
      * @param int $v new value
      * @return Game The current object (for fluent API support)
      */
-    public function setIdcall($v)
+    public function setCallId($v)
     {
         if ($v !== null && is_numeric($v)) {
             $v = (int) $v;
         }
 
-        if ($this->idcall !== $v) {
-            $this->idcall = $v;
-            $this->modifiedColumns[] = GamePeer::IDCALL;
+        if ($this->call_id !== $v) {
+            $this->call_id = $v;
+            $this->modifiedColumns[] = GamePeer::CALL_ID;
         }
 
-        if ($this->aPlayer !== null && $this->aPlayer->getId() !== $v) {
-            $this->aPlayer = null;
+        if ($this->acaller !== null && $this->acaller->getId() !== $v) {
+            $this->acaller = null;
         }
 
 
         return $this;
-    } // setIdcall()
+    } // setCallId()
 
     /**
-     * Set the value of [idcalled] column.
+     * Set the value of [called_id] column.
      *
      * @param int $v new value
      * @return Game The current object (for fluent API support)
      */
-    public function setIdcalled($v)
+    public function setCalledId($v)
     {
         if ($v !== null && is_numeric($v)) {
             $v = (int) $v;
         }
 
-        if ($this->idcalled !== $v) {
-            $this->idcalled = $v;
-            $this->modifiedColumns[] = GamePeer::IDCALLED;
+        if ($this->called_id !== $v) {
+            $this->called_id = $v;
+            $this->modifiedColumns[] = GamePeer::CALLED_ID;
         }
 
-        if ($this->aPlayer !== null && $this->aPlayer->getId() !== $v) {
-            $this->aPlayer = null;
+        if ($this->acalled !== null && $this->acalled->getId() !== $v) {
+            $this->acalled = null;
         }
 
 
         return $this;
-    } // setIdcalled()
+    } // setCalledId()
 
     /**
-     * Set the value of [idtournament] column.
+     * Set the value of [tournament_id] column.
      *
      * @param int $v new value
      * @return Game The current object (for fluent API support)
      */
-    public function setIdtournament($v)
+    public function setTournamentId($v)
     {
         if ($v !== null && is_numeric($v)) {
             $v = (int) $v;
         }
 
-        if ($this->idtournament !== $v) {
-            $this->idtournament = $v;
-            $this->modifiedColumns[] = GamePeer::IDTOURNAMENT;
+        if ($this->tournament_id !== $v) {
+            $this->tournament_id = $v;
+            $this->modifiedColumns[] = GamePeer::TOURNAMENT_ID;
         }
 
         if ($this->aTournament !== null && $this->aTournament->getId() !== $v) {
@@ -283,7 +288,7 @@ abstract class BaseGame extends BaseObject implements Persistent
 
 
         return $this;
-    } // setIdtournament()
+    } // setTournamentId()
 
     /**
      * Set the value of [bids] column.
@@ -360,9 +365,9 @@ abstract class BaseGame extends BaseObject implements Persistent
         try {
 
             $this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
-            $this->idcall = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
-            $this->idcalled = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
-            $this->idtournament = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
+            $this->call_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
+            $this->called_id = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
+            $this->tournament_id = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
             $this->bids = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
             $this->score = ($row[$startcol + 5] !== null) ? (int) $row[$startcol + 5] : null;
             $this->resetModified();
@@ -396,13 +401,13 @@ abstract class BaseGame extends BaseObject implements Persistent
     public function ensureConsistency()
     {
 
-        if ($this->aPlayer !== null && $this->idcall !== $this->aPlayer->getId()) {
-            $this->aPlayer = null;
+        if ($this->acaller !== null && $this->call_id !== $this->acaller->getId()) {
+            $this->acaller = null;
         }
-        if ($this->aPlayer !== null && $this->idcalled !== $this->aPlayer->getId()) {
-            $this->aPlayer = null;
+        if ($this->acalled !== null && $this->called_id !== $this->acalled->getId()) {
+            $this->acalled = null;
         }
-        if ($this->aTournament !== null && $this->idtournament !== $this->aTournament->getId()) {
+        if ($this->aTournament !== null && $this->tournament_id !== $this->aTournament->getId()) {
             $this->aTournament = null;
         }
     } // ensureConsistency
@@ -445,8 +450,9 @@ abstract class BaseGame extends BaseObject implements Persistent
         if ($deep) {  // also de-associate any related objects?
 
             $this->aTournament = null;
-            $this->aPlayer = null;
-            $this->collGameLists = null;
+            $this->acaller = null;
+            $this->acalled = null;
+            $this->collGamePlayers = null;
 
             $this->collBonuses = null;
             $this->collPlayers = null;
@@ -575,11 +581,18 @@ abstract class BaseGame extends BaseObject implements Persistent
                 $this->setTournament($this->aTournament);
             }
 
-            if ($this->aPlayer !== null) {
-                if ($this->aPlayer->isModified() || $this->aPlayer->isNew()) {
-                    $affectedRows += $this->aPlayer->save($con);
+            if ($this->acaller !== null) {
+                if ($this->acaller->isModified() || $this->acaller->isNew()) {
+                    $affectedRows += $this->acaller->save($con);
                 }
-                $this->setPlayer($this->aPlayer);
+                $this->setcaller($this->acaller);
+            }
+
+            if ($this->acalled !== null) {
+                if ($this->acalled->isModified() || $this->acalled->isNew()) {
+                    $affectedRows += $this->acalled->save($con);
+                }
+                $this->setcalled($this->acalled);
             }
 
             if ($this->isNew() || $this->isModified()) {
@@ -600,7 +613,7 @@ abstract class BaseGame extends BaseObject implements Persistent
                     foreach ($this->bonusesScheduledForDeletion->getPrimaryKeys(false) as $remotePk) {
                         $pks[] = array($remotePk, $pk);
                     }
-                    GameListQuery::create()
+                    GamePlayerQuery::create()
                         ->filterByPrimaryKeys($pks)
                         ->delete($con);
                     $this->bonusesScheduledForDeletion = null;
@@ -626,7 +639,7 @@ abstract class BaseGame extends BaseObject implements Persistent
                     foreach ($this->playersScheduledForDeletion->getPrimaryKeys(false) as $remotePk) {
                         $pks[] = array($remotePk, $pk);
                     }
-                    GameListQuery::create()
+                    GamePlayerQuery::create()
                         ->filterByPrimaryKeys($pks)
                         ->delete($con);
                     $this->playersScheduledForDeletion = null;
@@ -645,17 +658,17 @@ abstract class BaseGame extends BaseObject implements Persistent
                 }
             }
 
-            if ($this->gameListsScheduledForDeletion !== null) {
-                if (!$this->gameListsScheduledForDeletion->isEmpty()) {
-                    GameListQuery::create()
-                        ->filterByPrimaryKeys($this->gameListsScheduledForDeletion->getPrimaryKeys(false))
+            if ($this->gamePlayersScheduledForDeletion !== null) {
+                if (!$this->gamePlayersScheduledForDeletion->isEmpty()) {
+                    GamePlayerQuery::create()
+                        ->filterByPrimaryKeys($this->gamePlayersScheduledForDeletion->getPrimaryKeys(false))
                         ->delete($con);
-                    $this->gameListsScheduledForDeletion = null;
+                    $this->gamePlayersScheduledForDeletion = null;
                 }
             }
 
-            if ($this->collGameLists !== null) {
-                foreach ($this->collGameLists as $referrerFK) {
+            if ($this->collGamePlayers !== null) {
+                foreach ($this->collGamePlayers as $referrerFK) {
                     if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
                         $affectedRows += $referrerFK->save($con);
                     }
@@ -691,14 +704,14 @@ abstract class BaseGame extends BaseObject implements Persistent
         if ($this->isColumnModified(GamePeer::ID)) {
             $modifiedColumns[':p' . $index++]  = '`id`';
         }
-        if ($this->isColumnModified(GamePeer::IDCALL)) {
-            $modifiedColumns[':p' . $index++]  = '`idCall`';
+        if ($this->isColumnModified(GamePeer::CALL_ID)) {
+            $modifiedColumns[':p' . $index++]  = '`call_id`';
         }
-        if ($this->isColumnModified(GamePeer::IDCALLED)) {
-            $modifiedColumns[':p' . $index++]  = '`idCalled`';
+        if ($this->isColumnModified(GamePeer::CALLED_ID)) {
+            $modifiedColumns[':p' . $index++]  = '`called_id`';
         }
-        if ($this->isColumnModified(GamePeer::IDTOURNAMENT)) {
-            $modifiedColumns[':p' . $index++]  = '`idTournament`';
+        if ($this->isColumnModified(GamePeer::TOURNAMENT_ID)) {
+            $modifiedColumns[':p' . $index++]  = '`tournament_id`';
         }
         if ($this->isColumnModified(GamePeer::BIDS)) {
             $modifiedColumns[':p' . $index++]  = '`bids`';
@@ -708,7 +721,7 @@ abstract class BaseGame extends BaseObject implements Persistent
         }
 
         $sql = sprintf(
-            'INSERT INTO `Game` (%s) VALUES (%s)',
+            'INSERT INTO `game` (%s) VALUES (%s)',
             implode(', ', $modifiedColumns),
             implode(', ', array_keys($modifiedColumns))
         );
@@ -720,14 +733,14 @@ abstract class BaseGame extends BaseObject implements Persistent
                     case '`id`':
                         $stmt->bindValue($identifier, $this->id, PDO::PARAM_INT);
                         break;
-                    case '`idCall`':
-                        $stmt->bindValue($identifier, $this->idcall, PDO::PARAM_INT);
+                    case '`call_id`':
+                        $stmt->bindValue($identifier, $this->call_id, PDO::PARAM_INT);
                         break;
-                    case '`idCalled`':
-                        $stmt->bindValue($identifier, $this->idcalled, PDO::PARAM_INT);
+                    case '`called_id`':
+                        $stmt->bindValue($identifier, $this->called_id, PDO::PARAM_INT);
                         break;
-                    case '`idTournament`':
-                        $stmt->bindValue($identifier, $this->idtournament, PDO::PARAM_INT);
+                    case '`tournament_id`':
+                        $stmt->bindValue($identifier, $this->tournament_id, PDO::PARAM_INT);
                         break;
                     case '`bids`':
                         $stmt->bindValue($identifier, $this->bids, PDO::PARAM_STR);
@@ -840,9 +853,15 @@ abstract class BaseGame extends BaseObject implements Persistent
                 }
             }
 
-            if ($this->aPlayer !== null) {
-                if (!$this->aPlayer->validate($columns)) {
-                    $failureMap = array_merge($failureMap, $this->aPlayer->getValidationFailures());
+            if ($this->acaller !== null) {
+                if (!$this->acaller->validate($columns)) {
+                    $failureMap = array_merge($failureMap, $this->acaller->getValidationFailures());
+                }
+            }
+
+            if ($this->acalled !== null) {
+                if (!$this->acalled->validate($columns)) {
+                    $failureMap = array_merge($failureMap, $this->acalled->getValidationFailures());
                 }
             }
 
@@ -852,8 +871,8 @@ abstract class BaseGame extends BaseObject implements Persistent
             }
 
 
-                if ($this->collGameLists !== null) {
-                    foreach ($this->collGameLists as $referrerFK) {
+                if ($this->collGamePlayers !== null) {
+                    foreach ($this->collGamePlayers as $referrerFK) {
                         if (!$referrerFK->validate($columns)) {
                             $failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
                         }
@@ -899,13 +918,13 @@ abstract class BaseGame extends BaseObject implements Persistent
                 return $this->getId();
                 break;
             case 1:
-                return $this->getIdcall();
+                return $this->getCallId();
                 break;
             case 2:
-                return $this->getIdcalled();
+                return $this->getCalledId();
                 break;
             case 3:
-                return $this->getIdtournament();
+                return $this->getTournamentId();
                 break;
             case 4:
                 return $this->getBids();
@@ -943,9 +962,9 @@ abstract class BaseGame extends BaseObject implements Persistent
         $keys = GamePeer::getFieldNames($keyType);
         $result = array(
             $keys[0] => $this->getId(),
-            $keys[1] => $this->getIdcall(),
-            $keys[2] => $this->getIdcalled(),
-            $keys[3] => $this->getIdtournament(),
+            $keys[1] => $this->getCallId(),
+            $keys[2] => $this->getCalledId(),
+            $keys[3] => $this->getTournamentId(),
             $keys[4] => $this->getBids(),
             $keys[5] => $this->getScore(),
         );
@@ -953,11 +972,14 @@ abstract class BaseGame extends BaseObject implements Persistent
             if (null !== $this->aTournament) {
                 $result['Tournament'] = $this->aTournament->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
-            if (null !== $this->aPlayer) {
-                $result['Player'] = $this->aPlayer->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+            if (null !== $this->acaller) {
+                $result['caller'] = $this->acaller->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
-            if (null !== $this->collGameLists) {
-                $result['GameLists'] = $this->collGameLists->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            if (null !== $this->acalled) {
+                $result['called'] = $this->acalled->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+            }
+            if (null !== $this->collGamePlayers) {
+                $result['GamePlayers'] = $this->collGamePlayers->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
 
@@ -997,13 +1019,13 @@ abstract class BaseGame extends BaseObject implements Persistent
                 $this->setId($value);
                 break;
             case 1:
-                $this->setIdcall($value);
+                $this->setCallId($value);
                 break;
             case 2:
-                $this->setIdcalled($value);
+                $this->setCalledId($value);
                 break;
             case 3:
-                $this->setIdtournament($value);
+                $this->setTournamentId($value);
                 break;
             case 4:
                 $this->setBids($value);
@@ -1036,9 +1058,9 @@ abstract class BaseGame extends BaseObject implements Persistent
         $keys = GamePeer::getFieldNames($keyType);
 
         if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
-        if (array_key_exists($keys[1], $arr)) $this->setIdcall($arr[$keys[1]]);
-        if (array_key_exists($keys[2], $arr)) $this->setIdcalled($arr[$keys[2]]);
-        if (array_key_exists($keys[3], $arr)) $this->setIdtournament($arr[$keys[3]]);
+        if (array_key_exists($keys[1], $arr)) $this->setCallId($arr[$keys[1]]);
+        if (array_key_exists($keys[2], $arr)) $this->setCalledId($arr[$keys[2]]);
+        if (array_key_exists($keys[3], $arr)) $this->setTournamentId($arr[$keys[3]]);
         if (array_key_exists($keys[4], $arr)) $this->setBids($arr[$keys[4]]);
         if (array_key_exists($keys[5], $arr)) $this->setScore($arr[$keys[5]]);
     }
@@ -1053,9 +1075,9 @@ abstract class BaseGame extends BaseObject implements Persistent
         $criteria = new Criteria(GamePeer::DATABASE_NAME);
 
         if ($this->isColumnModified(GamePeer::ID)) $criteria->add(GamePeer::ID, $this->id);
-        if ($this->isColumnModified(GamePeer::IDCALL)) $criteria->add(GamePeer::IDCALL, $this->idcall);
-        if ($this->isColumnModified(GamePeer::IDCALLED)) $criteria->add(GamePeer::IDCALLED, $this->idcalled);
-        if ($this->isColumnModified(GamePeer::IDTOURNAMENT)) $criteria->add(GamePeer::IDTOURNAMENT, $this->idtournament);
+        if ($this->isColumnModified(GamePeer::CALL_ID)) $criteria->add(GamePeer::CALL_ID, $this->call_id);
+        if ($this->isColumnModified(GamePeer::CALLED_ID)) $criteria->add(GamePeer::CALLED_ID, $this->called_id);
+        if ($this->isColumnModified(GamePeer::TOURNAMENT_ID)) $criteria->add(GamePeer::TOURNAMENT_ID, $this->tournament_id);
         if ($this->isColumnModified(GamePeer::BIDS)) $criteria->add(GamePeer::BIDS, $this->bids);
         if ($this->isColumnModified(GamePeer::SCORE)) $criteria->add(GamePeer::SCORE, $this->score);
 
@@ -1121,9 +1143,9 @@ abstract class BaseGame extends BaseObject implements Persistent
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
-        $copyObj->setIdcall($this->getIdcall());
-        $copyObj->setIdcalled($this->getIdcalled());
-        $copyObj->setIdtournament($this->getIdtournament());
+        $copyObj->setCallId($this->getCallId());
+        $copyObj->setCalledId($this->getCalledId());
+        $copyObj->setTournamentId($this->getTournamentId());
         $copyObj->setBids($this->getBids());
         $copyObj->setScore($this->getScore());
 
@@ -1134,9 +1156,9 @@ abstract class BaseGame extends BaseObject implements Persistent
             // store object hash to prevent cycle
             $this->startCopy = true;
 
-            foreach ($this->getGameLists() as $relObj) {
+            foreach ($this->getGamePlayers() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addGameList($relObj->copy($deepCopy));
+                    $copyObj->addGamePlayer($relObj->copy($deepCopy));
                 }
             }
 
@@ -1200,9 +1222,9 @@ abstract class BaseGame extends BaseObject implements Persistent
     public function setTournament(Tournament $v = null)
     {
         if ($v === null) {
-            $this->setIdtournament(NULL);
+            $this->setTournamentId(NULL);
         } else {
-            $this->setIdtournament($v->getId());
+            $this->setTournamentId($v->getId());
         }
 
         $this->aTournament = $v;
@@ -1228,8 +1250,8 @@ abstract class BaseGame extends BaseObject implements Persistent
      */
     public function getTournament(PropelPDO $con = null, $doQuery = true)
     {
-        if ($this->aTournament === null && ($this->idtournament !== null) && $doQuery) {
-            $this->aTournament = TournamentQuery::create()->findPk($this->idtournament, $con);
+        if ($this->aTournament === null && ($this->tournament_id !== null) && $doQuery) {
+            $this->aTournament = TournamentQuery::create()->findPk($this->tournament_id, $con);
             /* The following can be used additionally to
                 guarantee the related object contains a reference
                 to this object.  This level of coupling may, however, be
@@ -1249,26 +1271,20 @@ abstract class BaseGame extends BaseObject implements Persistent
      * @return Game The current object (for fluent API support)
      * @throws PropelException
      */
-    public function setPlayer(Player $v = null)
+    public function setcaller(Player $v = null)
     {
         if ($v === null) {
-            $this->setIdcall(NULL);
+            $this->setCallId(NULL);
         } else {
-            $this->setIdcall($v->getId());
+            $this->setCallId($v->getId());
         }
 
-        if ($v === null) {
-            $this->setIdcalled(NULL);
-        } else {
-            $this->setIdcalled($v->getId());
-        }
-
-        $this->aPlayer = $v;
+        $this->acaller = $v;
 
         // Add binding for other direction of this n:n relationship.
         // If this object has already been added to the Player object, it will not be re-added.
         if ($v !== null) {
-            $v->addGame($this);
+            $v->addpCaller($this);
         }
 
 
@@ -1284,22 +1300,72 @@ abstract class BaseGame extends BaseObject implements Persistent
      * @return Player The associated Player object.
      * @throws PropelException
      */
-    public function getPlayer(PropelPDO $con = null, $doQuery = true)
+    public function getcaller(PropelPDO $con = null, $doQuery = true)
     {
-        if ($this->aPlayer === null && ($this->idcall !== null && $this->idcalled !== null) && $doQuery) {
-            $this->aPlayer = PlayerQuery::create()
-                ->filterByGame($this) // here
-                ->findOne($con);
+        if ($this->acaller === null && ($this->call_id !== null) && $doQuery) {
+            $this->acaller = PlayerQuery::create()->findPk($this->call_id, $con);
             /* The following can be used additionally to
                 guarantee the related object contains a reference
                 to this object.  This level of coupling may, however, be
                 undesirable since it could result in an only partially populated collection
                 in the referenced object.
-                $this->aPlayer->addGames($this);
+                $this->acaller->addpCallers($this);
              */
         }
 
-        return $this->aPlayer;
+        return $this->acaller;
+    }
+
+    /**
+     * Declares an association between this object and a Player object.
+     *
+     * @param             Player $v
+     * @return Game The current object (for fluent API support)
+     * @throws PropelException
+     */
+    public function setcalled(Player $v = null)
+    {
+        if ($v === null) {
+            $this->setCalledId(NULL);
+        } else {
+            $this->setCalledId($v->getId());
+        }
+
+        $this->acalled = $v;
+
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the Player object, it will not be re-added.
+        if ($v !== null) {
+            $v->addpCalled($this);
+        }
+
+
+        return $this;
+    }
+
+
+    /**
+     * Get the associated Player object
+     *
+     * @param PropelPDO $con Optional Connection object.
+     * @param $doQuery Executes a query to get the object if required
+     * @return Player The associated Player object.
+     * @throws PropelException
+     */
+    public function getcalled(PropelPDO $con = null, $doQuery = true)
+    {
+        if ($this->acalled === null && ($this->called_id !== null) && $doQuery) {
+            $this->acalled = PlayerQuery::create()->findPk($this->called_id, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->acalled->addpCalleds($this);
+             */
+        }
+
+        return $this->acalled;
     }
 
 
@@ -1313,42 +1379,42 @@ abstract class BaseGame extends BaseObject implements Persistent
      */
     public function initRelation($relationName)
     {
-        if ('GameList' == $relationName) {
-            $this->initGameLists();
+        if ('GamePlayer' == $relationName) {
+            $this->initGamePlayers();
         }
     }
 
     /**
-     * Clears out the collGameLists collection
+     * Clears out the collGamePlayers collection
      *
      * This does not modify the database; however, it will remove any associated objects, causing
      * them to be refetched by subsequent calls to accessor method.
      *
      * @return Game The current object (for fluent API support)
-     * @see        addGameLists()
+     * @see        addGamePlayers()
      */
-    public function clearGameLists()
+    public function clearGamePlayers()
     {
-        $this->collGameLists = null; // important to set this to null since that means it is uninitialized
-        $this->collGameListsPartial = null;
+        $this->collGamePlayers = null; // important to set this to null since that means it is uninitialized
+        $this->collGamePlayersPartial = null;
 
         return $this;
     }
 
     /**
-     * reset is the collGameLists collection loaded partially
+     * reset is the collGamePlayers collection loaded partially
      *
      * @return void
      */
-    public function resetPartialGameLists($v = true)
+    public function resetPartialGamePlayers($v = true)
     {
-        $this->collGameListsPartial = $v;
+        $this->collGamePlayersPartial = $v;
     }
 
     /**
-     * Initializes the collGameLists collection.
+     * Initializes the collGamePlayers collection.
      *
-     * By default this just sets the collGameLists collection to an empty array (like clearcollGameLists());
+     * By default this just sets the collGamePlayers collection to an empty array (like clearcollGamePlayers());
      * however, you may wish to override this method in your stub class to provide setting appropriate
      * to your application -- for example, setting the initial array to the values stored in database.
      *
@@ -1357,17 +1423,17 @@ abstract class BaseGame extends BaseObject implements Persistent
      *
      * @return void
      */
-    public function initGameLists($overrideExisting = true)
+    public function initGamePlayers($overrideExisting = true)
     {
-        if (null !== $this->collGameLists && !$overrideExisting) {
+        if (null !== $this->collGamePlayers && !$overrideExisting) {
             return;
         }
-        $this->collGameLists = new PropelObjectCollection();
-        $this->collGameLists->setModel('GameList');
+        $this->collGamePlayers = new PropelObjectCollection();
+        $this->collGamePlayers->setModel('GamePlayer');
     }
 
     /**
-     * Gets an array of GameList objects which contain a foreign key that references this object.
+     * Gets an array of GamePlayer objects which contain a foreign key that references this object.
      *
      * If the $criteria is not null, it is used to always fetch the results from the database.
      * Otherwise the results are fetched from the database the first time, then cached.
@@ -1377,105 +1443,105 @@ abstract class BaseGame extends BaseObject implements Persistent
      *
      * @param Criteria $criteria optional Criteria object to narrow the query
      * @param PropelPDO $con optional connection object
-     * @return PropelObjectCollection|GameList[] List of GameList objects
+     * @return PropelObjectCollection|GamePlayer[] List of GamePlayer objects
      * @throws PropelException
      */
-    public function getGameLists($criteria = null, PropelPDO $con = null)
+    public function getGamePlayers($criteria = null, PropelPDO $con = null)
     {
-        $partial = $this->collGameListsPartial && !$this->isNew();
-        if (null === $this->collGameLists || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collGameLists) {
+        $partial = $this->collGamePlayersPartial && !$this->isNew();
+        if (null === $this->collGamePlayers || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collGamePlayers) {
                 // return empty collection
-                $this->initGameLists();
+                $this->initGamePlayers();
             } else {
-                $collGameLists = GameListQuery::create(null, $criteria)
+                $collGamePlayers = GamePlayerQuery::create(null, $criteria)
                     ->filterByGame($this)
                     ->find($con);
                 if (null !== $criteria) {
-                    if (false !== $this->collGameListsPartial && count($collGameLists)) {
-                      $this->initGameLists(false);
+                    if (false !== $this->collGamePlayersPartial && count($collGamePlayers)) {
+                      $this->initGamePlayers(false);
 
-                      foreach($collGameLists as $obj) {
-                        if (false == $this->collGameLists->contains($obj)) {
-                          $this->collGameLists->append($obj);
+                      foreach($collGamePlayers as $obj) {
+                        if (false == $this->collGamePlayers->contains($obj)) {
+                          $this->collGamePlayers->append($obj);
                         }
                       }
 
-                      $this->collGameListsPartial = true;
+                      $this->collGamePlayersPartial = true;
                     }
 
-                    $collGameLists->getInternalIterator()->rewind();
-                    return $collGameLists;
+                    $collGamePlayers->getInternalIterator()->rewind();
+                    return $collGamePlayers;
                 }
 
-                if($partial && $this->collGameLists) {
-                    foreach($this->collGameLists as $obj) {
+                if($partial && $this->collGamePlayers) {
+                    foreach($this->collGamePlayers as $obj) {
                         if($obj->isNew()) {
-                            $collGameLists[] = $obj;
+                            $collGamePlayers[] = $obj;
                         }
                     }
                 }
 
-                $this->collGameLists = $collGameLists;
-                $this->collGameListsPartial = false;
+                $this->collGamePlayers = $collGamePlayers;
+                $this->collGamePlayersPartial = false;
             }
         }
 
-        return $this->collGameLists;
+        return $this->collGamePlayers;
     }
 
     /**
-     * Sets a collection of GameList objects related by a one-to-many relationship
+     * Sets a collection of GamePlayer objects related by a one-to-many relationship
      * to the current object.
      * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
      * and new objects from the given Propel collection.
      *
-     * @param PropelCollection $gameLists A Propel collection.
+     * @param PropelCollection $gamePlayers A Propel collection.
      * @param PropelPDO $con Optional connection object
      * @return Game The current object (for fluent API support)
      */
-    public function setGameLists(PropelCollection $gameLists, PropelPDO $con = null)
+    public function setGamePlayers(PropelCollection $gamePlayers, PropelPDO $con = null)
     {
-        $gameListsToDelete = $this->getGameLists(new Criteria(), $con)->diff($gameLists);
+        $gamePlayersToDelete = $this->getGamePlayers(new Criteria(), $con)->diff($gamePlayers);
 
-        $this->gameListsScheduledForDeletion = unserialize(serialize($gameListsToDelete));
+        $this->gamePlayersScheduledForDeletion = unserialize(serialize($gamePlayersToDelete));
 
-        foreach ($gameListsToDelete as $gameListRemoved) {
-            $gameListRemoved->setGame(null);
+        foreach ($gamePlayersToDelete as $gamePlayerRemoved) {
+            $gamePlayerRemoved->setGame(null);
         }
 
-        $this->collGameLists = null;
-        foreach ($gameLists as $gameList) {
-            $this->addGameList($gameList);
+        $this->collGamePlayers = null;
+        foreach ($gamePlayers as $gamePlayer) {
+            $this->addGamePlayer($gamePlayer);
         }
 
-        $this->collGameLists = $gameLists;
-        $this->collGameListsPartial = false;
+        $this->collGamePlayers = $gamePlayers;
+        $this->collGamePlayersPartial = false;
 
         return $this;
     }
 
     /**
-     * Returns the number of related GameList objects.
+     * Returns the number of related GamePlayer objects.
      *
      * @param Criteria $criteria
      * @param boolean $distinct
      * @param PropelPDO $con
-     * @return int             Count of related GameList objects.
+     * @return int             Count of related GamePlayer objects.
      * @throws PropelException
      */
-    public function countGameLists(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+    public function countGamePlayers(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
     {
-        $partial = $this->collGameListsPartial && !$this->isNew();
-        if (null === $this->collGameLists || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collGameLists) {
+        $partial = $this->collGamePlayersPartial && !$this->isNew();
+        if (null === $this->collGamePlayers || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collGamePlayers) {
                 return 0;
             }
 
             if($partial && !$criteria) {
-                return count($this->getGameLists());
+                return count($this->getGamePlayers());
             }
-            $query = GameListQuery::create(null, $criteria);
+            $query = GamePlayerQuery::create(null, $criteria);
             if ($distinct) {
                 $query->distinct();
             }
@@ -1485,52 +1551,52 @@ abstract class BaseGame extends BaseObject implements Persistent
                 ->count($con);
         }
 
-        return count($this->collGameLists);
+        return count($this->collGamePlayers);
     }
 
     /**
-     * Method called to associate a GameList object to this object
-     * through the GameList foreign key attribute.
+     * Method called to associate a GamePlayer object to this object
+     * through the GamePlayer foreign key attribute.
      *
-     * @param    GameList $l GameList
+     * @param    GamePlayer $l GamePlayer
      * @return Game The current object (for fluent API support)
      */
-    public function addGameList(GameList $l)
+    public function addGamePlayer(GamePlayer $l)
     {
-        if ($this->collGameLists === null) {
-            $this->initGameLists();
-            $this->collGameListsPartial = true;
+        if ($this->collGamePlayers === null) {
+            $this->initGamePlayers();
+            $this->collGamePlayersPartial = true;
         }
-        if (!in_array($l, $this->collGameLists->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
-            $this->doAddGameList($l);
+        if (!in_array($l, $this->collGamePlayers->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
+            $this->doAddGamePlayer($l);
         }
 
         return $this;
     }
 
     /**
-     * @param	GameList $gameList The gameList object to add.
+     * @param	GamePlayer $gamePlayer The gamePlayer object to add.
      */
-    protected function doAddGameList($gameList)
+    protected function doAddGamePlayer($gamePlayer)
     {
-        $this->collGameLists[]= $gameList;
-        $gameList->setGame($this);
+        $this->collGamePlayers[]= $gamePlayer;
+        $gamePlayer->setGame($this);
     }
 
     /**
-     * @param	GameList $gameList The gameList object to remove.
+     * @param	GamePlayer $gamePlayer The gamePlayer object to remove.
      * @return Game The current object (for fluent API support)
      */
-    public function removeGameList($gameList)
+    public function removeGamePlayer($gamePlayer)
     {
-        if ($this->getGameLists()->contains($gameList)) {
-            $this->collGameLists->remove($this->collGameLists->search($gameList));
-            if (null === $this->gameListsScheduledForDeletion) {
-                $this->gameListsScheduledForDeletion = clone $this->collGameLists;
-                $this->gameListsScheduledForDeletion->clear();
+        if ($this->getGamePlayers()->contains($gamePlayer)) {
+            $this->collGamePlayers->remove($this->collGamePlayers->search($gamePlayer));
+            if (null === $this->gamePlayersScheduledForDeletion) {
+                $this->gamePlayersScheduledForDeletion = clone $this->collGamePlayers;
+                $this->gamePlayersScheduledForDeletion->clear();
             }
-            $this->gameListsScheduledForDeletion[]= clone $gameList;
-            $gameList->setGame(null);
+            $this->gamePlayersScheduledForDeletion[]= clone $gamePlayer;
+            $gamePlayer->setGame(null);
         }
 
         return $this;
@@ -1542,7 +1608,7 @@ abstract class BaseGame extends BaseObject implements Persistent
      * an identical criteria, it returns the collection.
      * Otherwise if this Game is new, it will return
      * an empty collection; or if this Game has previously
-     * been saved, it will retrieve related GameLists from storage.
+     * been saved, it will retrieve related GamePlayers from storage.
      *
      * This method is protected by default in order to keep the public
      * api reasonable.  You can provide public methods for those you
@@ -1551,14 +1617,14 @@ abstract class BaseGame extends BaseObject implements Persistent
      * @param Criteria $criteria optional Criteria object to narrow the query
      * @param PropelPDO $con optional connection object
      * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return PropelObjectCollection|GameList[] List of GameList objects
+     * @return PropelObjectCollection|GamePlayer[] List of GamePlayer objects
      */
-    public function getGameListsJoinBonus($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    public function getGamePlayersJoinBonus($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
     {
-        $query = GameListQuery::create(null, $criteria);
+        $query = GamePlayerQuery::create(null, $criteria);
         $query->joinWith('Bonus', $join_behavior);
 
-        return $this->getGameLists($query, $con);
+        return $this->getGamePlayers($query, $con);
     }
 
 
@@ -1567,7 +1633,7 @@ abstract class BaseGame extends BaseObject implements Persistent
      * an identical criteria, it returns the collection.
      * Otherwise if this Game is new, it will return
      * an empty collection; or if this Game has previously
-     * been saved, it will retrieve related GameLists from storage.
+     * been saved, it will retrieve related GamePlayers from storage.
      *
      * This method is protected by default in order to keep the public
      * api reasonable.  You can provide public methods for those you
@@ -1576,14 +1642,14 @@ abstract class BaseGame extends BaseObject implements Persistent
      * @param Criteria $criteria optional Criteria object to narrow the query
      * @param PropelPDO $con optional connection object
      * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return PropelObjectCollection|GameList[] List of GameList objects
+     * @return PropelObjectCollection|GamePlayer[] List of GamePlayer objects
      */
-    public function getGameListsJoinPlayer($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    public function getGamePlayersJoinPlayer($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
     {
-        $query = GameListQuery::create(null, $criteria);
+        $query = GamePlayerQuery::create(null, $criteria);
         $query->joinWith('Player', $join_behavior);
 
-        return $this->getGameLists($query, $con);
+        return $this->getGamePlayers($query, $con);
     }
 
     /**
@@ -1620,7 +1686,7 @@ abstract class BaseGame extends BaseObject implements Persistent
 
     /**
      * Gets a collection of Bonus objects related by a many-to-many relationship
-     * to the current object by way of the Game_List cross-reference table.
+     * to the current object by way of the game_player cross-reference table.
      *
      * If the $criteria is not null, it is used to always fetch the results from the database.
      * Otherwise the results are fetched from the database the first time, then cached.
@@ -1655,7 +1721,7 @@ abstract class BaseGame extends BaseObject implements Persistent
 
     /**
      * Sets a collection of Bonus objects related by a many-to-many relationship
-     * to the current object by way of the Game_List cross-reference table.
+     * to the current object by way of the game_player cross-reference table.
      * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
      * and new objects from the given Propel collection.
      *
@@ -1683,7 +1749,7 @@ abstract class BaseGame extends BaseObject implements Persistent
 
     /**
      * Gets the number of Bonus objects related by a many-to-many relationship
-     * to the current object by way of the Game_List cross-reference table.
+     * to the current object by way of the game_player cross-reference table.
      *
      * @param Criteria $criteria Optional query object to filter the query
      * @param boolean $distinct Set to true to force count distinct
@@ -1713,9 +1779,9 @@ abstract class BaseGame extends BaseObject implements Persistent
 
     /**
      * Associate a Bonus object to this object
-     * through the Game_List cross reference table.
+     * through the game_player cross reference table.
      *
-     * @param  Bonus $bonus The GameList object to relate
+     * @param  Bonus $bonus The GamePlayer object to relate
      * @return Game The current object (for fluent API support)
      */
     public function addBonus(Bonus $bonus)
@@ -1737,16 +1803,16 @@ abstract class BaseGame extends BaseObject implements Persistent
      */
     protected function doAddBonus($bonus)
     {
-        $gameList = new GameList();
-        $gameList->setBonus($bonus);
-        $this->addGameList($gameList);
+        $gamePlayer = new GamePlayer();
+        $gamePlayer->setBonus($bonus);
+        $this->addGamePlayer($gamePlayer);
     }
 
     /**
      * Remove a Bonus object to this object
-     * through the Game_List cross reference table.
+     * through the game_player cross reference table.
      *
-     * @param Bonus $bonus The GameList object to relate
+     * @param Bonus $bonus The GamePlayer object to relate
      * @return Game The current object (for fluent API support)
      */
     public function removeBonus(Bonus $bonus)
@@ -1797,7 +1863,7 @@ abstract class BaseGame extends BaseObject implements Persistent
 
     /**
      * Gets a collection of Player objects related by a many-to-many relationship
-     * to the current object by way of the Game_List cross-reference table.
+     * to the current object by way of the game_player cross-reference table.
      *
      * If the $criteria is not null, it is used to always fetch the results from the database.
      * Otherwise the results are fetched from the database the first time, then cached.
@@ -1832,7 +1898,7 @@ abstract class BaseGame extends BaseObject implements Persistent
 
     /**
      * Sets a collection of Player objects related by a many-to-many relationship
-     * to the current object by way of the Game_List cross-reference table.
+     * to the current object by way of the game_player cross-reference table.
      * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
      * and new objects from the given Propel collection.
      *
@@ -1860,7 +1926,7 @@ abstract class BaseGame extends BaseObject implements Persistent
 
     /**
      * Gets the number of Player objects related by a many-to-many relationship
-     * to the current object by way of the Game_List cross-reference table.
+     * to the current object by way of the game_player cross-reference table.
      *
      * @param Criteria $criteria Optional query object to filter the query
      * @param boolean $distinct Set to true to force count distinct
@@ -1890,9 +1956,9 @@ abstract class BaseGame extends BaseObject implements Persistent
 
     /**
      * Associate a Player object to this object
-     * through the Game_List cross reference table.
+     * through the game_player cross reference table.
      *
-     * @param  Player $player The GameList object to relate
+     * @param  Player $player The GamePlayer object to relate
      * @return Game The current object (for fluent API support)
      */
     public function addPlayer(Player $player)
@@ -1914,16 +1980,16 @@ abstract class BaseGame extends BaseObject implements Persistent
      */
     protected function doAddPlayer($player)
     {
-        $gameList = new GameList();
-        $gameList->setPlayer($player);
-        $this->addGameList($gameList);
+        $gamePlayer = new GamePlayer();
+        $gamePlayer->setPlayer($player);
+        $this->addGamePlayer($gamePlayer);
     }
 
     /**
      * Remove a Player object to this object
-     * through the Game_List cross reference table.
+     * through the game_player cross reference table.
      *
-     * @param Player $player The GameList object to relate
+     * @param Player $player The GamePlayer object to relate
      * @return Game The current object (for fluent API support)
      */
     public function removePlayer(Player $player)
@@ -1946,9 +2012,9 @@ abstract class BaseGame extends BaseObject implements Persistent
     public function clear()
     {
         $this->id = null;
-        $this->idcall = null;
-        $this->idcalled = null;
-        $this->idtournament = null;
+        $this->call_id = null;
+        $this->called_id = null;
+        $this->tournament_id = null;
         $this->bids = null;
         $this->score = null;
         $this->alreadyInSave = false;
@@ -1973,8 +2039,8 @@ abstract class BaseGame extends BaseObject implements Persistent
     {
         if ($deep && !$this->alreadyInClearAllReferencesDeep) {
             $this->alreadyInClearAllReferencesDeep = true;
-            if ($this->collGameLists) {
-                foreach ($this->collGameLists as $o) {
+            if ($this->collGamePlayers) {
+                foreach ($this->collGamePlayers as $o) {
                     $o->clearAllReferences($deep);
                 }
             }
@@ -1991,17 +2057,20 @@ abstract class BaseGame extends BaseObject implements Persistent
             if ($this->aTournament instanceof Persistent) {
               $this->aTournament->clearAllReferences($deep);
             }
-            if ($this->aPlayer instanceof Persistent) {
-              $this->aPlayer->clearAllReferences($deep);
+            if ($this->acaller instanceof Persistent) {
+              $this->acaller->clearAllReferences($deep);
+            }
+            if ($this->acalled instanceof Persistent) {
+              $this->acalled->clearAllReferences($deep);
             }
 
             $this->alreadyInClearAllReferencesDeep = false;
         } // if ($deep)
 
-        if ($this->collGameLists instanceof PropelCollection) {
-            $this->collGameLists->clearIterator();
+        if ($this->collGamePlayers instanceof PropelCollection) {
+            $this->collGamePlayers->clearIterator();
         }
-        $this->collGameLists = null;
+        $this->collGamePlayers = null;
         if ($this->collBonuses instanceof PropelCollection) {
             $this->collBonuses->clearIterator();
         }
@@ -2011,7 +2080,8 @@ abstract class BaseGame extends BaseObject implements Persistent
         }
         $this->collPlayers = null;
         $this->aTournament = null;
-        $this->aPlayer = null;
+        $this->acaller = null;
+        $this->acalled = null;
     }
 
     /**

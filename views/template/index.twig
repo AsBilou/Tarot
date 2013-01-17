@@ -1,7 +1,32 @@
 {%extends 'layout/base.twig'%}
 {%block content%}
-    {%for tournament in tournaments%}
-        tournament : {{tournament.idtournament}}
-        active : {{tournament.active}}</br>
+    {% for tournament in tournaments %}
+        <table class="table">
+            <h2>tournament : {{tournament.id}}</h2>
+            <thead>
+                <tr>
+                    <th>
+                        #
+                    </th>
+                    {%for player in tournament.orderedPlayers%}
+                         <th>
+                            {{player.name}}
+                         </th>
+                    {%endfor%}
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        total
+                    </td>
+                    {%for player in tournament.TournamentPlayers%}
+                        <td>
+                            {{player.score}}
+                        </td>
+                    {%endfor%}
+                </tr>
+            </tbody>
+        </table>
     {%endfor%}
 {%endblock%}

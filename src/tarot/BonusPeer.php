@@ -3,7 +3,7 @@
 
 
 /**
- * Skeleton subclass for performing query and update operations on the 'Bonus' table.
+ * Skeleton subclass for performing query and update operations on the 'bonus' table.
  *
  *
  *

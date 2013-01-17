@@ -2,35 +2,35 @@
 
 
 /**
- * Base class that represents a query for the 'Bonus' table.
+ * Base class that represents a query for the 'bonus' table.
  *
  *
  *
  * @method BonusQuery orderById($order = Criteria::ASC) Order by the id column
- * @method BonusQuery orderByNamebonus($order = Criteria::ASC) Order by the nameBonus column
- * @method BonusQuery orderByValuebonus($order = Criteria::ASC) Order by the valueBonus column
+ * @method BonusQuery orderByName($order = Criteria::ASC) Order by the name column
+ * @method BonusQuery orderByValue($order = Criteria::ASC) Order by the value column
  *
  * @method BonusQuery groupById() Group by the id column
- * @method BonusQuery groupByNamebonus() Group by the nameBonus column
- * @method BonusQuery groupByValuebonus() Group by the valueBonus column
+ * @method BonusQuery groupByName() Group by the name column
+ * @method BonusQuery groupByValue() Group by the value column
  *
  * @method BonusQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method BonusQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
  * @method BonusQuery innerJoin($relation) Adds a INNER JOIN clause to the query
  *
- * @method BonusQuery leftJoinGameList($relationAlias = null) Adds a LEFT JOIN clause to the query using the GameList relation
- * @method BonusQuery rightJoinGameList($relationAlias = null) Adds a RIGHT JOIN clause to the query using the GameList relation
- * @method BonusQuery innerJoinGameList($relationAlias = null) Adds a INNER JOIN clause to the query using the GameList relation
+ * @method BonusQuery leftJoinGamePlayer($relationAlias = null) Adds a LEFT JOIN clause to the query using the GamePlayer relation
+ * @method BonusQuery rightJoinGamePlayer($relationAlias = null) Adds a RIGHT JOIN clause to the query using the GamePlayer relation
+ * @method BonusQuery innerJoinGamePlayer($relationAlias = null) Adds a INNER JOIN clause to the query using the GamePlayer relation
  *
  * @method Bonus findOne(PropelPDO $con = null) Return the first Bonus matching the query
  * @method Bonus findOneOrCreate(PropelPDO $con = null) Return the first Bonus matching the query, or a new Bonus object populated from the query conditions when no match is found
  *
- * @method Bonus findOneByNamebonus(string $nameBonus) Return the first Bonus filtered by the nameBonus column
- * @method Bonus findOneByValuebonus(int $valueBonus) Return the first Bonus filtered by the valueBonus column
+ * @method Bonus findOneByName(string $name) Return the first Bonus filtered by the name column
+ * @method Bonus findOneByValue(int $value) Return the first Bonus filtered by the value column
  *
  * @method array findById(int $id) Return Bonus objects filtered by the id column
- * @method array findByNamebonus(string $nameBonus) Return Bonus objects filtered by the nameBonus column
- * @method array findByValuebonus(int $valueBonus) Return Bonus objects filtered by the valueBonus column
+ * @method array findByName(string $name) Return Bonus objects filtered by the name column
+ * @method array findByValue(int $value) Return Bonus objects filtered by the value column
  *
  * @package    propel.generator.tarot.om
  */
@@ -134,7 +134,7 @@ abstract class BaseBonusQuery extends ModelCriteria
      */
     protected function findPkSimple($key, $con)
     {
-        $sql = 'SELECT `id`, `nameBonus`, `valueBonus` FROM `Bonus` WHERE `id` = :p0';
+        $sql = 'SELECT `id`, `name`, `value` FROM `bonus` WHERE `id` = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -266,46 +266,46 @@ abstract class BaseBonusQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the nameBonus column
+     * Filter the query on the name column
      *
      * Example usage:
      * <code>
-     * $query->filterByNamebonus('fooValue');   // WHERE nameBonus = 'fooValue'
-     * $query->filterByNamebonus('%fooValue%'); // WHERE nameBonus LIKE '%fooValue%'
+     * $query->filterByName('fooValue');   // WHERE name = 'fooValue'
+     * $query->filterByName('%fooValue%'); // WHERE name LIKE '%fooValue%'
      * </code>
      *
-     * @param     string $namebonus The value to use as filter.
+     * @param     string $name The value to use as filter.
      *              Accepts wildcards (* and % trigger a LIKE)
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return BonusQuery The current query, for fluid interface
      */
-    public function filterByNamebonus($namebonus = null, $comparison = null)
+    public function filterByName($name = null, $comparison = null)
     {
         if (null === $comparison) {
-            if (is_array($namebonus)) {
+            if (is_array($name)) {
                 $comparison = Criteria::IN;
-            } elseif (preg_match('/[\%\*]/', $namebonus)) {
-                $namebonus = str_replace('*', '%', $namebonus);
+            } elseif (preg_match('/[\%\*]/', $name)) {
+                $name = str_replace('*', '%', $name);
                 $comparison = Criteria::LIKE;
             }
         }
 
-        return $this->addUsingAlias(BonusPeer::NAMEBONUS, $namebonus, $comparison);
+        return $this->addUsingAlias(BonusPeer::NAME, $name, $comparison);
     }
 
     /**
-     * Filter the query on the valueBonus column
+     * Filter the query on the value column
      *
      * Example usage:
      * <code>
-     * $query->filterByValuebonus(1234); // WHERE valueBonus = 1234
-     * $query->filterByValuebonus(array(12, 34)); // WHERE valueBonus IN (12, 34)
-     * $query->filterByValuebonus(array('min' => 12)); // WHERE valueBonus >= 12
-     * $query->filterByValuebonus(array('max' => 12)); // WHERE valueBonus <= 12
+     * $query->filterByValue(1234); // WHERE value = 1234
+     * $query->filterByValue(array(12, 34)); // WHERE value IN (12, 34)
+     * $query->filterByValue(array('min' => 12)); // WHERE value >= 12
+     * $query->filterByValue(array('max' => 12)); // WHERE value <= 12
      * </code>
      *
-     * @param     mixed $valuebonus The value to use as filter.
+     * @param     mixed $value The value to use as filter.
      *              Use scalar values for equality.
      *              Use array values for in_array() equivalent.
      *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
@@ -313,16 +313,16 @@ abstract class BaseBonusQuery extends ModelCriteria
      *
      * @return BonusQuery The current query, for fluid interface
      */
-    public function filterByValuebonus($valuebonus = null, $comparison = null)
+    public function filterByValue($value = null, $comparison = null)
     {
-        if (is_array($valuebonus)) {
+        if (is_array($value)) {
             $useMinMax = false;
-            if (isset($valuebonus['min'])) {
-                $this->addUsingAlias(BonusPeer::VALUEBONUS, $valuebonus['min'], Criteria::GREATER_EQUAL);
+            if (isset($value['min'])) {
+                $this->addUsingAlias(BonusPeer::VALUE, $value['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
-            if (isset($valuebonus['max'])) {
-                $this->addUsingAlias(BonusPeer::VALUEBONUS, $valuebonus['max'], Criteria::LESS_EQUAL);
+            if (isset($value['max'])) {
+                $this->addUsingAlias(BonusPeer::VALUE, $value['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -333,45 +333,45 @@ abstract class BaseBonusQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(BonusPeer::VALUEBONUS, $valuebonus, $comparison);
+        return $this->addUsingAlias(BonusPeer::VALUE, $value, $comparison);
     }
 
     /**
-     * Filter the query by a related GameList object
+     * Filter the query by a related GamePlayer object
      *
-     * @param   GameList|PropelObjectCollection $gameList  the related object to use as filter
+     * @param   GamePlayer|PropelObjectCollection $gamePlayer  the related object to use as filter
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return                 BonusQuery The current query, for fluid interface
      * @throws PropelException - if the provided filter is invalid.
      */
-    public function filterByGameList($gameList, $comparison = null)
+    public function filterByGamePlayer($gamePlayer, $comparison = null)
     {
-        if ($gameList instanceof GameList) {
+        if ($gamePlayer instanceof GamePlayer) {
             return $this
-                ->addUsingAlias(BonusPeer::ID, $gameList->getIdbonus(), $comparison);
-        } elseif ($gameList instanceof PropelObjectCollection) {
+                ->addUsingAlias(BonusPeer::ID, $gamePlayer->getBonusId(), $comparison);
+        } elseif ($gamePlayer instanceof PropelObjectCollection) {
             return $this
-                ->useGameListQuery()
-                ->filterByPrimaryKeys($gameList->getPrimaryKeys())
+                ->useGamePlayerQuery()
+                ->filterByPrimaryKeys($gamePlayer->getPrimaryKeys())
                 ->endUse();
         } else {
-            throw new PropelException('filterByGameList() only accepts arguments of type GameList or PropelCollection');
+            throw new PropelException('filterByGamePlayer() only accepts arguments of type GamePlayer or PropelCollection');
         }
     }
 
     /**
-     * Adds a JOIN clause to the query using the GameList relation
+     * Adds a JOIN clause to the query using the GamePlayer relation
      *
      * @param     string $relationAlias optional alias for the relation
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
      * @return BonusQuery The current query, for fluid interface
      */
-    public function joinGameList($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinGamePlayer($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('GameList');
+        $relationMap = $tableMap->getRelation('GamePlayer');
 
         // create a ModelJoin object for this join
         $join = new ModelJoin();
@@ -386,14 +386,14 @@ abstract class BaseBonusQuery extends ModelCriteria
             $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
             $this->addJoinObject($join, $relationAlias);
         } else {
-            $this->addJoinObject($join, 'GameList');
+            $this->addJoinObject($join, 'GamePlayer');
         }
 
         return $this;
     }
 
     /**
-     * Use the GameList relation GameList object
+     * Use the GamePlayer relation GamePlayer object
      *
      * @see       useQuery()
      *
@@ -401,18 +401,18 @@ abstract class BaseBonusQuery extends ModelCriteria
      *                                   to be used as main alias in the secondary query
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
-     * @return   GameListQuery A secondary query class using the current class as primary query
+     * @return   GamePlayerQuery A secondary query class using the current class as primary query
      */
-    public function useGameListQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function useGamePlayerQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         return $this
-            ->joinGameList($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'GameList', 'GameListQuery');
+            ->joinGamePlayer($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'GamePlayer', 'GamePlayerQuery');
     }
 
     /**
      * Filter the query by a related Player object
-     * using the Game_List table as cross reference
+     * using the game_player table as cross reference
      *
      * @param   Player $player the related object to use as filter
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
@@ -422,14 +422,14 @@ abstract class BaseBonusQuery extends ModelCriteria
     public function filterByPlayer($player, $comparison = Criteria::EQUAL)
     {
         return $this
-            ->useGameListQuery()
+            ->useGamePlayerQuery()
             ->filterByPlayer($player, $comparison)
             ->endUse();
     }
 
     /**
      * Filter the query by a related Game object
-     * using the Game_List table as cross reference
+     * using the game_player table as cross reference
      *
      * @param   Game $game the related object to use as filter
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
@@ -439,7 +439,7 @@ abstract class BaseBonusQuery extends ModelCriteria
     public function filterByGame($game, $comparison = Criteria::EQUAL)
     {
         return $this
-            ->useGameListQuery()
+            ->useGamePlayerQuery()
             ->filterByGame($game, $comparison)
             ->endUse();
     }

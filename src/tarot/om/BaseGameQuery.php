@@ -2,21 +2,21 @@
 
 
 /**
- * Base class that represents a query for the 'Game' table.
+ * Base class that represents a query for the 'game' table.
  *
  *
  *
  * @method GameQuery orderById($order = Criteria::ASC) Order by the id column
- * @method GameQuery orderByIdcall($order = Criteria::ASC) Order by the idCall column
- * @method GameQuery orderByIdcalled($order = Criteria::ASC) Order by the idCalled column
- * @method GameQuery orderByIdtournament($order = Criteria::ASC) Order by the idTournament column
+ * @method GameQuery orderByCallId($order = Criteria::ASC) Order by the call_id column
+ * @method GameQuery orderByCalledId($order = Criteria::ASC) Order by the called_id column
+ * @method GameQuery orderByTournamentId($order = Criteria::ASC) Order by the tournament_id column
  * @method GameQuery orderByBids($order = Criteria::ASC) Order by the bids column
  * @method GameQuery orderByScore($order = Criteria::ASC) Order by the score column
  *
  * @method GameQuery groupById() Group by the id column
- * @method GameQuery groupByIdcall() Group by the idCall column
- * @method GameQuery groupByIdcalled() Group by the idCalled column
- * @method GameQuery groupByIdtournament() Group by the idTournament column
+ * @method GameQuery groupByCallId() Group by the call_id column
+ * @method GameQuery groupByCalledId() Group by the called_id column
+ * @method GameQuery groupByTournamentId() Group by the tournament_id column
  * @method GameQuery groupByBids() Group by the bids column
  * @method GameQuery groupByScore() Group by the score column
  *
@@ -28,27 +28,31 @@
  * @method GameQuery rightJoinTournament($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Tournament relation
  * @method GameQuery innerJoinTournament($relationAlias = null) Adds a INNER JOIN clause to the query using the Tournament relation
  *
- * @method GameQuery leftJoinPlayer($relationAlias = null) Adds a LEFT JOIN clause to the query using the Player relation
- * @method GameQuery rightJoinPlayer($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Player relation
- * @method GameQuery innerJoinPlayer($relationAlias = null) Adds a INNER JOIN clause to the query using the Player relation
+ * @method GameQuery leftJoincaller($relationAlias = null) Adds a LEFT JOIN clause to the query using the caller relation
+ * @method GameQuery rightJoincaller($relationAlias = null) Adds a RIGHT JOIN clause to the query using the caller relation
+ * @method GameQuery innerJoincaller($relationAlias = null) Adds a INNER JOIN clause to the query using the caller relation
  *
- * @method GameQuery leftJoinGameList($relationAlias = null) Adds a LEFT JOIN clause to the query using the GameList relation
- * @method GameQuery rightJoinGameList($relationAlias = null) Adds a RIGHT JOIN clause to the query using the GameList relation
- * @method GameQuery innerJoinGameList($relationAlias = null) Adds a INNER JOIN clause to the query using the GameList relation
+ * @method GameQuery leftJoincalled($relationAlias = null) Adds a LEFT JOIN clause to the query using the called relation
+ * @method GameQuery rightJoincalled($relationAlias = null) Adds a RIGHT JOIN clause to the query using the called relation
+ * @method GameQuery innerJoincalled($relationAlias = null) Adds a INNER JOIN clause to the query using the called relation
+ *
+ * @method GameQuery leftJoinGamePlayer($relationAlias = null) Adds a LEFT JOIN clause to the query using the GamePlayer relation
+ * @method GameQuery rightJoinGamePlayer($relationAlias = null) Adds a RIGHT JOIN clause to the query using the GamePlayer relation
+ * @method GameQuery innerJoinGamePlayer($relationAlias = null) Adds a INNER JOIN clause to the query using the GamePlayer relation
  *
  * @method Game findOne(PropelPDO $con = null) Return the first Game matching the query
  * @method Game findOneOrCreate(PropelPDO $con = null) Return the first Game matching the query, or a new Game object populated from the query conditions when no match is found
  *
- * @method Game findOneByIdcall(int $idCall) Return the first Game filtered by the idCall column
- * @method Game findOneByIdcalled(int $idCalled) Return the first Game filtered by the idCalled column
- * @method Game findOneByIdtournament(int $idTournament) Return the first Game filtered by the idTournament column
+ * @method Game findOneByCallId(int $call_id) Return the first Game filtered by the call_id column
+ * @method Game findOneByCalledId(int $called_id) Return the first Game filtered by the called_id column
+ * @method Game findOneByTournamentId(int $tournament_id) Return the first Game filtered by the tournament_id column
  * @method Game findOneByBids(string $bids) Return the first Game filtered by the bids column
  * @method Game findOneByScore(int $score) Return the first Game filtered by the score column
  *
  * @method array findById(int $id) Return Game objects filtered by the id column
- * @method array findByIdcall(int $idCall) Return Game objects filtered by the idCall column
- * @method array findByIdcalled(int $idCalled) Return Game objects filtered by the idCalled column
- * @method array findByIdtournament(int $idTournament) Return Game objects filtered by the idTournament column
+ * @method array findByCallId(int $call_id) Return Game objects filtered by the call_id column
+ * @method array findByCalledId(int $called_id) Return Game objects filtered by the called_id column
+ * @method array findByTournamentId(int $tournament_id) Return Game objects filtered by the tournament_id column
  * @method array findByBids(string $bids) Return Game objects filtered by the bids column
  * @method array findByScore(int $score) Return Game objects filtered by the score column
  *
@@ -154,7 +158,7 @@ abstract class BaseGameQuery extends ModelCriteria
      */
     protected function findPkSimple($key, $con)
     {
-        $sql = 'SELECT `id`, `idCall`, `idCalled`, `idTournament`, `bids`, `score` FROM `Game` WHERE `id` = :p0';
+        $sql = 'SELECT `id`, `call_id`, `called_id`, `tournament_id`, `bids`, `score` FROM `game` WHERE `id` = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -286,19 +290,19 @@ abstract class BaseGameQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the idCall column
+     * Filter the query on the call_id column
      *
      * Example usage:
      * <code>
-     * $query->filterByIdcall(1234); // WHERE idCall = 1234
-     * $query->filterByIdcall(array(12, 34)); // WHERE idCall IN (12, 34)
-     * $query->filterByIdcall(array('min' => 12)); // WHERE idCall >= 12
-     * $query->filterByIdcall(array('max' => 12)); // WHERE idCall <= 12
+     * $query->filterByCallId(1234); // WHERE call_id = 1234
+     * $query->filterByCallId(array(12, 34)); // WHERE call_id IN (12, 34)
+     * $query->filterByCallId(array('min' => 12)); // WHERE call_id >= 12
+     * $query->filterByCallId(array('max' => 12)); // WHERE call_id <= 12
      * </code>
      *
-     * @see       filterByPlayer()
+     * @see       filterBycaller()
      *
-     * @param     mixed $idcall The value to use as filter.
+     * @param     mixed $callId The value to use as filter.
      *              Use scalar values for equality.
      *              Use array values for in_array() equivalent.
      *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
@@ -306,16 +310,16 @@ abstract class BaseGameQuery extends ModelCriteria
      *
      * @return GameQuery The current query, for fluid interface
      */
-    public function filterByIdcall($idcall = null, $comparison = null)
+    public function filterByCallId($callId = null, $comparison = null)
     {
-        if (is_array($idcall)) {
+        if (is_array($callId)) {
             $useMinMax = false;
-            if (isset($idcall['min'])) {
-                $this->addUsingAlias(GamePeer::IDCALL, $idcall['min'], Criteria::GREATER_EQUAL);
+            if (isset($callId['min'])) {
+                $this->addUsingAlias(GamePeer::CALL_ID, $callId['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
-            if (isset($idcall['max'])) {
-                $this->addUsingAlias(GamePeer::IDCALL, $idcall['max'], Criteria::LESS_EQUAL);
+            if (isset($callId['max'])) {
+                $this->addUsingAlias(GamePeer::CALL_ID, $callId['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -326,23 +330,23 @@ abstract class BaseGameQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(GamePeer::IDCALL, $idcall, $comparison);
+        return $this->addUsingAlias(GamePeer::CALL_ID, $callId, $comparison);
     }
 
     /**
-     * Filter the query on the idCalled column
+     * Filter the query on the called_id column
      *
      * Example usage:
      * <code>
-     * $query->filterByIdcalled(1234); // WHERE idCalled = 1234
-     * $query->filterByIdcalled(array(12, 34)); // WHERE idCalled IN (12, 34)
-     * $query->filterByIdcalled(array('min' => 12)); // WHERE idCalled >= 12
-     * $query->filterByIdcalled(array('max' => 12)); // WHERE idCalled <= 12
+     * $query->filterByCalledId(1234); // WHERE called_id = 1234
+     * $query->filterByCalledId(array(12, 34)); // WHERE called_id IN (12, 34)
+     * $query->filterByCalledId(array('min' => 12)); // WHERE called_id >= 12
+     * $query->filterByCalledId(array('max' => 12)); // WHERE called_id <= 12
      * </code>
      *
-     * @see       filterByPlayer()
+     * @see       filterBycalled()
      *
-     * @param     mixed $idcalled The value to use as filter.
+     * @param     mixed $calledId The value to use as filter.
      *              Use scalar values for equality.
      *              Use array values for in_array() equivalent.
      *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
@@ -350,16 +354,16 @@ abstract class BaseGameQuery extends ModelCriteria
      *
      * @return GameQuery The current query, for fluid interface
      */
-    public function filterByIdcalled($idcalled = null, $comparison = null)
+    public function filterByCalledId($calledId = null, $comparison = null)
     {
-        if (is_array($idcalled)) {
+        if (is_array($calledId)) {
             $useMinMax = false;
-            if (isset($idcalled['min'])) {
-                $this->addUsingAlias(GamePeer::IDCALLED, $idcalled['min'], Criteria::GREATER_EQUAL);
+            if (isset($calledId['min'])) {
+                $this->addUsingAlias(GamePeer::CALLED_ID, $calledId['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
-            if (isset($idcalled['max'])) {
-                $this->addUsingAlias(GamePeer::IDCALLED, $idcalled['max'], Criteria::LESS_EQUAL);
+            if (isset($calledId['max'])) {
+                $this->addUsingAlias(GamePeer::CALLED_ID, $calledId['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -370,23 +374,23 @@ abstract class BaseGameQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(GamePeer::IDCALLED, $idcalled, $comparison);
+        return $this->addUsingAlias(GamePeer::CALLED_ID, $calledId, $comparison);
     }
 
     /**
-     * Filter the query on the idTournament column
+     * Filter the query on the tournament_id column
      *
      * Example usage:
      * <code>
-     * $query->filterByIdtournament(1234); // WHERE idTournament = 1234
-     * $query->filterByIdtournament(array(12, 34)); // WHERE idTournament IN (12, 34)
-     * $query->filterByIdtournament(array('min' => 12)); // WHERE idTournament >= 12
-     * $query->filterByIdtournament(array('max' => 12)); // WHERE idTournament <= 12
+     * $query->filterByTournamentId(1234); // WHERE tournament_id = 1234
+     * $query->filterByTournamentId(array(12, 34)); // WHERE tournament_id IN (12, 34)
+     * $query->filterByTournamentId(array('min' => 12)); // WHERE tournament_id >= 12
+     * $query->filterByTournamentId(array('max' => 12)); // WHERE tournament_id <= 12
      * </code>
      *
      * @see       filterByTournament()
      *
-     * @param     mixed $idtournament The value to use as filter.
+     * @param     mixed $tournamentId The value to use as filter.
      *              Use scalar values for equality.
      *              Use array values for in_array() equivalent.
      *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
@@ -394,16 +398,16 @@ abstract class BaseGameQuery extends ModelCriteria
      *
      * @return GameQuery The current query, for fluid interface
      */
-    public function filterByIdtournament($idtournament = null, $comparison = null)
+    public function filterByTournamentId($tournamentId = null, $comparison = null)
     {
-        if (is_array($idtournament)) {
+        if (is_array($tournamentId)) {
             $useMinMax = false;
-            if (isset($idtournament['min'])) {
-                $this->addUsingAlias(GamePeer::IDTOURNAMENT, $idtournament['min'], Criteria::GREATER_EQUAL);
+            if (isset($tournamentId['min'])) {
+                $this->addUsingAlias(GamePeer::TOURNAMENT_ID, $tournamentId['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
-            if (isset($idtournament['max'])) {
-                $this->addUsingAlias(GamePeer::IDTOURNAMENT, $idtournament['max'], Criteria::LESS_EQUAL);
+            if (isset($tournamentId['max'])) {
+                $this->addUsingAlias(GamePeer::TOURNAMENT_ID, $tournamentId['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -414,7 +418,7 @@ abstract class BaseGameQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(GamePeer::IDTOURNAMENT, $idtournament, $comparison);
+        return $this->addUsingAlias(GamePeer::TOURNAMENT_ID, $tournamentId, $comparison);
     }
 
     /**
@@ -501,14 +505,14 @@ abstract class BaseGameQuery extends ModelCriteria
     {
         if ($tournament instanceof Tournament) {
             return $this
-                ->addUsingAlias(GamePeer::IDTOURNAMENT, $tournament->getId(), $comparison);
+                ->addUsingAlias(GamePeer::TOURNAMENT_ID, $tournament->getId(), $comparison);
         } elseif ($tournament instanceof PropelObjectCollection) {
             if (null === $comparison) {
                 $comparison = Criteria::IN;
             }
 
             return $this
-                ->addUsingAlias(GamePeer::IDTOURNAMENT, $tournament->toKeyValue('PrimaryKey', 'Id'), $comparison);
+                ->addUsingAlias(GamePeer::TOURNAMENT_ID, $tournament->toKeyValue('PrimaryKey', 'Id'), $comparison);
         } else {
             throw new PropelException('filterByTournament() only accepts arguments of type Tournament or PropelCollection');
         }
@@ -567,35 +571,41 @@ abstract class BaseGameQuery extends ModelCriteria
     /**
      * Filter the query by a related Player object
      *
-     * @param   Player $player The related object to use as filter
+     * @param   Player|PropelObjectCollection $player The related object(s) to use as filter
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return                 GameQuery The current query, for fluid interface
      * @throws PropelException - if the provided filter is invalid.
      */
-    public function filterByPlayer($player, $comparison = null)
+    public function filterBycaller($player, $comparison = null)
     {
         if ($player instanceof Player) {
             return $this
-                ->addUsingAlias(GamePeer::IDCALL, $player->getId(), $comparison)
-                ->addUsingAlias(GamePeer::IDCALLED, $player->getId(), $comparison);
+                ->addUsingAlias(GamePeer::CALL_ID, $player->getId(), $comparison);
+        } elseif ($player instanceof PropelObjectCollection) {
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+
+            return $this
+                ->addUsingAlias(GamePeer::CALL_ID, $player->toKeyValue('PrimaryKey', 'Id'), $comparison);
         } else {
-            throw new PropelException('filterByPlayer() only accepts arguments of type Player');
+            throw new PropelException('filterBycaller() only accepts arguments of type Player or PropelCollection');
         }
     }
 
     /**
-     * Adds a JOIN clause to the query using the Player relation
+     * Adds a JOIN clause to the query using the caller relation
      *
      * @param     string $relationAlias optional alias for the relation
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
      * @return GameQuery The current query, for fluid interface
      */
-    public function joinPlayer($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
+    public function joincaller($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('Player');
+        $relationMap = $tableMap->getRelation('caller');
 
         // create a ModelJoin object for this join
         $join = new ModelJoin();
@@ -610,14 +620,14 @@ abstract class BaseGameQuery extends ModelCriteria
             $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
             $this->addJoinObject($join, $relationAlias);
         } else {
-            $this->addJoinObject($join, 'Player');
+            $this->addJoinObject($join, 'caller');
         }
 
         return $this;
     }
 
     /**
-     * Use the Player relation Player object
+     * Use the caller relation Player object
      *
      * @see       useQuery()
      *
@@ -627,49 +637,51 @@ abstract class BaseGameQuery extends ModelCriteria
      *
      * @return   PlayerQuery A secondary query class using the current class as primary query
      */
-    public function usePlayerQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
+    public function usecallerQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         return $this
-            ->joinPlayer($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'Player', 'PlayerQuery');
+            ->joincaller($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'caller', 'PlayerQuery');
     }
 
     /**
-     * Filter the query by a related GameList object
+     * Filter the query by a related Player object
      *
-     * @param   GameList|PropelObjectCollection $gameList  the related object to use as filter
+     * @param   Player|PropelObjectCollection $player The related object(s) to use as filter
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return                 GameQuery The current query, for fluid interface
      * @throws PropelException - if the provided filter is invalid.
      */
-    public function filterByGameList($gameList, $comparison = null)
+    public function filterBycalled($player, $comparison = null)
     {
-        if ($gameList instanceof GameList) {
+        if ($player instanceof Player) {
             return $this
-                ->addUsingAlias(GamePeer::ID, $gameList->getIdgame(), $comparison);
-        } elseif ($gameList instanceof PropelObjectCollection) {
+                ->addUsingAlias(GamePeer::CALLED_ID, $player->getId(), $comparison);
+        } elseif ($player instanceof PropelObjectCollection) {
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+
             return $this
-                ->useGameListQuery()
-                ->filterByPrimaryKeys($gameList->getPrimaryKeys())
-                ->endUse();
+                ->addUsingAlias(GamePeer::CALLED_ID, $player->toKeyValue('PrimaryKey', 'Id'), $comparison);
         } else {
-            throw new PropelException('filterByGameList() only accepts arguments of type GameList or PropelCollection');
+            throw new PropelException('filterBycalled() only accepts arguments of type Player or PropelCollection');
         }
     }
 
     /**
-     * Adds a JOIN clause to the query using the GameList relation
+     * Adds a JOIN clause to the query using the called relation
      *
      * @param     string $relationAlias optional alias for the relation
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
      * @return GameQuery The current query, for fluid interface
      */
-    public function joinGameList($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joincalled($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
     {
         $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('GameList');
+        $relationMap = $tableMap->getRelation('called');
 
         // create a ModelJoin object for this join
         $join = new ModelJoin();
@@ -684,14 +696,14 @@ abstract class BaseGameQuery extends ModelCriteria
             $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
             $this->addJoinObject($join, $relationAlias);
         } else {
-            $this->addJoinObject($join, 'GameList');
+            $this->addJoinObject($join, 'called');
         }
 
         return $this;
     }
 
     /**
-     * Use the GameList relation GameList object
+     * Use the called relation Player object
      *
      * @see       useQuery()
      *
@@ -699,18 +711,92 @@ abstract class BaseGameQuery extends ModelCriteria
      *                                   to be used as main alias in the secondary query
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
-     * @return   GameListQuery A secondary query class using the current class as primary query
+     * @return   PlayerQuery A secondary query class using the current class as primary query
      */
-    public function useGameListQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function usecalledQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
     {
         return $this
-            ->joinGameList($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'GameList', 'GameListQuery');
+            ->joincalled($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'called', 'PlayerQuery');
+    }
+
+    /**
+     * Filter the query by a related GamePlayer object
+     *
+     * @param   GamePlayer|PropelObjectCollection $gamePlayer  the related object to use as filter
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return                 GameQuery The current query, for fluid interface
+     * @throws PropelException - if the provided filter is invalid.
+     */
+    public function filterByGamePlayer($gamePlayer, $comparison = null)
+    {
+        if ($gamePlayer instanceof GamePlayer) {
+            return $this
+                ->addUsingAlias(GamePeer::ID, $gamePlayer->getGameId(), $comparison);
+        } elseif ($gamePlayer instanceof PropelObjectCollection) {
+            return $this
+                ->useGamePlayerQuery()
+                ->filterByPrimaryKeys($gamePlayer->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByGamePlayer() only accepts arguments of type GamePlayer or PropelCollection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the GamePlayer relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return GameQuery The current query, for fluid interface
+     */
+    public function joinGamePlayer($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('GamePlayer');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'GamePlayer');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the GamePlayer relation GamePlayer object
+     *
+     * @see       useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return   GamePlayerQuery A secondary query class using the current class as primary query
+     */
+    public function useGamePlayerQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinGamePlayer($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'GamePlayer', 'GamePlayerQuery');
     }
 
     /**
      * Filter the query by a related Bonus object
-     * using the Game_List table as cross reference
+     * using the game_player table as cross reference
      *
      * @param   Bonus $bonus the related object to use as filter
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
@@ -720,14 +806,14 @@ abstract class BaseGameQuery extends ModelCriteria
     public function filterByBonus($bonus, $comparison = Criteria::EQUAL)
     {
         return $this
-            ->useGameListQuery()
+            ->useGamePlayerQuery()
             ->filterByBonus($bonus, $comparison)
             ->endUse();
     }
 
     /**
      * Filter the query by a related Player object
-     * using the Game_List table as cross reference
+     * using the game_player table as cross reference
      *
      * @param   Player $player the related object to use as filter
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
@@ -737,7 +823,7 @@ abstract class BaseGameQuery extends ModelCriteria
     public function filterByPlayer($player, $comparison = Criteria::EQUAL)
     {
         return $this
-            ->useGameListQuery()
+            ->useGamePlayerQuery()
             ->filterByPlayer($player, $comparison)
             ->endUse();
     }

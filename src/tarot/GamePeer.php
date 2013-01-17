@@ -3,7 +3,7 @@
 
 
 /**
- * Skeleton subclass for performing query and update operations on the 'Game' table.
+ * Skeleton subclass for performing query and update operations on the 'game' table.
  *
  *
  *

@@ -3,7 +3,7 @@
 
 
 /**
- * Skeleton subclass for representing a row from the 'Bonus' table.
+ * Skeleton subclass for representing a row from the 'bonus' table.
  *
  *
  *

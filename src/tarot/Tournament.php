@@ -3,7 +3,7 @@
 
 
 /**
- * Skeleton subclass for representing a row from the 'Tournament' table.
+ * Skeleton subclass for representing a row from the 'tournament' table.
  *
  *
  *
@@ -15,4 +15,9 @@
  */
 class Tournament extends BaseTournament
 {
+    public function getOrderedPlayers() {
+        $query = PlayerQuery::create()
+            ->orderByName();
+        return parent::getPlayers($query);
+    }
 }

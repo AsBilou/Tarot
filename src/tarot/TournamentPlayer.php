@@ -3,7 +3,7 @@
 
 
 /**
- * Skeleton subclass for representing a row from the 'Score_Tournament' table.
+ * Skeleton subclass for representing a row from the 'tournament_player' table.
  *
  *
  *
@@ -13,6 +13,6 @@
  *
  * @package    propel.generator.tarot
  */
-class ScoreTournament extends BaseScoreTournament
+class TournamentPlayer extends BaseTournamentPlayer
 {
 }

@@ -3,7 +3,7 @@
 
 
 /**
- * Skeleton subclass for representing a row from the 'Game' table.
+ * Skeleton subclass for representing a row from the 'game' table.
  *
  *
  *
@@ -15,4 +15,5 @@
  */
 class Game extends BaseGame
 {
+
 }

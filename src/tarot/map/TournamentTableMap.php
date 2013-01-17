@@ -3,7 +3,7 @@
 
 
 /**
- * This class defines the structure of the 'Tournament' table.
+ * This class defines the structure of the 'tournament' table.
  *
  *
  *
@@ -32,16 +32,16 @@ class TournamentTableMap extends TableMap
     public function initialize()
     {
         // attributes
-        $this->setName('Tournament');
+        $this->setName('tournament');
         $this->setPhpName('Tournament');
         $this->setClassname('Tournament');
         $this->setPackage('tarot');
         $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
-        $this->addColumn('dateStart', 'Datestart', 'TIMESTAMP', true, null, null);
+        $this->addColumn('start', 'Start', 'TIMESTAMP', true, null, null);
         $this->addColumn('active', 'Active', 'BOOLEAN', true, 1, null);
-        $this->addForeignKey('idWinner', 'Idwinner', 'INTEGER', 'Player', 'id', false, null, null);
+        $this->addColumn('winner_id', 'WinnerId', 'INTEGER', false, null, null);
         // validators
     } // initialize()
 
@@ -50,10 +50,8 @@ class TournamentTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('Player', 'Player', RelationMap::MANY_TO_ONE, array('idWinner' => 'id', ), 'CASCADE', null);
-        $this->addRelation('Game', 'Game', RelationMap::ONE_TO_MANY, array('id' => 'idTournament', ), 'CASCADE', null, 'Games');
-        $this->addRelation('ScoreTournament', 'ScoreTournament', RelationMap::ONE_TO_MANY, array('id' => 'idTournament', ), 'CASCADE', null, 'ScoreTournaments');
-        $this->addRelation('Player', 'Player', RelationMap::MANY_TO_MANY, array(), 'CASCADE', null, 'Players');
+        $this->addRelation('Game', 'Game', RelationMap::ONE_TO_MANY, array('id' => 'tournament_id', ), 'CASCADE', null, 'Games');
+        $this->addRelation('TournamentPlayer', 'TournamentPlayer', RelationMap::ONE_TO_MANY, array('id' => 'tournament_id', ), 'CASCADE', null, 'TournamentPlayers');
         $this->addRelation('Player', 'Player', RelationMap::MANY_TO_MANY, array(), 'CASCADE', null, 'Players');
     } // buildRelations()
 

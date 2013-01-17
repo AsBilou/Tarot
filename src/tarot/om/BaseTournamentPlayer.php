@@ -2,24 +2,24 @@
 
 
 /**
- * Base class that represents a row from the 'Score_Tournament' table.
+ * Base class that represents a row from the 'tournament_player' table.
  *
  *
  *
  * @package    propel.generator.tarot.om
  */
-abstract class BaseScoreTournament extends BaseObject implements Persistent
+abstract class BaseTournamentPlayer extends BaseObject implements Persistent
 {
     /**
      * Peer class name
      */
-    const PEER = 'ScoreTournamentPeer';
+    const PEER = 'TournamentPlayerPeer';
 
     /**
      * The Peer class.
      * Instance provides a convenient way of calling static methods on a class
      * that calling code may not be able to identify.
-     * @var        ScoreTournamentPeer
+     * @var        TournamentPlayerPeer
      */
     protected static $peer;
 
@@ -30,16 +30,16 @@ abstract class BaseScoreTournament extends BaseObject implements Persistent
     protected $startCopy = false;
 
     /**
-     * The value for the idtournament field.
+     * The value for the tournament_id field.
      * @var        int
      */
-    protected $idtournament;
+    protected $tournament_id;
 
     /**
-     * The value for the idplayer field.
+     * The value for the player_id field.
      * @var        int
      */
-    protected $idplayer;
+    protected $player_id;
 
     /**
      * The value for the score field.
@@ -90,7 +90,7 @@ abstract class BaseScoreTournament extends BaseObject implements Persistent
     }
 
     /**
-     * Initializes internal state of BaseScoreTournament object.
+     * Initializes internal state of BaseTournamentPlayer object.
      * @see        applyDefaults()
      */
     public function __construct()
@@ -100,23 +100,23 @@ abstract class BaseScoreTournament extends BaseObject implements Persistent
     }
 
     /**
-     * Get the [idtournament] column value.
+     * Get the [tournament_id] column value.
      *
      * @return int
      */
-    public function getIdtournament()
+    public function getTournamentId()
     {
-        return $this->idtournament;
+        return $this->tournament_id;
     }
 
     /**
-     * Get the [idplayer] column value.
+     * Get the [player_id] column value.
      *
      * @return int
      */
-    public function getIdplayer()
+    public function getPlayerId()
     {
-        return $this->idplayer;
+        return $this->player_id;
     }
 
     /**
@@ -130,20 +130,20 @@ abstract class BaseScoreTournament extends BaseObject implements Persistent
     }
 
     /**
-     * Set the value of [idtournament] column.
+     * Set the value of [tournament_id] column.
      *
      * @param int $v new value
-     * @return ScoreTournament The current object (for fluent API support)
+     * @return TournamentPlayer The current object (for fluent API support)
      */
-    public function setIdtournament($v)
+    public function setTournamentId($v)
     {
         if ($v !== null && is_numeric($v)) {
             $v = (int) $v;
         }
 
-        if ($this->idtournament !== $v) {
-            $this->idtournament = $v;
-            $this->modifiedColumns[] = ScoreTournamentPeer::IDTOURNAMENT;
+        if ($this->tournament_id !== $v) {
+            $this->tournament_id = $v;
+            $this->modifiedColumns[] = TournamentPlayerPeer::TOURNAMENT_ID;
         }
 
         if ($this->aTournament !== null && $this->aTournament->getId() !== $v) {
@@ -152,23 +152,23 @@ abstract class BaseScoreTournament extends BaseObject implements Persistent
 
 
         return $this;
-    } // setIdtournament()
+    } // setTournamentId()
 
     /**
-     * Set the value of [idplayer] column.
+     * Set the value of [player_id] column.
      *
      * @param int $v new value
-     * @return ScoreTournament The current object (for fluent API support)
+     * @return TournamentPlayer The current object (for fluent API support)
      */
-    public function setIdplayer($v)
+    public function setPlayerId($v)
     {
         if ($v !== null && is_numeric($v)) {
             $v = (int) $v;
         }
 
-        if ($this->idplayer !== $v) {
-            $this->idplayer = $v;
-            $this->modifiedColumns[] = ScoreTournamentPeer::IDPLAYER;
+        if ($this->player_id !== $v) {
+            $this->player_id = $v;
+            $this->modifiedColumns[] = TournamentPlayerPeer::PLAYER_ID;
         }
 
         if ($this->aPlayer !== null && $this->aPlayer->getId() !== $v) {
@@ -177,13 +177,13 @@ abstract class BaseScoreTournament extends BaseObject implements Persistent
 
 
         return $this;
-    } // setIdplayer()
+    } // setPlayerId()
 
     /**
      * Set the value of [score] column.
      *
      * @param int $v new value
-     * @return ScoreTournament The current object (for fluent API support)
+     * @return TournamentPlayer The current object (for fluent API support)
      */
     public function setScore($v)
     {
@@ -193,7 +193,7 @@ abstract class BaseScoreTournament extends BaseObject implements Persistent
 
         if ($this->score !== $v) {
             $this->score = $v;
-            $this->modifiedColumns[] = ScoreTournamentPeer::SCORE;
+            $this->modifiedColumns[] = TournamentPlayerPeer::SCORE;
         }
 
 
@@ -236,8 +236,8 @@ abstract class BaseScoreTournament extends BaseObject implements Persistent
     {
         try {
 
-            $this->idtournament = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
-            $this->idplayer = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
+            $this->tournament_id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
+            $this->player_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
             $this->score = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
             $this->resetModified();
 
@@ -247,10 +247,10 @@ abstract class BaseScoreTournament extends BaseObject implements Persistent
                 $this->ensureConsistency();
             }
             $this->postHydrate($row, $startcol, $rehydrate);
-            return $startcol + 3; // 3 = ScoreTournamentPeer::NUM_HYDRATE_COLUMNS.
+            return $startcol + 3; // 3 = TournamentPlayerPeer::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
-            throw new PropelException("Error populating ScoreTournament object", $e);
+            throw new PropelException("Error populating TournamentPlayer object", $e);
         }
     }
 
@@ -270,10 +270,10 @@ abstract class BaseScoreTournament extends BaseObject implements Persistent
     public function ensureConsistency()
     {
 
-        if ($this->aTournament !== null && $this->idtournament !== $this->aTournament->getId()) {
+        if ($this->aTournament !== null && $this->tournament_id !== $this->aTournament->getId()) {
             $this->aTournament = null;
         }
-        if ($this->aPlayer !== null && $this->idplayer !== $this->aPlayer->getId()) {
+        if ($this->aPlayer !== null && $this->player_id !== $this->aPlayer->getId()) {
             $this->aPlayer = null;
         }
     } // ensureConsistency
@@ -299,13 +299,13 @@ abstract class BaseScoreTournament extends BaseObject implements Persistent
         }
 
         if ($con === null) {
-            $con = Propel::getConnection(ScoreTournamentPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+            $con = Propel::getConnection(TournamentPlayerPeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
 
         // We don't need to alter the object instance pool; we're just modifying this instance
         // already in the pool.
 
-        $stmt = ScoreTournamentPeer::doSelectStmt($this->buildPkeyCriteria(), $con);
+        $stmt = TournamentPlayerPeer::doSelectStmt($this->buildPkeyCriteria(), $con);
         $row = $stmt->fetch(PDO::FETCH_NUM);
         $stmt->closeCursor();
         if (!$row) {
@@ -337,12 +337,12 @@ abstract class BaseScoreTournament extends BaseObject implements Persistent
         }
 
         if ($con === null) {
-            $con = Propel::getConnection(ScoreTournamentPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+            $con = Propel::getConnection(TournamentPlayerPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
         }
 
         $con->beginTransaction();
         try {
-            $deleteQuery = ScoreTournamentQuery::create()
+            $deleteQuery = TournamentPlayerQuery::create()
                 ->filterByPrimaryKey($this->getPrimaryKey());
             $ret = $this->preDelete($con);
             if ($ret) {
@@ -380,7 +380,7 @@ abstract class BaseScoreTournament extends BaseObject implements Persistent
         }
 
         if ($con === null) {
-            $con = Propel::getConnection(ScoreTournamentPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+            $con = Propel::getConnection(TournamentPlayerPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
         }
 
         $con->beginTransaction();
@@ -400,7 +400,7 @@ abstract class BaseScoreTournament extends BaseObject implements Persistent
                     $this->postUpdate($con);
                 }
                 $this->postSave($con);
-                ScoreTournamentPeer::addInstanceToPool($this);
+                TournamentPlayerPeer::addInstanceToPool($this);
             } else {
                 $affectedRows = 0;
             }
@@ -482,18 +482,18 @@ abstract class BaseScoreTournament extends BaseObject implements Persistent
 
 
          // check the columns in natural order for more readable SQL queries
-        if ($this->isColumnModified(ScoreTournamentPeer::IDTOURNAMENT)) {
-            $modifiedColumns[':p' . $index++]  = '`idTournament`';
+        if ($this->isColumnModified(TournamentPlayerPeer::TOURNAMENT_ID)) {
+            $modifiedColumns[':p' . $index++]  = '`tournament_id`';
         }
-        if ($this->isColumnModified(ScoreTournamentPeer::IDPLAYER)) {
-            $modifiedColumns[':p' . $index++]  = '`idPlayer`';
+        if ($this->isColumnModified(TournamentPlayerPeer::PLAYER_ID)) {
+            $modifiedColumns[':p' . $index++]  = '`player_id`';
         }
-        if ($this->isColumnModified(ScoreTournamentPeer::SCORE)) {
+        if ($this->isColumnModified(TournamentPlayerPeer::SCORE)) {
             $modifiedColumns[':p' . $index++]  = '`score`';
         }
 
         $sql = sprintf(
-            'INSERT INTO `Score_Tournament` (%s) VALUES (%s)',
+            'INSERT INTO `tournament_player` (%s) VALUES (%s)',
             implode(', ', $modifiedColumns),
             implode(', ', array_keys($modifiedColumns))
         );
@@ -502,11 +502,11 @@ abstract class BaseScoreTournament extends BaseObject implements Persistent
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case '`idTournament`':
-                        $stmt->bindValue($identifier, $this->idtournament, PDO::PARAM_INT);
+                    case '`tournament_id`':
+                        $stmt->bindValue($identifier, $this->tournament_id, PDO::PARAM_INT);
                         break;
-                    case '`idPlayer`':
-                        $stmt->bindValue($identifier, $this->idplayer, PDO::PARAM_INT);
+                    case '`player_id`':
+                        $stmt->bindValue($identifier, $this->player_id, PDO::PARAM_INT);
                         break;
                     case '`score`':
                         $stmt->bindValue($identifier, $this->score, PDO::PARAM_INT);
@@ -616,7 +616,7 @@ abstract class BaseScoreTournament extends BaseObject implements Persistent
             }
 
 
-            if (($retval = ScoreTournamentPeer::doValidate($this, $columns)) !== true) {
+            if (($retval = TournamentPlayerPeer::doValidate($this, $columns)) !== true) {
                 $failureMap = array_merge($failureMap, $retval);
             }
 
@@ -640,7 +640,7 @@ abstract class BaseScoreTournament extends BaseObject implements Persistent
      */
     public function getByName($name, $type = BasePeer::TYPE_FIELDNAME)
     {
-        $pos = ScoreTournamentPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+        $pos = TournamentPlayerPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
         $field = $this->getByPosition($pos);
 
         return $field;
@@ -657,10 +657,10 @@ abstract class BaseScoreTournament extends BaseObject implements Persistent
     {
         switch ($pos) {
             case 0:
-                return $this->getIdtournament();
+                return $this->getTournamentId();
                 break;
             case 1:
-                return $this->getIdplayer();
+                return $this->getPlayerId();
                 break;
             case 2:
                 return $this->getScore();
@@ -688,14 +688,14 @@ abstract class BaseScoreTournament extends BaseObject implements Persistent
      */
     public function toArray($keyType = BasePeer::TYPE_FIELDNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array(), $includeForeignObjects = false)
     {
-        if (isset($alreadyDumpedObjects['ScoreTournament'][serialize($this->getPrimaryKey())])) {
+        if (isset($alreadyDumpedObjects['TournamentPlayer'][serialize($this->getPrimaryKey())])) {
             return '*RECURSION*';
         }
-        $alreadyDumpedObjects['ScoreTournament'][serialize($this->getPrimaryKey())] = true;
-        $keys = ScoreTournamentPeer::getFieldNames($keyType);
+        $alreadyDumpedObjects['TournamentPlayer'][serialize($this->getPrimaryKey())] = true;
+        $keys = TournamentPlayerPeer::getFieldNames($keyType);
         $result = array(
-            $keys[0] => $this->getIdtournament(),
-            $keys[1] => $this->getIdplayer(),
+            $keys[0] => $this->getTournamentId(),
+            $keys[1] => $this->getPlayerId(),
             $keys[2] => $this->getScore(),
         );
         if ($includeForeignObjects) {
@@ -723,7 +723,7 @@ abstract class BaseScoreTournament extends BaseObject implements Persistent
      */
     public function setByName($name, $value, $type = BasePeer::TYPE_FIELDNAME)
     {
-        $pos = ScoreTournamentPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+        $pos = TournamentPlayerPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 
         $this->setByPosition($pos, $value);
     }
@@ -740,10 +740,10 @@ abstract class BaseScoreTournament extends BaseObject implements Persistent
     {
         switch ($pos) {
             case 0:
-                $this->setIdtournament($value);
+                $this->setTournamentId($value);
                 break;
             case 1:
-                $this->setIdplayer($value);
+                $this->setPlayerId($value);
                 break;
             case 2:
                 $this->setScore($value);
@@ -770,10 +770,10 @@ abstract class BaseScoreTournament extends BaseObject implements Persistent
      */
     public function fromArray($arr, $keyType = BasePeer::TYPE_FIELDNAME)
     {
-        $keys = ScoreTournamentPeer::getFieldNames($keyType);
+        $keys = TournamentPlayerPeer::getFieldNames($keyType);
 
-        if (array_key_exists($keys[0], $arr)) $this->setIdtournament($arr[$keys[0]]);
-        if (array_key_exists($keys[1], $arr)) $this->setIdplayer($arr[$keys[1]]);
+        if (array_key_exists($keys[0], $arr)) $this->setTournamentId($arr[$keys[0]]);
+        if (array_key_exists($keys[1], $arr)) $this->setPlayerId($arr[$keys[1]]);
         if (array_key_exists($keys[2], $arr)) $this->setScore($arr[$keys[2]]);
     }
 
@@ -784,11 +784,11 @@ abstract class BaseScoreTournament extends BaseObject implements Persistent
      */
     public function buildCriteria()
     {
-        $criteria = new Criteria(ScoreTournamentPeer::DATABASE_NAME);
+        $criteria = new Criteria(TournamentPlayerPeer::DATABASE_NAME);
 
-        if ($this->isColumnModified(ScoreTournamentPeer::IDTOURNAMENT)) $criteria->add(ScoreTournamentPeer::IDTOURNAMENT, $this->idtournament);
-        if ($this->isColumnModified(ScoreTournamentPeer::IDPLAYER)) $criteria->add(ScoreTournamentPeer::IDPLAYER, $this->idplayer);
-        if ($this->isColumnModified(ScoreTournamentPeer::SCORE)) $criteria->add(ScoreTournamentPeer::SCORE, $this->score);
+        if ($this->isColumnModified(TournamentPlayerPeer::TOURNAMENT_ID)) $criteria->add(TournamentPlayerPeer::TOURNAMENT_ID, $this->tournament_id);
+        if ($this->isColumnModified(TournamentPlayerPeer::PLAYER_ID)) $criteria->add(TournamentPlayerPeer::PLAYER_ID, $this->player_id);
+        if ($this->isColumnModified(TournamentPlayerPeer::SCORE)) $criteria->add(TournamentPlayerPeer::SCORE, $this->score);
 
         return $criteria;
     }
@@ -803,9 +803,9 @@ abstract class BaseScoreTournament extends BaseObject implements Persistent
      */
     public function buildPkeyCriteria()
     {
-        $criteria = new Criteria(ScoreTournamentPeer::DATABASE_NAME);
-        $criteria->add(ScoreTournamentPeer::IDTOURNAMENT, $this->idtournament);
-        $criteria->add(ScoreTournamentPeer::IDPLAYER, $this->idplayer);
+        $criteria = new Criteria(TournamentPlayerPeer::DATABASE_NAME);
+        $criteria->add(TournamentPlayerPeer::TOURNAMENT_ID, $this->tournament_id);
+        $criteria->add(TournamentPlayerPeer::PLAYER_ID, $this->player_id);
 
         return $criteria;
     }
@@ -818,8 +818,8 @@ abstract class BaseScoreTournament extends BaseObject implements Persistent
     public function getPrimaryKey()
     {
         $pks = array();
-        $pks[0] = $this->getIdtournament();
-        $pks[1] = $this->getIdplayer();
+        $pks[0] = $this->getTournamentId();
+        $pks[1] = $this->getPlayerId();
 
         return $pks;
     }
@@ -832,8 +832,8 @@ abstract class BaseScoreTournament extends BaseObject implements Persistent
      */
     public function setPrimaryKey($keys)
     {
-        $this->setIdtournament($keys[0]);
-        $this->setIdplayer($keys[1]);
+        $this->setTournamentId($keys[0]);
+        $this->setPlayerId($keys[1]);
     }
 
     /**
@@ -843,7 +843,7 @@ abstract class BaseScoreTournament extends BaseObject implements Persistent
     public function isPrimaryKeyNull()
     {
 
-        return (null === $this->getIdtournament()) && (null === $this->getIdplayer());
+        return (null === $this->getTournamentId()) && (null === $this->getPlayerId());
     }
 
     /**
@@ -852,15 +852,15 @@ abstract class BaseScoreTournament extends BaseObject implements Persistent
      * If desired, this method can also make copies of all associated (fkey referrers)
      * objects.
      *
-     * @param object $copyObj An object of ScoreTournament (or compatible) type.
+     * @param object $copyObj An object of TournamentPlayer (or compatible) type.
      * @param boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
      * @param boolean $makeNew Whether to reset autoincrement PKs and make the object new.
      * @throws PropelException
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
-        $copyObj->setIdtournament($this->getIdtournament());
-        $copyObj->setIdplayer($this->getIdplayer());
+        $copyObj->setTournamentId($this->getTournamentId());
+        $copyObj->setPlayerId($this->getPlayerId());
         $copyObj->setScore($this->getScore());
 
         if ($deepCopy && !$this->startCopy) {
@@ -888,7 +888,7 @@ abstract class BaseScoreTournament extends BaseObject implements Persistent
      * objects.
      *
      * @param boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-     * @return ScoreTournament Clone of current object.
+     * @return TournamentPlayer Clone of current object.
      * @throws PropelException
      */
     public function copy($deepCopy = false)
@@ -908,12 +908,12 @@ abstract class BaseScoreTournament extends BaseObject implements Persistent
      * same instance for all member of this class. The method could therefore
      * be static, but this would prevent one from overriding the behavior.
      *
-     * @return ScoreTournamentPeer
+     * @return TournamentPlayerPeer
      */
     public function getPeer()
     {
         if (self::$peer === null) {
-            self::$peer = new ScoreTournamentPeer();
+            self::$peer = new TournamentPlayerPeer();
         }
 
         return self::$peer;
@@ -923,15 +923,15 @@ abstract class BaseScoreTournament extends BaseObject implements Persistent
      * Declares an association between this object and a Tournament object.
      *
      * @param             Tournament $v
-     * @return ScoreTournament The current object (for fluent API support)
+     * @return TournamentPlayer The current object (for fluent API support)
      * @throws PropelException
      */
     public function setTournament(Tournament $v = null)
     {
         if ($v === null) {
-            $this->setIdtournament(NULL);
+            $this->setTournamentId(NULL);
         } else {
-            $this->setIdtournament($v->getId());
+            $this->setTournamentId($v->getId());
         }
 
         $this->aTournament = $v;
@@ -939,7 +939,7 @@ abstract class BaseScoreTournament extends BaseObject implements Persistent
         // Add binding for other direction of this n:n relationship.
         // If this object has already been added to the Tournament object, it will not be re-added.
         if ($v !== null) {
-            $v->addScoreTournament($this);
+            $v->addTournamentPlayer($this);
         }
 
 
@@ -957,14 +957,14 @@ abstract class BaseScoreTournament extends BaseObject implements Persistent
      */
     public function getTournament(PropelPDO $con = null, $doQuery = true)
     {
-        if ($this->aTournament === null && ($this->idtournament !== null) && $doQuery) {
-            $this->aTournament = TournamentQuery::create()->findPk($this->idtournament, $con);
+        if ($this->aTournament === null && ($this->tournament_id !== null) && $doQuery) {
+            $this->aTournament = TournamentQuery::create()->findPk($this->tournament_id, $con);
             /* The following can be used additionally to
                 guarantee the related object contains a reference
                 to this object.  This level of coupling may, however, be
                 undesirable since it could result in an only partially populated collection
                 in the referenced object.
-                $this->aTournament->addScoreTournaments($this);
+                $this->aTournament->addTournamentPlayers($this);
              */
         }
 
@@ -975,15 +975,15 @@ abstract class BaseScoreTournament extends BaseObject implements Persistent
      * Declares an association between this object and a Player object.
      *
      * @param             Player $v
-     * @return ScoreTournament The current object (for fluent API support)
+     * @return TournamentPlayer The current object (for fluent API support)
      * @throws PropelException
      */
     public function setPlayer(Player $v = null)
     {
         if ($v === null) {
-            $this->setIdplayer(NULL);
+            $this->setPlayerId(NULL);
         } else {
-            $this->setIdplayer($v->getId());
+            $this->setPlayerId($v->getId());
         }
 
         $this->aPlayer = $v;
@@ -991,7 +991,7 @@ abstract class BaseScoreTournament extends BaseObject implements Persistent
         // Add binding for other direction of this n:n relationship.
         // If this object has already been added to the Player object, it will not be re-added.
         if ($v !== null) {
-            $v->addScoreTournament($this);
+            $v->addTournamentPlayer($this);
         }
 
 
@@ -1009,14 +1009,14 @@ abstract class BaseScoreTournament extends BaseObject implements Persistent
      */
     public function getPlayer(PropelPDO $con = null, $doQuery = true)
     {
-        if ($this->aPlayer === null && ($this->idplayer !== null) && $doQuery) {
-            $this->aPlayer = PlayerQuery::create()->findPk($this->idplayer, $con);
+        if ($this->aPlayer === null && ($this->player_id !== null) && $doQuery) {
+            $this->aPlayer = PlayerQuery::create()->findPk($this->player_id, $con);
             /* The following can be used additionally to
                 guarantee the related object contains a reference
                 to this object.  This level of coupling may, however, be
                 undesirable since it could result in an only partially populated collection
                 in the referenced object.
-                $this->aPlayer->addScoreTournaments($this);
+                $this->aPlayer->addTournamentPlayers($this);
              */
         }
 
@@ -1028,8 +1028,8 @@ abstract class BaseScoreTournament extends BaseObject implements Persistent
      */
     public function clear()
     {
-        $this->idtournament = null;
-        $this->idplayer = null;
+        $this->tournament_id = null;
+        $this->player_id = null;
         $this->score = null;
         $this->alreadyInSave = false;
         $this->alreadyInValidation = false;
@@ -1075,7 +1075,7 @@ abstract class BaseScoreTournament extends BaseObject implements Persistent
      */
     public function __toString()
     {
-        return (string) $this->exportTo(ScoreTournamentPeer::DEFAULT_STRING_FORMAT);
+        return (string) $this->exportTo(TournamentPlayerPeer::DEFAULT_STRING_FORMAT);
     }
 
     /**

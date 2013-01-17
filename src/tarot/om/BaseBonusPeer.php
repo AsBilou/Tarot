@@ -2,7 +2,7 @@
 
 
 /**
- * Base static class for performing query and update operations on the 'Bonus' table.
+ * Base static class for performing query and update operations on the 'bonus' table.
  *
  *
  *
@@ -15,7 +15,7 @@ abstract class BaseBonusPeer
     const DATABASE_NAME = 'tarot';
 
     /** the table name for this class */
-    const TABLE_NAME = 'Bonus';
+    const TABLE_NAME = 'bonus';
 
     /** the related Propel class for this table */
     const OM_CLASS = 'Bonus';
@@ -33,13 +33,13 @@ abstract class BaseBonusPeer
     const NUM_HYDRATE_COLUMNS = 3;
 
     /** the column name for the id field */
-    const ID = 'Bonus.id';
+    const ID = 'bonus.id';
 
-    /** the column name for the nameBonus field */
-    const NAMEBONUS = 'Bonus.nameBonus';
+    /** the column name for the name field */
+    const NAME = 'bonus.name';
 
-    /** the column name for the valueBonus field */
-    const VALUEBONUS = 'Bonus.valueBonus';
+    /** the column name for the value field */
+    const VALUE = 'bonus.value';
 
     /** The default string format for model objects of the related table **/
     const DEFAULT_STRING_FORMAT = 'YAML';
@@ -60,11 +60,11 @@ abstract class BaseBonusPeer
      * e.g. BonusPeer::$fieldNames[BonusPeer::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        BasePeer::TYPE_PHPNAME => array ('Id', 'Namebonus', 'Valuebonus', ),
-        BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'namebonus', 'valuebonus', ),
-        BasePeer::TYPE_COLNAME => array (BonusPeer::ID, BonusPeer::NAMEBONUS, BonusPeer::VALUEBONUS, ),
-        BasePeer::TYPE_RAW_COLNAME => array ('ID', 'NAMEBONUS', 'VALUEBONUS', ),
-        BasePeer::TYPE_FIELDNAME => array ('id', 'nameBonus', 'valueBonus', ),
+        BasePeer::TYPE_PHPNAME => array ('Id', 'Name', 'Value', ),
+        BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'name', 'value', ),
+        BasePeer::TYPE_COLNAME => array (BonusPeer::ID, BonusPeer::NAME, BonusPeer::VALUE, ),
+        BasePeer::TYPE_RAW_COLNAME => array ('ID', 'NAME', 'VALUE', ),
+        BasePeer::TYPE_FIELDNAME => array ('id', 'name', 'value', ),
         BasePeer::TYPE_NUM => array (0, 1, 2, )
     );
 
@@ -75,11 +75,11 @@ abstract class BaseBonusPeer
      * e.g. BonusPeer::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Namebonus' => 1, 'Valuebonus' => 2, ),
-        BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'namebonus' => 1, 'valuebonus' => 2, ),
-        BasePeer::TYPE_COLNAME => array (BonusPeer::ID => 0, BonusPeer::NAMEBONUS => 1, BonusPeer::VALUEBONUS => 2, ),
-        BasePeer::TYPE_RAW_COLNAME => array ('ID' => 0, 'NAMEBONUS' => 1, 'VALUEBONUS' => 2, ),
-        BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'nameBonus' => 1, 'valueBonus' => 2, ),
+        BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Name' => 1, 'Value' => 2, ),
+        BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'name' => 1, 'value' => 2, ),
+        BasePeer::TYPE_COLNAME => array (BonusPeer::ID => 0, BonusPeer::NAME => 1, BonusPeer::VALUE => 2, ),
+        BasePeer::TYPE_RAW_COLNAME => array ('ID' => 0, 'NAME' => 1, 'VALUE' => 2, ),
+        BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'name' => 1, 'value' => 2, ),
         BasePeer::TYPE_NUM => array (0, 1, 2, )
     );
 
@@ -155,12 +155,12 @@ abstract class BaseBonusPeer
     {
         if (null === $alias) {
             $criteria->addSelectColumn(BonusPeer::ID);
-            $criteria->addSelectColumn(BonusPeer::NAMEBONUS);
-            $criteria->addSelectColumn(BonusPeer::VALUEBONUS);
+            $criteria->addSelectColumn(BonusPeer::NAME);
+            $criteria->addSelectColumn(BonusPeer::VALUE);
         } else {
             $criteria->addSelectColumn($alias . '.id');
-            $criteria->addSelectColumn($alias . '.nameBonus');
-            $criteria->addSelectColumn($alias . '.valueBonus');
+            $criteria->addSelectColumn($alias . '.name');
+            $criteria->addSelectColumn($alias . '.value');
         }
     }
 
@@ -362,14 +362,14 @@ abstract class BaseBonusPeer
     }
 
     /**
-     * Method to invalidate the instance pool of all tables related to Bonus
+     * Method to invalidate the instance pool of all tables related to bonus
      * by a foreign key with ON DELETE CASCADE
      */
     public static function clearRelatedInstancePool()
     {
-        // Invalidate objects in GameListPeer instance pool,
+        // Invalidate objects in GamePlayerPeer instance pool,
         // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
-        GameListPeer::clearInstancePool();
+        GamePlayerPeer::clearInstancePool();
     }
 
     /**
@@ -583,7 +583,7 @@ abstract class BaseBonusPeer
     }
 
     /**
-     * Deletes all rows from the Bonus table.
+     * Deletes all rows from the bonus table.
      *
      * @param      PropelPDO $con the connection to use
      * @return int             The number of affected rows (if supported by underlying database driver).
@@ -704,11 +704,11 @@ abstract class BaseBonusPeer
         foreach ($objects as $obj) {
 
 
-            // delete related GameList objects
-            $criteria = new Criteria(GameListPeer::DATABASE_NAME);
+            // delete related GamePlayer objects
+            $criteria = new Criteria(GamePlayerPeer::DATABASE_NAME);
 
-            $criteria->add(GameListPeer::IDBONUS, $obj->getId());
-            $affectedRows += GameListPeer::doDelete($criteria, $con);
+            $criteria->add(GamePlayerPeer::BONUS_ID, $obj->getId());
+            $affectedRows += GamePlayerPeer::doDelete($criteria, $con);
         }
 
         return $affectedRows;

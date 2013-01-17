@@ -3,7 +3,7 @@
 
 
 /**
- * This class defines the structure of the 'Bonus' table.
+ * This class defines the structure of the 'bonus' table.
  *
  *
  *
@@ -32,15 +32,15 @@ class BonusTableMap extends TableMap
     public function initialize()
     {
         // attributes
-        $this->setName('Bonus');
+        $this->setName('bonus');
         $this->setPhpName('Bonus');
         $this->setClassname('Bonus');
         $this->setPackage('tarot');
         $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
-        $this->addColumn('nameBonus', 'Namebonus', 'VARCHAR', true, 255, null);
-        $this->addColumn('valueBonus', 'Valuebonus', 'INTEGER', true, null, null);
+        $this->addColumn('name', 'Name', 'VARCHAR', true, 255, null);
+        $this->addColumn('value', 'Value', 'INTEGER', true, null, null);
         // validators
     } // initialize()
 
@@ -49,7 +49,7 @@ class BonusTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('GameList', 'GameList', RelationMap::ONE_TO_MANY, array('id' => 'idBonus', ), 'CASCADE', null, 'GameLists');
+        $this->addRelation('GamePlayer', 'GamePlayer', RelationMap::ONE_TO_MANY, array('id' => 'bonus_id', ), 'CASCADE', null, 'GamePlayers');
         $this->addRelation('Player', 'Player', RelationMap::MANY_TO_MANY, array(), 'CASCADE', null, 'Players');
         $this->addRelation('Game', 'Game', RelationMap::MANY_TO_MANY, array(), 'CASCADE', null, 'Games');
     } // buildRelations()

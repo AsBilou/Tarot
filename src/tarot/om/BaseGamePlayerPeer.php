@@ -2,53 +2,56 @@
 
 
 /**
- * Base static class for performing query and update operations on the 'Score_Tournament' table.
+ * Base static class for performing query and update operations on the 'game_player' table.
  *
  *
  *
  * @package propel.generator.tarot.om
  */
-abstract class BaseScoreTournamentPeer
+abstract class BaseGamePlayerPeer
 {
 
     /** the default database name for this class */
     const DATABASE_NAME = 'tarot';
 
     /** the table name for this class */
-    const TABLE_NAME = 'Score_Tournament';
+    const TABLE_NAME = 'game_player';
 
     /** the related Propel class for this table */
-    const OM_CLASS = 'ScoreTournament';
+    const OM_CLASS = 'GamePlayer';
 
     /** the related TableMap class for this table */
-    const TM_CLASS = 'ScoreTournamentTableMap';
+    const TM_CLASS = 'GamePlayerTableMap';
 
     /** The total number of columns. */
-    const NUM_COLUMNS = 3;
+    const NUM_COLUMNS = 4;
 
     /** The number of lazy-loaded columns. */
     const NUM_LAZY_LOAD_COLUMNS = 0;
 
     /** The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS) */
-    const NUM_HYDRATE_COLUMNS = 3;
+    const NUM_HYDRATE_COLUMNS = 4;
 
-    /** the column name for the idTournament field */
-    const IDTOURNAMENT = 'Score_Tournament.idTournament';
+    /** the column name for the game_id field */
+    const GAME_ID = 'game_player.game_id';
 
-    /** the column name for the idPlayer field */
-    const IDPLAYER = 'Score_Tournament.idPlayer';
+    /** the column name for the player_id field */
+    const PLAYER_ID = 'game_player.player_id';
 
-    /** the column name for the score field */
-    const SCORE = 'Score_Tournament.score';
+    /** the column name for the bonus_id field */
+    const BONUS_ID = 'game_player.bonus_id';
+
+    /** the column name for the type field */
+    const TYPE = 'game_player.type';
 
     /** The default string format for model objects of the related table **/
     const DEFAULT_STRING_FORMAT = 'YAML';
 
     /**
-     * An identiy map to hold any loaded instances of ScoreTournament objects.
+     * An identiy map to hold any loaded instances of GamePlayer objects.
      * This must be public so that other peer classes can access this when hydrating from JOIN
      * queries.
-     * @var        array ScoreTournament[]
+     * @var        array GamePlayer[]
      */
     public static $instances = array();
 
@@ -57,30 +60,30 @@ abstract class BaseScoreTournamentPeer
      * holds an array of fieldnames
      *
      * first dimension keys are the type constants
-     * e.g. ScoreTournamentPeer::$fieldNames[ScoreTournamentPeer::TYPE_PHPNAME][0] = 'Id'
+     * e.g. GamePlayerPeer::$fieldNames[GamePlayerPeer::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        BasePeer::TYPE_PHPNAME => array ('Idtournament', 'Idplayer', 'Score', ),
-        BasePeer::TYPE_STUDLYPHPNAME => array ('idtournament', 'idplayer', 'score', ),
-        BasePeer::TYPE_COLNAME => array (ScoreTournamentPeer::IDTOURNAMENT, ScoreTournamentPeer::IDPLAYER, ScoreTournamentPeer::SCORE, ),
-        BasePeer::TYPE_RAW_COLNAME => array ('IDTOURNAMENT', 'IDPLAYER', 'SCORE', ),
-        BasePeer::TYPE_FIELDNAME => array ('idTournament', 'idPlayer', 'score', ),
-        BasePeer::TYPE_NUM => array (0, 1, 2, )
+        BasePeer::TYPE_PHPNAME => array ('GameId', 'PlayerId', 'BonusId', 'Type', ),
+        BasePeer::TYPE_STUDLYPHPNAME => array ('gameId', 'playerId', 'bonusId', 'type', ),
+        BasePeer::TYPE_COLNAME => array (GamePlayerPeer::GAME_ID, GamePlayerPeer::PLAYER_ID, GamePlayerPeer::BONUS_ID, GamePlayerPeer::TYPE, ),
+        BasePeer::TYPE_RAW_COLNAME => array ('GAME_ID', 'PLAYER_ID', 'BONUS_ID', 'TYPE', ),
+        BasePeer::TYPE_FIELDNAME => array ('game_id', 'player_id', 'bonus_id', 'type', ),
+        BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
     );
 
     /**
      * holds an array of keys for quick access to the fieldnames array
      *
      * first dimension keys are the type constants
-     * e.g. ScoreTournamentPeer::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
+     * e.g. GamePlayerPeer::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        BasePeer::TYPE_PHPNAME => array ('Idtournament' => 0, 'Idplayer' => 1, 'Score' => 2, ),
-        BasePeer::TYPE_STUDLYPHPNAME => array ('idtournament' => 0, 'idplayer' => 1, 'score' => 2, ),
-        BasePeer::TYPE_COLNAME => array (ScoreTournamentPeer::IDTOURNAMENT => 0, ScoreTournamentPeer::IDPLAYER => 1, ScoreTournamentPeer::SCORE => 2, ),
-        BasePeer::TYPE_RAW_COLNAME => array ('IDTOURNAMENT' => 0, 'IDPLAYER' => 1, 'SCORE' => 2, ),
-        BasePeer::TYPE_FIELDNAME => array ('idTournament' => 0, 'idPlayer' => 1, 'score' => 2, ),
-        BasePeer::TYPE_NUM => array (0, 1, 2, )
+        BasePeer::TYPE_PHPNAME => array ('GameId' => 0, 'PlayerId' => 1, 'BonusId' => 2, 'Type' => 3, ),
+        BasePeer::TYPE_STUDLYPHPNAME => array ('gameId' => 0, 'playerId' => 1, 'bonusId' => 2, 'type' => 3, ),
+        BasePeer::TYPE_COLNAME => array (GamePlayerPeer::GAME_ID => 0, GamePlayerPeer::PLAYER_ID => 1, GamePlayerPeer::BONUS_ID => 2, GamePlayerPeer::TYPE => 3, ),
+        BasePeer::TYPE_RAW_COLNAME => array ('GAME_ID' => 0, 'PLAYER_ID' => 1, 'BONUS_ID' => 2, 'TYPE' => 3, ),
+        BasePeer::TYPE_FIELDNAME => array ('game_id' => 0, 'player_id' => 1, 'bonus_id' => 2, 'type' => 3, ),
+        BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
     );
 
     /**
@@ -95,10 +98,10 @@ abstract class BaseScoreTournamentPeer
      */
     public static function translateFieldName($name, $fromType, $toType)
     {
-        $toNames = ScoreTournamentPeer::getFieldNames($toType);
-        $key = isset(ScoreTournamentPeer::$fieldKeys[$fromType][$name]) ? ScoreTournamentPeer::$fieldKeys[$fromType][$name] : null;
+        $toNames = GamePlayerPeer::getFieldNames($toType);
+        $key = isset(GamePlayerPeer::$fieldKeys[$fromType][$name]) ? GamePlayerPeer::$fieldKeys[$fromType][$name] : null;
         if ($key === null) {
-            throw new PropelException("'$name' could not be found in the field names of type '$fromType'. These are: " . print_r(ScoreTournamentPeer::$fieldKeys[$fromType], true));
+            throw new PropelException("'$name' could not be found in the field names of type '$fromType'. These are: " . print_r(GamePlayerPeer::$fieldKeys[$fromType], true));
         }
 
         return $toNames[$key];
@@ -115,11 +118,11 @@ abstract class BaseScoreTournamentPeer
      */
     public static function getFieldNames($type = BasePeer::TYPE_PHPNAME)
     {
-        if (!array_key_exists($type, ScoreTournamentPeer::$fieldNames)) {
+        if (!array_key_exists($type, GamePlayerPeer::$fieldNames)) {
             throw new PropelException('Method getFieldNames() expects the parameter $type to be one of the class constants BasePeer::TYPE_PHPNAME, BasePeer::TYPE_STUDLYPHPNAME, BasePeer::TYPE_COLNAME, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_NUM. ' . $type . ' was given.');
         }
 
-        return ScoreTournamentPeer::$fieldNames[$type];
+        return GamePlayerPeer::$fieldNames[$type];
     }
 
     /**
@@ -131,12 +134,12 @@ abstract class BaseScoreTournamentPeer
      *		$c->addJoin(TablePeer::alias("alias1", TablePeer::PRIMARY_KEY_COLUMN), TablePeer::PRIMARY_KEY_COLUMN);
      * </code>
      * @param      string $alias The alias for the current table.
-     * @param      string $column The column name for current table. (i.e. ScoreTournamentPeer::COLUMN_NAME).
+     * @param      string $column The column name for current table. (i.e. GamePlayerPeer::COLUMN_NAME).
      * @return string
      */
     public static function alias($alias, $column)
     {
-        return str_replace(ScoreTournamentPeer::TABLE_NAME.'.', $alias.'.', $column);
+        return str_replace(GamePlayerPeer::TABLE_NAME.'.', $alias.'.', $column);
     }
 
     /**
@@ -154,13 +157,15 @@ abstract class BaseScoreTournamentPeer
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(ScoreTournamentPeer::IDTOURNAMENT);
-            $criteria->addSelectColumn(ScoreTournamentPeer::IDPLAYER);
-            $criteria->addSelectColumn(ScoreTournamentPeer::SCORE);
+            $criteria->addSelectColumn(GamePlayerPeer::GAME_ID);
+            $criteria->addSelectColumn(GamePlayerPeer::PLAYER_ID);
+            $criteria->addSelectColumn(GamePlayerPeer::BONUS_ID);
+            $criteria->addSelectColumn(GamePlayerPeer::TYPE);
         } else {
-            $criteria->addSelectColumn($alias . '.idTournament');
-            $criteria->addSelectColumn($alias . '.idPlayer');
-            $criteria->addSelectColumn($alias . '.score');
+            $criteria->addSelectColumn($alias . '.game_id');
+            $criteria->addSelectColumn($alias . '.player_id');
+            $criteria->addSelectColumn($alias . '.bonus_id');
+            $criteria->addSelectColumn($alias . '.type');
         }
     }
 
@@ -180,21 +185,21 @@ abstract class BaseScoreTournamentPeer
         // We need to set the primary table name, since in the case that there are no WHERE columns
         // it will be impossible for the BasePeer::createSelectSql() method to determine which
         // tables go into the FROM clause.
-        $criteria->setPrimaryTableName(ScoreTournamentPeer::TABLE_NAME);
+        $criteria->setPrimaryTableName(GamePlayerPeer::TABLE_NAME);
 
         if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
             $criteria->setDistinct();
         }
 
         if (!$criteria->hasSelectClause()) {
-            ScoreTournamentPeer::addSelectColumns($criteria);
+            GamePlayerPeer::addSelectColumns($criteria);
         }
 
         $criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
-        $criteria->setDbName(ScoreTournamentPeer::DATABASE_NAME); // Set the correct dbName
+        $criteria->setDbName(GamePlayerPeer::DATABASE_NAME); // Set the correct dbName
 
         if ($con === null) {
-            $con = Propel::getConnection(ScoreTournamentPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+            $con = Propel::getConnection(GamePlayerPeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
         // BasePeer returns a PDOStatement
         $stmt = BasePeer::doCount($criteria, $con);
@@ -213,7 +218,7 @@ abstract class BaseScoreTournamentPeer
      *
      * @param      Criteria $criteria object used to create the SELECT statement.
      * @param      PropelPDO $con
-     * @return                 ScoreTournament
+     * @return                 GamePlayer
      * @throws PropelException Any exceptions caught during processing will be
      *		 rethrown wrapped into a PropelException.
      */
@@ -221,7 +226,7 @@ abstract class BaseScoreTournamentPeer
     {
         $critcopy = clone $criteria;
         $critcopy->setLimit(1);
-        $objects = ScoreTournamentPeer::doSelect($critcopy, $con);
+        $objects = GamePlayerPeer::doSelect($critcopy, $con);
         if ($objects) {
             return $objects[0];
         }
@@ -239,7 +244,7 @@ abstract class BaseScoreTournamentPeer
      */
     public static function doSelect(Criteria $criteria, PropelPDO $con = null)
     {
-        return ScoreTournamentPeer::populateObjects(ScoreTournamentPeer::doSelectStmt($criteria, $con));
+        return GamePlayerPeer::populateObjects(GamePlayerPeer::doSelectStmt($criteria, $con));
     }
     /**
      * Prepares the Criteria object and uses the parent doSelect() method to execute a PDOStatement.
@@ -257,16 +262,16 @@ abstract class BaseScoreTournamentPeer
     public static function doSelectStmt(Criteria $criteria, PropelPDO $con = null)
     {
         if ($con === null) {
-            $con = Propel::getConnection(ScoreTournamentPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+            $con = Propel::getConnection(GamePlayerPeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
 
         if (!$criteria->hasSelectClause()) {
             $criteria = clone $criteria;
-            ScoreTournamentPeer::addSelectColumns($criteria);
+            GamePlayerPeer::addSelectColumns($criteria);
         }
 
         // Set the correct dbName
-        $criteria->setDbName(ScoreTournamentPeer::DATABASE_NAME);
+        $criteria->setDbName(GamePlayerPeer::DATABASE_NAME);
 
         // BasePeer returns a PDOStatement
         return BasePeer::doSelect($criteria, $con);
@@ -280,16 +285,16 @@ abstract class BaseScoreTournamentPeer
      * to the cache in order to ensure that the same objects are always returned by doSelect*()
      * and retrieveByPK*() calls.
      *
-     * @param      ScoreTournament $obj A ScoreTournament object.
+     * @param      GamePlayer $obj A GamePlayer object.
      * @param      string $key (optional) key to use for instance map (for performance boost if key was already calculated externally).
      */
     public static function addInstanceToPool($obj, $key = null)
     {
         if (Propel::isInstancePoolingEnabled()) {
             if ($key === null) {
-                $key = serialize(array((string) $obj->getIdtournament(), (string) $obj->getIdplayer()));
+                $key = serialize(array((string) $obj->getGameId(), (string) $obj->getPlayerId(), (string) $obj->getBonusId()));
             } // if key === null
-            ScoreTournamentPeer::$instances[$key] = $obj;
+            GamePlayerPeer::$instances[$key] = $obj;
         }
     }
 
@@ -301,7 +306,7 @@ abstract class BaseScoreTournamentPeer
      * methods in your stub classes -- you may need to explicitly remove objects
      * from the cache in order to prevent returning objects that no longer exist.
      *
-     * @param      mixed $value A ScoreTournament object or a primary key value.
+     * @param      mixed $value A GamePlayer object or a primary key value.
      *
      * @return void
      * @throws PropelException - if the value is invalid.
@@ -309,17 +314,17 @@ abstract class BaseScoreTournamentPeer
     public static function removeInstanceFromPool($value)
     {
         if (Propel::isInstancePoolingEnabled() && $value !== null) {
-            if (is_object($value) && $value instanceof ScoreTournament) {
-                $key = serialize(array((string) $value->getIdtournament(), (string) $value->getIdplayer()));
-            } elseif (is_array($value) && count($value) === 2) {
+            if (is_object($value) && $value instanceof GamePlayer) {
+                $key = serialize(array((string) $value->getGameId(), (string) $value->getPlayerId(), (string) $value->getBonusId()));
+            } elseif (is_array($value) && count($value) === 3) {
                 // assume we've been passed a primary key
-                $key = serialize(array((string) $value[0], (string) $value[1]));
+                $key = serialize(array((string) $value[0], (string) $value[1], (string) $value[2]));
             } else {
-                $e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or ScoreTournament object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value,true)));
+                $e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or GamePlayer object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value,true)));
                 throw $e;
             }
 
-            unset(ScoreTournamentPeer::$instances[$key]);
+            unset(GamePlayerPeer::$instances[$key]);
         }
     } // removeInstanceFromPool()
 
@@ -330,14 +335,14 @@ abstract class BaseScoreTournamentPeer
      * a multi-column primary key, a serialize()d version of the primary key will be returned.
      *
      * @param      string $key The key (@see getPrimaryKeyHash()) for this instance.
-     * @return   ScoreTournament Found object or null if 1) no instance exists for specified key or 2) instance pooling has been disabled.
+     * @return   GamePlayer Found object or null if 1) no instance exists for specified key or 2) instance pooling has been disabled.
      * @see        getPrimaryKeyHash()
      */
     public static function getInstanceFromPool($key)
     {
         if (Propel::isInstancePoolingEnabled()) {
-            if (isset(ScoreTournamentPeer::$instances[$key])) {
-                return ScoreTournamentPeer::$instances[$key];
+            if (isset(GamePlayerPeer::$instances[$key])) {
+                return GamePlayerPeer::$instances[$key];
             }
         }
 
@@ -353,16 +358,16 @@ abstract class BaseScoreTournamentPeer
     {
       if ($and_clear_all_references)
       {
-        foreach (ScoreTournamentPeer::$instances as $instance)
+        foreach (GamePlayerPeer::$instances as $instance)
         {
           $instance->clearAllReferences(true);
         }
       }
-        ScoreTournamentPeer::$instances = array();
+        GamePlayerPeer::$instances = array();
     }
 
     /**
-     * Method to invalidate the instance pool of all tables related to Score_Tournament
+     * Method to invalidate the instance pool of all tables related to game_player
      * by a foreign key with ON DELETE CASCADE
      */
     public static function clearRelatedInstancePool()
@@ -382,11 +387,11 @@ abstract class BaseScoreTournamentPeer
     public static function getPrimaryKeyHashFromRow($row, $startcol = 0)
     {
         // If the PK cannot be derived from the row, return null.
-        if ($row[$startcol] === null && $row[$startcol + 1] === null) {
+        if ($row[$startcol] === null && $row[$startcol + 1] === null && $row[$startcol + 2] === null) {
             return null;
         }
 
-        return serialize(array((string) $row[$startcol], (string) $row[$startcol + 1]));
+        return serialize(array((string) $row[$startcol], (string) $row[$startcol + 1], (string) $row[$startcol + 2]));
     }
 
     /**
@@ -401,7 +406,7 @@ abstract class BaseScoreTournamentPeer
     public static function getPrimaryKeyFromRow($row, $startcol = 0)
     {
 
-        return array((int) $row[$startcol], (int) $row[$startcol + 1]);
+        return array((int) $row[$startcol], (int) $row[$startcol + 1], (int) $row[$startcol + 2]);
     }
 
     /**
@@ -416,11 +421,11 @@ abstract class BaseScoreTournamentPeer
         $results = array();
 
         // set the class once to avoid overhead in the loop
-        $cls = ScoreTournamentPeer::getOMClass();
+        $cls = GamePlayerPeer::getOMClass();
         // populate the object(s)
         while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-            $key = ScoreTournamentPeer::getPrimaryKeyHashFromRow($row, 0);
-            if (null !== ($obj = ScoreTournamentPeer::getInstanceFromPool($key))) {
+            $key = GamePlayerPeer::getPrimaryKeyHashFromRow($row, 0);
+            if (null !== ($obj = GamePlayerPeer::getInstanceFromPool($key))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj->hydrate($row, 0, true); // rehydrate
@@ -429,7 +434,7 @@ abstract class BaseScoreTournamentPeer
                 $obj = new $cls();
                 $obj->hydrate($row);
                 $results[] = $obj;
-                ScoreTournamentPeer::addInstanceToPool($obj, $key);
+                GamePlayerPeer::addInstanceToPool($obj, $key);
             } // if key exists
         }
         $stmt->closeCursor();
@@ -443,21 +448,21 @@ abstract class BaseScoreTournamentPeer
      * @param      int $startcol The 0-based offset for reading from the resultset row.
      * @throws PropelException Any exceptions caught during processing will be
      *		 rethrown wrapped into a PropelException.
-     * @return array (ScoreTournament object, last column rank)
+     * @return array (GamePlayer object, last column rank)
      */
     public static function populateObject($row, $startcol = 0)
     {
-        $key = ScoreTournamentPeer::getPrimaryKeyHashFromRow($row, $startcol);
-        if (null !== ($obj = ScoreTournamentPeer::getInstanceFromPool($key))) {
+        $key = GamePlayerPeer::getPrimaryKeyHashFromRow($row, $startcol);
+        if (null !== ($obj = GamePlayerPeer::getInstanceFromPool($key))) {
             // We no longer rehydrate the object, since this can cause data loss.
             // See http://www.propelorm.org/ticket/509
             // $obj->hydrate($row, $startcol, true); // rehydrate
-            $col = $startcol + ScoreTournamentPeer::NUM_HYDRATE_COLUMNS;
+            $col = $startcol + GamePlayerPeer::NUM_HYDRATE_COLUMNS;
         } else {
-            $cls = ScoreTournamentPeer::OM_CLASS;
+            $cls = GamePlayerPeer::OM_CLASS;
             $obj = new $cls();
             $col = $obj->hydrate($row, $startcol);
-            ScoreTournamentPeer::addInstanceToPool($obj, $key);
+            GamePlayerPeer::addInstanceToPool($obj, $key);
         }
 
         return array($obj, $col);
@@ -465,7 +470,7 @@ abstract class BaseScoreTournamentPeer
 
 
     /**
-     * Returns the number of rows matching criteria, joining the related Tournament table
+     * Returns the number of rows matching criteria, joining the related Bonus table
      *
      * @param      Criteria $criteria
      * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
@@ -473,7 +478,7 @@ abstract class BaseScoreTournamentPeer
      * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
      * @return int Number of matching rows.
      */
-    public static function doCountJoinTournament(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    public static function doCountJoinBonus(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
     {
         // we're going to modify criteria, so copy it first
         $criteria = clone $criteria;
@@ -481,26 +486,26 @@ abstract class BaseScoreTournamentPeer
         // We need to set the primary table name, since in the case that there are no WHERE columns
         // it will be impossible for the BasePeer::createSelectSql() method to determine which
         // tables go into the FROM clause.
-        $criteria->setPrimaryTableName(ScoreTournamentPeer::TABLE_NAME);
+        $criteria->setPrimaryTableName(GamePlayerPeer::TABLE_NAME);
 
         if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
             $criteria->setDistinct();
         }
 
         if (!$criteria->hasSelectClause()) {
-            ScoreTournamentPeer::addSelectColumns($criteria);
+            GamePlayerPeer::addSelectColumns($criteria);
         }
 
         $criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
 
         // Set the correct dbName
-        $criteria->setDbName(ScoreTournamentPeer::DATABASE_NAME);
+        $criteria->setDbName(GamePlayerPeer::DATABASE_NAME);
 
         if ($con === null) {
-            $con = Propel::getConnection(ScoreTournamentPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+            $con = Propel::getConnection(GamePlayerPeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
 
-        $criteria->addJoin(ScoreTournamentPeer::IDTOURNAMENT, TournamentPeer::ID, $join_behavior);
+        $criteria->addJoin(GamePlayerPeer::BONUS_ID, BonusPeer::ID, $join_behavior);
 
         $stmt = BasePeer::doCount($criteria, $con);
 
@@ -532,26 +537,26 @@ abstract class BaseScoreTournamentPeer
         // We need to set the primary table name, since in the case that there are no WHERE columns
         // it will be impossible for the BasePeer::createSelectSql() method to determine which
         // tables go into the FROM clause.
-        $criteria->setPrimaryTableName(ScoreTournamentPeer::TABLE_NAME);
+        $criteria->setPrimaryTableName(GamePlayerPeer::TABLE_NAME);
 
         if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
             $criteria->setDistinct();
         }
 
         if (!$criteria->hasSelectClause()) {
-            ScoreTournamentPeer::addSelectColumns($criteria);
+            GamePlayerPeer::addSelectColumns($criteria);
         }
 
         $criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
 
         // Set the correct dbName
-        $criteria->setDbName(ScoreTournamentPeer::DATABASE_NAME);
+        $criteria->setDbName(GamePlayerPeer::DATABASE_NAME);
 
         if ($con === null) {
-            $con = Propel::getConnection(ScoreTournamentPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+            $con = Propel::getConnection(GamePlayerPeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
 
-        $criteria->addJoin(ScoreTournamentPeer::IDPLAYER, PlayerPeer::ID, $join_behavior);
+        $criteria->addJoin(GamePlayerPeer::PLAYER_ID, PlayerPeer::ID, $join_behavior);
 
         $stmt = BasePeer::doCount($criteria, $con);
 
@@ -567,61 +572,112 @@ abstract class BaseScoreTournamentPeer
 
 
     /**
-     * Selects a collection of ScoreTournament objects pre-filled with their Tournament objects.
+     * Returns the number of rows matching criteria, joining the related Game table
+     *
+     * @param      Criteria $criteria
+     * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
+     * @param      PropelPDO $con
+     * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+     * @return int Number of matching rows.
+     */
+    public static function doCountJoinGame(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    {
+        // we're going to modify criteria, so copy it first
+        $criteria = clone $criteria;
+
+        // We need to set the primary table name, since in the case that there are no WHERE columns
+        // it will be impossible for the BasePeer::createSelectSql() method to determine which
+        // tables go into the FROM clause.
+        $criteria->setPrimaryTableName(GamePlayerPeer::TABLE_NAME);
+
+        if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+            $criteria->setDistinct();
+        }
+
+        if (!$criteria->hasSelectClause()) {
+            GamePlayerPeer::addSelectColumns($criteria);
+        }
+
+        $criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
+
+        // Set the correct dbName
+        $criteria->setDbName(GamePlayerPeer::DATABASE_NAME);
+
+        if ($con === null) {
+            $con = Propel::getConnection(GamePlayerPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+        }
+
+        $criteria->addJoin(GamePlayerPeer::GAME_ID, GamePeer::ID, $join_behavior);
+
+        $stmt = BasePeer::doCount($criteria, $con);
+
+        if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+            $count = (int) $row[0];
+        } else {
+            $count = 0; // no rows returned; we infer that means 0 matches.
+        }
+        $stmt->closeCursor();
+
+        return $count;
+    }
+
+
+    /**
+     * Selects a collection of GamePlayer objects pre-filled with their Bonus objects.
      * @param      Criteria  $criteria
      * @param      PropelPDO $con
      * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-     * @return array           Array of ScoreTournament objects.
+     * @return array           Array of GamePlayer objects.
      * @throws PropelException Any exceptions caught during processing will be
      *		 rethrown wrapped into a PropelException.
      */
-    public static function doSelectJoinTournament(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    public static function doSelectJoinBonus(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
     {
         $criteria = clone $criteria;
 
         // Set the correct dbName if it has not been overridden
         if ($criteria->getDbName() == Propel::getDefaultDB()) {
-            $criteria->setDbName(ScoreTournamentPeer::DATABASE_NAME);
+            $criteria->setDbName(GamePlayerPeer::DATABASE_NAME);
         }
 
-        ScoreTournamentPeer::addSelectColumns($criteria);
-        $startcol = ScoreTournamentPeer::NUM_HYDRATE_COLUMNS;
-        TournamentPeer::addSelectColumns($criteria);
+        GamePlayerPeer::addSelectColumns($criteria);
+        $startcol = GamePlayerPeer::NUM_HYDRATE_COLUMNS;
+        BonusPeer::addSelectColumns($criteria);
 
-        $criteria->addJoin(ScoreTournamentPeer::IDTOURNAMENT, TournamentPeer::ID, $join_behavior);
+        $criteria->addJoin(GamePlayerPeer::BONUS_ID, BonusPeer::ID, $join_behavior);
 
         $stmt = BasePeer::doSelect($criteria, $con);
         $results = array();
 
         while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-            $key1 = ScoreTournamentPeer::getPrimaryKeyHashFromRow($row, 0);
-            if (null !== ($obj1 = ScoreTournamentPeer::getInstanceFromPool($key1))) {
+            $key1 = GamePlayerPeer::getPrimaryKeyHashFromRow($row, 0);
+            if (null !== ($obj1 = GamePlayerPeer::getInstanceFromPool($key1))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj1->hydrate($row, 0, true); // rehydrate
             } else {
 
-                $cls = ScoreTournamentPeer::getOMClass();
+                $cls = GamePlayerPeer::getOMClass();
 
                 $obj1 = new $cls();
                 $obj1->hydrate($row);
-                ScoreTournamentPeer::addInstanceToPool($obj1, $key1);
+                GamePlayerPeer::addInstanceToPool($obj1, $key1);
             } // if $obj1 already loaded
 
-            $key2 = TournamentPeer::getPrimaryKeyHashFromRow($row, $startcol);
+            $key2 = BonusPeer::getPrimaryKeyHashFromRow($row, $startcol);
             if ($key2 !== null) {
-                $obj2 = TournamentPeer::getInstanceFromPool($key2);
+                $obj2 = BonusPeer::getInstanceFromPool($key2);
                 if (!$obj2) {
 
-                    $cls = TournamentPeer::getOMClass();
+                    $cls = BonusPeer::getOMClass();
 
                     $obj2 = new $cls();
                     $obj2->hydrate($row, $startcol);
-                    TournamentPeer::addInstanceToPool($obj2, $key2);
+                    BonusPeer::addInstanceToPool($obj2, $key2);
                 } // if obj2 already loaded
 
-                // Add the $obj1 (ScoreTournament) to $obj2 (Tournament)
-                $obj2->addScoreTournament($obj1);
+                // Add the $obj1 (GamePlayer) to $obj2 (Bonus)
+                $obj2->addGamePlayer($obj1);
 
             } // if joined row was not null
 
@@ -634,11 +690,11 @@ abstract class BaseScoreTournamentPeer
 
 
     /**
-     * Selects a collection of ScoreTournament objects pre-filled with their Player objects.
+     * Selects a collection of GamePlayer objects pre-filled with their Player objects.
      * @param      Criteria  $criteria
      * @param      PropelPDO $con
      * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-     * @return array           Array of ScoreTournament objects.
+     * @return array           Array of GamePlayer objects.
      * @throws PropelException Any exceptions caught during processing will be
      *		 rethrown wrapped into a PropelException.
      */
@@ -648,31 +704,31 @@ abstract class BaseScoreTournamentPeer
 
         // Set the correct dbName if it has not been overridden
         if ($criteria->getDbName() == Propel::getDefaultDB()) {
-            $criteria->setDbName(ScoreTournamentPeer::DATABASE_NAME);
+            $criteria->setDbName(GamePlayerPeer::DATABASE_NAME);
         }
 
-        ScoreTournamentPeer::addSelectColumns($criteria);
-        $startcol = ScoreTournamentPeer::NUM_HYDRATE_COLUMNS;
+        GamePlayerPeer::addSelectColumns($criteria);
+        $startcol = GamePlayerPeer::NUM_HYDRATE_COLUMNS;
         PlayerPeer::addSelectColumns($criteria);
 
-        $criteria->addJoin(ScoreTournamentPeer::IDPLAYER, PlayerPeer::ID, $join_behavior);
+        $criteria->addJoin(GamePlayerPeer::PLAYER_ID, PlayerPeer::ID, $join_behavior);
 
         $stmt = BasePeer::doSelect($criteria, $con);
         $results = array();
 
         while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-            $key1 = ScoreTournamentPeer::getPrimaryKeyHashFromRow($row, 0);
-            if (null !== ($obj1 = ScoreTournamentPeer::getInstanceFromPool($key1))) {
+            $key1 = GamePlayerPeer::getPrimaryKeyHashFromRow($row, 0);
+            if (null !== ($obj1 = GamePlayerPeer::getInstanceFromPool($key1))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj1->hydrate($row, 0, true); // rehydrate
             } else {
 
-                $cls = ScoreTournamentPeer::getOMClass();
+                $cls = GamePlayerPeer::getOMClass();
 
                 $obj1 = new $cls();
                 $obj1->hydrate($row);
-                ScoreTournamentPeer::addInstanceToPool($obj1, $key1);
+                GamePlayerPeer::addInstanceToPool($obj1, $key1);
             } // if $obj1 already loaded
 
             $key2 = PlayerPeer::getPrimaryKeyHashFromRow($row, $startcol);
@@ -687,8 +743,75 @@ abstract class BaseScoreTournamentPeer
                     PlayerPeer::addInstanceToPool($obj2, $key2);
                 } // if obj2 already loaded
 
-                // Add the $obj1 (ScoreTournament) to $obj2 (Player)
-                $obj2->addScoreTournament($obj1);
+                // Add the $obj1 (GamePlayer) to $obj2 (Player)
+                $obj2->addGamePlayer($obj1);
+
+            } // if joined row was not null
+
+            $results[] = $obj1;
+        }
+        $stmt->closeCursor();
+
+        return $results;
+    }
+
+
+    /**
+     * Selects a collection of GamePlayer objects pre-filled with their Game objects.
+     * @param      Criteria  $criteria
+     * @param      PropelPDO $con
+     * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+     * @return array           Array of GamePlayer objects.
+     * @throws PropelException Any exceptions caught during processing will be
+     *		 rethrown wrapped into a PropelException.
+     */
+    public static function doSelectJoinGame(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    {
+        $criteria = clone $criteria;
+
+        // Set the correct dbName if it has not been overridden
+        if ($criteria->getDbName() == Propel::getDefaultDB()) {
+            $criteria->setDbName(GamePlayerPeer::DATABASE_NAME);
+        }
+
+        GamePlayerPeer::addSelectColumns($criteria);
+        $startcol = GamePlayerPeer::NUM_HYDRATE_COLUMNS;
+        GamePeer::addSelectColumns($criteria);
+
+        $criteria->addJoin(GamePlayerPeer::GAME_ID, GamePeer::ID, $join_behavior);
+
+        $stmt = BasePeer::doSelect($criteria, $con);
+        $results = array();
+
+        while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+            $key1 = GamePlayerPeer::getPrimaryKeyHashFromRow($row, 0);
+            if (null !== ($obj1 = GamePlayerPeer::getInstanceFromPool($key1))) {
+                // We no longer rehydrate the object, since this can cause data loss.
+                // See http://www.propelorm.org/ticket/509
+                // $obj1->hydrate($row, 0, true); // rehydrate
+            } else {
+
+                $cls = GamePlayerPeer::getOMClass();
+
+                $obj1 = new $cls();
+                $obj1->hydrate($row);
+                GamePlayerPeer::addInstanceToPool($obj1, $key1);
+            } // if $obj1 already loaded
+
+            $key2 = GamePeer::getPrimaryKeyHashFromRow($row, $startcol);
+            if ($key2 !== null) {
+                $obj2 = GamePeer::getInstanceFromPool($key2);
+                if (!$obj2) {
+
+                    $cls = GamePeer::getOMClass();
+
+                    $obj2 = new $cls();
+                    $obj2->hydrate($row, $startcol);
+                    GamePeer::addInstanceToPool($obj2, $key2);
+                } // if obj2 already loaded
+
+                // Add the $obj1 (GamePlayer) to $obj2 (Game)
+                $obj2->addGamePlayer($obj1);
 
             } // if joined row was not null
 
@@ -717,28 +840,30 @@ abstract class BaseScoreTournamentPeer
         // We need to set the primary table name, since in the case that there are no WHERE columns
         // it will be impossible for the BasePeer::createSelectSql() method to determine which
         // tables go into the FROM clause.
-        $criteria->setPrimaryTableName(ScoreTournamentPeer::TABLE_NAME);
+        $criteria->setPrimaryTableName(GamePlayerPeer::TABLE_NAME);
 
         if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
             $criteria->setDistinct();
         }
 
         if (!$criteria->hasSelectClause()) {
-            ScoreTournamentPeer::addSelectColumns($criteria);
+            GamePlayerPeer::addSelectColumns($criteria);
         }
 
         $criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
 
         // Set the correct dbName
-        $criteria->setDbName(ScoreTournamentPeer::DATABASE_NAME);
+        $criteria->setDbName(GamePlayerPeer::DATABASE_NAME);
 
         if ($con === null) {
-            $con = Propel::getConnection(ScoreTournamentPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+            $con = Propel::getConnection(GamePlayerPeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
 
-        $criteria->addJoin(ScoreTournamentPeer::IDTOURNAMENT, TournamentPeer::ID, $join_behavior);
+        $criteria->addJoin(GamePlayerPeer::BONUS_ID, BonusPeer::ID, $join_behavior);
 
-        $criteria->addJoin(ScoreTournamentPeer::IDPLAYER, PlayerPeer::ID, $join_behavior);
+        $criteria->addJoin(GamePlayerPeer::PLAYER_ID, PlayerPeer::ID, $join_behavior);
+
+        $criteria->addJoin(GamePlayerPeer::GAME_ID, GamePeer::ID, $join_behavior);
 
         $stmt = BasePeer::doCount($criteria, $con);
 
@@ -753,12 +878,12 @@ abstract class BaseScoreTournamentPeer
     }
 
     /**
-     * Selects a collection of ScoreTournament objects pre-filled with all related objects.
+     * Selects a collection of GamePlayer objects pre-filled with all related objects.
      *
      * @param      Criteria  $criteria
      * @param      PropelPDO $con
      * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-     * @return array           Array of ScoreTournament objects.
+     * @return array           Array of GamePlayer objects.
      * @throws PropelException Any exceptions caught during processing will be
      *		 rethrown wrapped into a PropelException.
      */
@@ -768,55 +893,60 @@ abstract class BaseScoreTournamentPeer
 
         // Set the correct dbName if it has not been overridden
         if ($criteria->getDbName() == Propel::getDefaultDB()) {
-            $criteria->setDbName(ScoreTournamentPeer::DATABASE_NAME);
+            $criteria->setDbName(GamePlayerPeer::DATABASE_NAME);
         }
 
-        ScoreTournamentPeer::addSelectColumns($criteria);
-        $startcol2 = ScoreTournamentPeer::NUM_HYDRATE_COLUMNS;
+        GamePlayerPeer::addSelectColumns($criteria);
+        $startcol2 = GamePlayerPeer::NUM_HYDRATE_COLUMNS;
 
-        TournamentPeer::addSelectColumns($criteria);
-        $startcol3 = $startcol2 + TournamentPeer::NUM_HYDRATE_COLUMNS;
+        BonusPeer::addSelectColumns($criteria);
+        $startcol3 = $startcol2 + BonusPeer::NUM_HYDRATE_COLUMNS;
 
         PlayerPeer::addSelectColumns($criteria);
         $startcol4 = $startcol3 + PlayerPeer::NUM_HYDRATE_COLUMNS;
 
-        $criteria->addJoin(ScoreTournamentPeer::IDTOURNAMENT, TournamentPeer::ID, $join_behavior);
+        GamePeer::addSelectColumns($criteria);
+        $startcol5 = $startcol4 + GamePeer::NUM_HYDRATE_COLUMNS;
 
-        $criteria->addJoin(ScoreTournamentPeer::IDPLAYER, PlayerPeer::ID, $join_behavior);
+        $criteria->addJoin(GamePlayerPeer::BONUS_ID, BonusPeer::ID, $join_behavior);
+
+        $criteria->addJoin(GamePlayerPeer::PLAYER_ID, PlayerPeer::ID, $join_behavior);
+
+        $criteria->addJoin(GamePlayerPeer::GAME_ID, GamePeer::ID, $join_behavior);
 
         $stmt = BasePeer::doSelect($criteria, $con);
         $results = array();
 
         while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-            $key1 = ScoreTournamentPeer::getPrimaryKeyHashFromRow($row, 0);
-            if (null !== ($obj1 = ScoreTournamentPeer::getInstanceFromPool($key1))) {
+            $key1 = GamePlayerPeer::getPrimaryKeyHashFromRow($row, 0);
+            if (null !== ($obj1 = GamePlayerPeer::getInstanceFromPool($key1))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj1->hydrate($row, 0, true); // rehydrate
             } else {
-                $cls = ScoreTournamentPeer::getOMClass();
+                $cls = GamePlayerPeer::getOMClass();
 
                 $obj1 = new $cls();
                 $obj1->hydrate($row);
-                ScoreTournamentPeer::addInstanceToPool($obj1, $key1);
+                GamePlayerPeer::addInstanceToPool($obj1, $key1);
             } // if obj1 already loaded
 
-            // Add objects for joined Tournament rows
+            // Add objects for joined Bonus rows
 
-            $key2 = TournamentPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+            $key2 = BonusPeer::getPrimaryKeyHashFromRow($row, $startcol2);
             if ($key2 !== null) {
-                $obj2 = TournamentPeer::getInstanceFromPool($key2);
+                $obj2 = BonusPeer::getInstanceFromPool($key2);
                 if (!$obj2) {
 
-                    $cls = TournamentPeer::getOMClass();
+                    $cls = BonusPeer::getOMClass();
 
                     $obj2 = new $cls();
                     $obj2->hydrate($row, $startcol2);
-                    TournamentPeer::addInstanceToPool($obj2, $key2);
+                    BonusPeer::addInstanceToPool($obj2, $key2);
                 } // if obj2 loaded
 
-                // Add the $obj1 (ScoreTournament) to the collection in $obj2 (Tournament)
-                $obj2->addScoreTournament($obj1);
+                // Add the $obj1 (GamePlayer) to the collection in $obj2 (Bonus)
+                $obj2->addGamePlayer($obj1);
             } // if joined row not null
 
             // Add objects for joined Player rows
@@ -833,8 +963,26 @@ abstract class BaseScoreTournamentPeer
                     PlayerPeer::addInstanceToPool($obj3, $key3);
                 } // if obj3 loaded
 
-                // Add the $obj1 (ScoreTournament) to the collection in $obj3 (Player)
-                $obj3->addScoreTournament($obj1);
+                // Add the $obj1 (GamePlayer) to the collection in $obj3 (Player)
+                $obj3->addGamePlayer($obj1);
+            } // if joined row not null
+
+            // Add objects for joined Game rows
+
+            $key4 = GamePeer::getPrimaryKeyHashFromRow($row, $startcol4);
+            if ($key4 !== null) {
+                $obj4 = GamePeer::getInstanceFromPool($key4);
+                if (!$obj4) {
+
+                    $cls = GamePeer::getOMClass();
+
+                    $obj4 = new $cls();
+                    $obj4->hydrate($row, $startcol4);
+                    GamePeer::addInstanceToPool($obj4, $key4);
+                } // if obj4 loaded
+
+                // Add the $obj1 (GamePlayer) to the collection in $obj4 (Game)
+                $obj4->addGamePlayer($obj1);
             } // if joined row not null
 
             $results[] = $obj1;
@@ -846,7 +994,7 @@ abstract class BaseScoreTournamentPeer
 
 
     /**
-     * Returns the number of rows matching criteria, joining the related Tournament table
+     * Returns the number of rows matching criteria, joining the related Bonus table
      *
      * @param      Criteria $criteria
      * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
@@ -854,7 +1002,7 @@ abstract class BaseScoreTournamentPeer
      * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
      * @return int Number of matching rows.
      */
-    public static function doCountJoinAllExceptTournament(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    public static function doCountJoinAllExceptBonus(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
     {
         // we're going to modify criteria, so copy it first
         $criteria = clone $criteria;
@@ -862,26 +1010,28 @@ abstract class BaseScoreTournamentPeer
         // We need to set the primary table name, since in the case that there are no WHERE columns
         // it will be impossible for the BasePeer::createSelectSql() method to determine which
         // tables go into the FROM clause.
-        $criteria->setPrimaryTableName(ScoreTournamentPeer::TABLE_NAME);
+        $criteria->setPrimaryTableName(GamePlayerPeer::TABLE_NAME);
 
         if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
             $criteria->setDistinct();
         }
 
         if (!$criteria->hasSelectClause()) {
-            ScoreTournamentPeer::addSelectColumns($criteria);
+            GamePlayerPeer::addSelectColumns($criteria);
         }
 
         $criteria->clearOrderByColumns(); // ORDER BY should not affect count
 
         // Set the correct dbName
-        $criteria->setDbName(ScoreTournamentPeer::DATABASE_NAME);
+        $criteria->setDbName(GamePlayerPeer::DATABASE_NAME);
 
         if ($con === null) {
-            $con = Propel::getConnection(ScoreTournamentPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+            $con = Propel::getConnection(GamePlayerPeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
 
-        $criteria->addJoin(ScoreTournamentPeer::IDPLAYER, PlayerPeer::ID, $join_behavior);
+        $criteria->addJoin(GamePlayerPeer::PLAYER_ID, PlayerPeer::ID, $join_behavior);
+
+        $criteria->addJoin(GamePlayerPeer::GAME_ID, GamePeer::ID, $join_behavior);
 
         $stmt = BasePeer::doCount($criteria, $con);
 
@@ -913,26 +1063,28 @@ abstract class BaseScoreTournamentPeer
         // We need to set the primary table name, since in the case that there are no WHERE columns
         // it will be impossible for the BasePeer::createSelectSql() method to determine which
         // tables go into the FROM clause.
-        $criteria->setPrimaryTableName(ScoreTournamentPeer::TABLE_NAME);
+        $criteria->setPrimaryTableName(GamePlayerPeer::TABLE_NAME);
 
         if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
             $criteria->setDistinct();
         }
 
         if (!$criteria->hasSelectClause()) {
-            ScoreTournamentPeer::addSelectColumns($criteria);
+            GamePlayerPeer::addSelectColumns($criteria);
         }
 
         $criteria->clearOrderByColumns(); // ORDER BY should not affect count
 
         // Set the correct dbName
-        $criteria->setDbName(ScoreTournamentPeer::DATABASE_NAME);
+        $criteria->setDbName(GamePlayerPeer::DATABASE_NAME);
 
         if ($con === null) {
-            $con = Propel::getConnection(ScoreTournamentPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+            $con = Propel::getConnection(GamePlayerPeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
 
-        $criteria->addJoin(ScoreTournamentPeer::IDTOURNAMENT, TournamentPeer::ID, $join_behavior);
+        $criteria->addJoin(GamePlayerPeer::BONUS_ID, BonusPeer::ID, $join_behavior);
+
+        $criteria->addJoin(GamePlayerPeer::GAME_ID, GamePeer::ID, $join_behavior);
 
         $stmt = BasePeer::doCount($criteria, $con);
 
@@ -948,16 +1100,69 @@ abstract class BaseScoreTournamentPeer
 
 
     /**
-     * Selects a collection of ScoreTournament objects pre-filled with all related objects except Tournament.
+     * Returns the number of rows matching criteria, joining the related Game table
+     *
+     * @param      Criteria $criteria
+     * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
+     * @param      PropelPDO $con
+     * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+     * @return int Number of matching rows.
+     */
+    public static function doCountJoinAllExceptGame(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    {
+        // we're going to modify criteria, so copy it first
+        $criteria = clone $criteria;
+
+        // We need to set the primary table name, since in the case that there are no WHERE columns
+        // it will be impossible for the BasePeer::createSelectSql() method to determine which
+        // tables go into the FROM clause.
+        $criteria->setPrimaryTableName(GamePlayerPeer::TABLE_NAME);
+
+        if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+            $criteria->setDistinct();
+        }
+
+        if (!$criteria->hasSelectClause()) {
+            GamePlayerPeer::addSelectColumns($criteria);
+        }
+
+        $criteria->clearOrderByColumns(); // ORDER BY should not affect count
+
+        // Set the correct dbName
+        $criteria->setDbName(GamePlayerPeer::DATABASE_NAME);
+
+        if ($con === null) {
+            $con = Propel::getConnection(GamePlayerPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+        }
+
+        $criteria->addJoin(GamePlayerPeer::BONUS_ID, BonusPeer::ID, $join_behavior);
+
+        $criteria->addJoin(GamePlayerPeer::PLAYER_ID, PlayerPeer::ID, $join_behavior);
+
+        $stmt = BasePeer::doCount($criteria, $con);
+
+        if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+            $count = (int) $row[0];
+        } else {
+            $count = 0; // no rows returned; we infer that means 0 matches.
+        }
+        $stmt->closeCursor();
+
+        return $count;
+    }
+
+
+    /**
+     * Selects a collection of GamePlayer objects pre-filled with all related objects except Bonus.
      *
      * @param      Criteria  $criteria
      * @param      PropelPDO $con
      * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-     * @return array           Array of ScoreTournament objects.
+     * @return array           Array of GamePlayer objects.
      * @throws PropelException Any exceptions caught during processing will be
      *		 rethrown wrapped into a PropelException.
      */
-    public static function doSelectJoinAllExceptTournament(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    public static function doSelectJoinAllExceptBonus(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
     {
         $criteria = clone $criteria;
 
@@ -965,33 +1170,38 @@ abstract class BaseScoreTournamentPeer
         // $criteria->getDbName() will return the same object if not set to another value
         // so == check is okay and faster
         if ($criteria->getDbName() == Propel::getDefaultDB()) {
-            $criteria->setDbName(ScoreTournamentPeer::DATABASE_NAME);
+            $criteria->setDbName(GamePlayerPeer::DATABASE_NAME);
         }
 
-        ScoreTournamentPeer::addSelectColumns($criteria);
-        $startcol2 = ScoreTournamentPeer::NUM_HYDRATE_COLUMNS;
+        GamePlayerPeer::addSelectColumns($criteria);
+        $startcol2 = GamePlayerPeer::NUM_HYDRATE_COLUMNS;
 
         PlayerPeer::addSelectColumns($criteria);
         $startcol3 = $startcol2 + PlayerPeer::NUM_HYDRATE_COLUMNS;
 
-        $criteria->addJoin(ScoreTournamentPeer::IDPLAYER, PlayerPeer::ID, $join_behavior);
+        GamePeer::addSelectColumns($criteria);
+        $startcol4 = $startcol3 + GamePeer::NUM_HYDRATE_COLUMNS;
+
+        $criteria->addJoin(GamePlayerPeer::PLAYER_ID, PlayerPeer::ID, $join_behavior);
+
+        $criteria->addJoin(GamePlayerPeer::GAME_ID, GamePeer::ID, $join_behavior);
 
 
         $stmt = BasePeer::doSelect($criteria, $con);
         $results = array();
 
         while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-            $key1 = ScoreTournamentPeer::getPrimaryKeyHashFromRow($row, 0);
-            if (null !== ($obj1 = ScoreTournamentPeer::getInstanceFromPool($key1))) {
+            $key1 = GamePlayerPeer::getPrimaryKeyHashFromRow($row, 0);
+            if (null !== ($obj1 = GamePlayerPeer::getInstanceFromPool($key1))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj1->hydrate($row, 0, true); // rehydrate
             } else {
-                $cls = ScoreTournamentPeer::getOMClass();
+                $cls = GamePlayerPeer::getOMClass();
 
                 $obj1 = new $cls();
                 $obj1->hydrate($row);
-                ScoreTournamentPeer::addInstanceToPool($obj1, $key1);
+                GamePlayerPeer::addInstanceToPool($obj1, $key1);
             } // if obj1 already loaded
 
                 // Add objects for joined Player rows
@@ -1008,8 +1218,27 @@ abstract class BaseScoreTournamentPeer
                     PlayerPeer::addInstanceToPool($obj2, $key2);
                 } // if $obj2 already loaded
 
-                // Add the $obj1 (ScoreTournament) to the collection in $obj2 (Player)
-                $obj2->addScoreTournament($obj1);
+                // Add the $obj1 (GamePlayer) to the collection in $obj2 (Player)
+                $obj2->addGamePlayer($obj1);
+
+            } // if joined row is not null
+
+                // Add objects for joined Game rows
+
+                $key3 = GamePeer::getPrimaryKeyHashFromRow($row, $startcol3);
+                if ($key3 !== null) {
+                    $obj3 = GamePeer::getInstanceFromPool($key3);
+                    if (!$obj3) {
+
+                        $cls = GamePeer::getOMClass();
+
+                    $obj3 = new $cls();
+                    $obj3->hydrate($row, $startcol3);
+                    GamePeer::addInstanceToPool($obj3, $key3);
+                } // if $obj3 already loaded
+
+                // Add the $obj1 (GamePlayer) to the collection in $obj3 (Game)
+                $obj3->addGamePlayer($obj1);
 
             } // if joined row is not null
 
@@ -1022,12 +1251,12 @@ abstract class BaseScoreTournamentPeer
 
 
     /**
-     * Selects a collection of ScoreTournament objects pre-filled with all related objects except Player.
+     * Selects a collection of GamePlayer objects pre-filled with all related objects except Player.
      *
      * @param      Criteria  $criteria
      * @param      PropelPDO $con
      * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-     * @return array           Array of ScoreTournament objects.
+     * @return array           Array of GamePlayer objects.
      * @throws PropelException Any exceptions caught during processing will be
      *		 rethrown wrapped into a PropelException.
      */
@@ -1039,51 +1268,173 @@ abstract class BaseScoreTournamentPeer
         // $criteria->getDbName() will return the same object if not set to another value
         // so == check is okay and faster
         if ($criteria->getDbName() == Propel::getDefaultDB()) {
-            $criteria->setDbName(ScoreTournamentPeer::DATABASE_NAME);
+            $criteria->setDbName(GamePlayerPeer::DATABASE_NAME);
         }
 
-        ScoreTournamentPeer::addSelectColumns($criteria);
-        $startcol2 = ScoreTournamentPeer::NUM_HYDRATE_COLUMNS;
+        GamePlayerPeer::addSelectColumns($criteria);
+        $startcol2 = GamePlayerPeer::NUM_HYDRATE_COLUMNS;
 
-        TournamentPeer::addSelectColumns($criteria);
-        $startcol3 = $startcol2 + TournamentPeer::NUM_HYDRATE_COLUMNS;
+        BonusPeer::addSelectColumns($criteria);
+        $startcol3 = $startcol2 + BonusPeer::NUM_HYDRATE_COLUMNS;
 
-        $criteria->addJoin(ScoreTournamentPeer::IDTOURNAMENT, TournamentPeer::ID, $join_behavior);
+        GamePeer::addSelectColumns($criteria);
+        $startcol4 = $startcol3 + GamePeer::NUM_HYDRATE_COLUMNS;
+
+        $criteria->addJoin(GamePlayerPeer::BONUS_ID, BonusPeer::ID, $join_behavior);
+
+        $criteria->addJoin(GamePlayerPeer::GAME_ID, GamePeer::ID, $join_behavior);
 
 
         $stmt = BasePeer::doSelect($criteria, $con);
         $results = array();
 
         while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-            $key1 = ScoreTournamentPeer::getPrimaryKeyHashFromRow($row, 0);
-            if (null !== ($obj1 = ScoreTournamentPeer::getInstanceFromPool($key1))) {
+            $key1 = GamePlayerPeer::getPrimaryKeyHashFromRow($row, 0);
+            if (null !== ($obj1 = GamePlayerPeer::getInstanceFromPool($key1))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj1->hydrate($row, 0, true); // rehydrate
             } else {
-                $cls = ScoreTournamentPeer::getOMClass();
+                $cls = GamePlayerPeer::getOMClass();
 
                 $obj1 = new $cls();
                 $obj1->hydrate($row);
-                ScoreTournamentPeer::addInstanceToPool($obj1, $key1);
+                GamePlayerPeer::addInstanceToPool($obj1, $key1);
             } // if obj1 already loaded
 
-                // Add objects for joined Tournament rows
+                // Add objects for joined Bonus rows
 
-                $key2 = TournamentPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+                $key2 = BonusPeer::getPrimaryKeyHashFromRow($row, $startcol2);
                 if ($key2 !== null) {
-                    $obj2 = TournamentPeer::getInstanceFromPool($key2);
+                    $obj2 = BonusPeer::getInstanceFromPool($key2);
                     if (!$obj2) {
 
-                        $cls = TournamentPeer::getOMClass();
+                        $cls = BonusPeer::getOMClass();
 
                     $obj2 = new $cls();
                     $obj2->hydrate($row, $startcol2);
-                    TournamentPeer::addInstanceToPool($obj2, $key2);
+                    BonusPeer::addInstanceToPool($obj2, $key2);
                 } // if $obj2 already loaded
 
-                // Add the $obj1 (ScoreTournament) to the collection in $obj2 (Tournament)
-                $obj2->addScoreTournament($obj1);
+                // Add the $obj1 (GamePlayer) to the collection in $obj2 (Bonus)
+                $obj2->addGamePlayer($obj1);
+
+            } // if joined row is not null
+
+                // Add objects for joined Game rows
+
+                $key3 = GamePeer::getPrimaryKeyHashFromRow($row, $startcol3);
+                if ($key3 !== null) {
+                    $obj3 = GamePeer::getInstanceFromPool($key3);
+                    if (!$obj3) {
+
+                        $cls = GamePeer::getOMClass();
+
+                    $obj3 = new $cls();
+                    $obj3->hydrate($row, $startcol3);
+                    GamePeer::addInstanceToPool($obj3, $key3);
+                } // if $obj3 already loaded
+
+                // Add the $obj1 (GamePlayer) to the collection in $obj3 (Game)
+                $obj3->addGamePlayer($obj1);
+
+            } // if joined row is not null
+
+            $results[] = $obj1;
+        }
+        $stmt->closeCursor();
+
+        return $results;
+    }
+
+
+    /**
+     * Selects a collection of GamePlayer objects pre-filled with all related objects except Game.
+     *
+     * @param      Criteria  $criteria
+     * @param      PropelPDO $con
+     * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+     * @return array           Array of GamePlayer objects.
+     * @throws PropelException Any exceptions caught during processing will be
+     *		 rethrown wrapped into a PropelException.
+     */
+    public static function doSelectJoinAllExceptGame(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    {
+        $criteria = clone $criteria;
+
+        // Set the correct dbName if it has not been overridden
+        // $criteria->getDbName() will return the same object if not set to another value
+        // so == check is okay and faster
+        if ($criteria->getDbName() == Propel::getDefaultDB()) {
+            $criteria->setDbName(GamePlayerPeer::DATABASE_NAME);
+        }
+
+        GamePlayerPeer::addSelectColumns($criteria);
+        $startcol2 = GamePlayerPeer::NUM_HYDRATE_COLUMNS;
+
+        BonusPeer::addSelectColumns($criteria);
+        $startcol3 = $startcol2 + BonusPeer::NUM_HYDRATE_COLUMNS;
+
+        PlayerPeer::addSelectColumns($criteria);
+        $startcol4 = $startcol3 + PlayerPeer::NUM_HYDRATE_COLUMNS;
+
+        $criteria->addJoin(GamePlayerPeer::BONUS_ID, BonusPeer::ID, $join_behavior);
+
+        $criteria->addJoin(GamePlayerPeer::PLAYER_ID, PlayerPeer::ID, $join_behavior);
+
+
+        $stmt = BasePeer::doSelect($criteria, $con);
+        $results = array();
+
+        while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+            $key1 = GamePlayerPeer::getPrimaryKeyHashFromRow($row, 0);
+            if (null !== ($obj1 = GamePlayerPeer::getInstanceFromPool($key1))) {
+                // We no longer rehydrate the object, since this can cause data loss.
+                // See http://www.propelorm.org/ticket/509
+                // $obj1->hydrate($row, 0, true); // rehydrate
+            } else {
+                $cls = GamePlayerPeer::getOMClass();
+
+                $obj1 = new $cls();
+                $obj1->hydrate($row);
+                GamePlayerPeer::addInstanceToPool($obj1, $key1);
+            } // if obj1 already loaded
+
+                // Add objects for joined Bonus rows
+
+                $key2 = BonusPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+                if ($key2 !== null) {
+                    $obj2 = BonusPeer::getInstanceFromPool($key2);
+                    if (!$obj2) {
+
+                        $cls = BonusPeer::getOMClass();
+
+                    $obj2 = new $cls();
+                    $obj2->hydrate($row, $startcol2);
+                    BonusPeer::addInstanceToPool($obj2, $key2);
+                } // if $obj2 already loaded
+
+                // Add the $obj1 (GamePlayer) to the collection in $obj2 (Bonus)
+                $obj2->addGamePlayer($obj1);
+
+            } // if joined row is not null
+
+                // Add objects for joined Player rows
+
+                $key3 = PlayerPeer::getPrimaryKeyHashFromRow($row, $startcol3);
+                if ($key3 !== null) {
+                    $obj3 = PlayerPeer::getInstanceFromPool($key3);
+                    if (!$obj3) {
+
+                        $cls = PlayerPeer::getOMClass();
+
+                    $obj3 = new $cls();
+                    $obj3->hydrate($row, $startcol3);
+                    PlayerPeer::addInstanceToPool($obj3, $key3);
+                } // if $obj3 already loaded
+
+                // Add the $obj1 (GamePlayer) to the collection in $obj3 (Player)
+                $obj3->addGamePlayer($obj1);
 
             } // if joined row is not null
 
@@ -1103,7 +1454,7 @@ abstract class BaseScoreTournamentPeer
      */
     public static function getTableMap()
     {
-        return Propel::getDatabaseMap(ScoreTournamentPeer::DATABASE_NAME)->getTable(ScoreTournamentPeer::TABLE_NAME);
+        return Propel::getDatabaseMap(GamePlayerPeer::DATABASE_NAME)->getTable(GamePlayerPeer::TABLE_NAME);
     }
 
     /**
@@ -1111,9 +1462,9 @@ abstract class BaseScoreTournamentPeer
      */
     public static function buildTableMap()
     {
-      $dbMap = Propel::getDatabaseMap(BaseScoreTournamentPeer::DATABASE_NAME);
-      if (!$dbMap->hasTable(BaseScoreTournamentPeer::TABLE_NAME)) {
-        $dbMap->addTableObject(new ScoreTournamentTableMap());
+      $dbMap = Propel::getDatabaseMap(BaseGamePlayerPeer::DATABASE_NAME);
+      if (!$dbMap->hasTable(BaseGamePlayerPeer::TABLE_NAME)) {
+        $dbMap->addTableObject(new GamePlayerTableMap());
       }
     }
 
@@ -1125,13 +1476,13 @@ abstract class BaseScoreTournamentPeer
      */
     public static function getOMClass()
     {
-        return ScoreTournamentPeer::OM_CLASS;
+        return GamePlayerPeer::OM_CLASS;
     }
 
     /**
-     * Performs an INSERT on the database, given a ScoreTournament or Criteria object.
+     * Performs an INSERT on the database, given a GamePlayer or Criteria object.
      *
-     * @param      mixed $values Criteria or ScoreTournament object containing data that is used to create the INSERT statement.
+     * @param      mixed $values Criteria or GamePlayer object containing data that is used to create the INSERT statement.
      * @param      PropelPDO $con the PropelPDO connection to use
      * @return mixed           The new primary key.
      * @throws PropelException Any exceptions caught during processing will be
@@ -1140,18 +1491,18 @@ abstract class BaseScoreTournamentPeer
     public static function doInsert($values, PropelPDO $con = null)
     {
         if ($con === null) {
-            $con = Propel::getConnection(ScoreTournamentPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+            $con = Propel::getConnection(GamePlayerPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
         }
 
         if ($values instanceof Criteria) {
             $criteria = clone $values; // rename for clarity
         } else {
-            $criteria = $values->buildCriteria(); // build Criteria from ScoreTournament object
+            $criteria = $values->buildCriteria(); // build Criteria from GamePlayer object
         }
 
 
         // Set the correct dbName
-        $criteria->setDbName(ScoreTournamentPeer::DATABASE_NAME);
+        $criteria->setDbName(GamePlayerPeer::DATABASE_NAME);
 
         try {
             // use transaction because $criteria could contain info
@@ -1168,9 +1519,9 @@ abstract class BaseScoreTournamentPeer
     }
 
     /**
-     * Performs an UPDATE on the database, given a ScoreTournament or Criteria object.
+     * Performs an UPDATE on the database, given a GamePlayer or Criteria object.
      *
-     * @param      mixed $values Criteria or ScoreTournament object containing data that is used to create the UPDATE statement.
+     * @param      mixed $values Criteria or GamePlayer object containing data that is used to create the UPDATE statement.
      * @param      PropelPDO $con The connection to use (specify PropelPDO connection object to exert more control over transactions).
      * @return int             The number of affected rows (if supported by underlying database driver).
      * @throws PropelException Any exceptions caught during processing will be
@@ -1179,43 +1530,51 @@ abstract class BaseScoreTournamentPeer
     public static function doUpdate($values, PropelPDO $con = null)
     {
         if ($con === null) {
-            $con = Propel::getConnection(ScoreTournamentPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+            $con = Propel::getConnection(GamePlayerPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
         }
 
-        $selectCriteria = new Criteria(ScoreTournamentPeer::DATABASE_NAME);
+        $selectCriteria = new Criteria(GamePlayerPeer::DATABASE_NAME);
 
         if ($values instanceof Criteria) {
             $criteria = clone $values; // rename for clarity
 
-            $comparison = $criteria->getComparison(ScoreTournamentPeer::IDTOURNAMENT);
-            $value = $criteria->remove(ScoreTournamentPeer::IDTOURNAMENT);
+            $comparison = $criteria->getComparison(GamePlayerPeer::GAME_ID);
+            $value = $criteria->remove(GamePlayerPeer::GAME_ID);
             if ($value) {
-                $selectCriteria->add(ScoreTournamentPeer::IDTOURNAMENT, $value, $comparison);
+                $selectCriteria->add(GamePlayerPeer::GAME_ID, $value, $comparison);
             } else {
-                $selectCriteria->setPrimaryTableName(ScoreTournamentPeer::TABLE_NAME);
+                $selectCriteria->setPrimaryTableName(GamePlayerPeer::TABLE_NAME);
             }
 
-            $comparison = $criteria->getComparison(ScoreTournamentPeer::IDPLAYER);
-            $value = $criteria->remove(ScoreTournamentPeer::IDPLAYER);
+            $comparison = $criteria->getComparison(GamePlayerPeer::PLAYER_ID);
+            $value = $criteria->remove(GamePlayerPeer::PLAYER_ID);
             if ($value) {
-                $selectCriteria->add(ScoreTournamentPeer::IDPLAYER, $value, $comparison);
+                $selectCriteria->add(GamePlayerPeer::PLAYER_ID, $value, $comparison);
             } else {
-                $selectCriteria->setPrimaryTableName(ScoreTournamentPeer::TABLE_NAME);
+                $selectCriteria->setPrimaryTableName(GamePlayerPeer::TABLE_NAME);
             }
 
-        } else { // $values is ScoreTournament object
+            $comparison = $criteria->getComparison(GamePlayerPeer::BONUS_ID);
+            $value = $criteria->remove(GamePlayerPeer::BONUS_ID);
+            if ($value) {
+                $selectCriteria->add(GamePlayerPeer::BONUS_ID, $value, $comparison);
+            } else {
+                $selectCriteria->setPrimaryTableName(GamePlayerPeer::TABLE_NAME);
+            }
+
+        } else { // $values is GamePlayer object
             $criteria = $values->buildCriteria(); // gets full criteria
             $selectCriteria = $values->buildPkeyCriteria(); // gets criteria w/ primary key(s)
         }
 
         // set the correct dbName
-        $criteria->setDbName(ScoreTournamentPeer::DATABASE_NAME);
+        $criteria->setDbName(GamePlayerPeer::DATABASE_NAME);
 
         return BasePeer::doUpdate($selectCriteria, $criteria, $con);
     }
 
     /**
-     * Deletes all rows from the Score_Tournament table.
+     * Deletes all rows from the game_player table.
      *
      * @param      PropelPDO $con the connection to use
      * @return int             The number of affected rows (if supported by underlying database driver).
@@ -1224,19 +1583,19 @@ abstract class BaseScoreTournamentPeer
     public static function doDeleteAll(PropelPDO $con = null)
     {
         if ($con === null) {
-            $con = Propel::getConnection(ScoreTournamentPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+            $con = Propel::getConnection(GamePlayerPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
         }
         $affectedRows = 0; // initialize var to track total num of affected rows
         try {
             // use transaction because $criteria could contain info
             // for more than one table or we could emulating ON DELETE CASCADE, etc.
             $con->beginTransaction();
-            $affectedRows += BasePeer::doDeleteAll(ScoreTournamentPeer::TABLE_NAME, $con, ScoreTournamentPeer::DATABASE_NAME);
+            $affectedRows += BasePeer::doDeleteAll(GamePlayerPeer::TABLE_NAME, $con, GamePlayerPeer::DATABASE_NAME);
             // Because this db requires some delete cascade/set null emulation, we have to
             // clear the cached instance *after* the emulation has happened (since
             // instances get re-added by the select statement contained therein).
-            ScoreTournamentPeer::clearInstancePool();
-            ScoreTournamentPeer::clearRelatedInstancePool();
+            GamePlayerPeer::clearInstancePool();
+            GamePlayerPeer::clearRelatedInstancePool();
             $con->commit();
 
             return $affectedRows;
@@ -1247,9 +1606,9 @@ abstract class BaseScoreTournamentPeer
     }
 
     /**
-     * Performs a DELETE on the database, given a ScoreTournament or Criteria object OR a primary key value.
+     * Performs a DELETE on the database, given a GamePlayer or Criteria object OR a primary key value.
      *
-     * @param      mixed $values Criteria or ScoreTournament object or primary key or array of primary keys
+     * @param      mixed $values Criteria or GamePlayer object or primary key or array of primary keys
      *              which is used to create the DELETE statement
      * @param      PropelPDO $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -1260,23 +1619,23 @@ abstract class BaseScoreTournamentPeer
      public static function doDelete($values, PropelPDO $con = null)
      {
         if ($con === null) {
-            $con = Propel::getConnection(ScoreTournamentPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+            $con = Propel::getConnection(GamePlayerPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
         }
 
         if ($values instanceof Criteria) {
             // invalidate the cache for all objects of this type, since we have no
             // way of knowing (without running a query) what objects should be invalidated
             // from the cache based on this Criteria.
-            ScoreTournamentPeer::clearInstancePool();
+            GamePlayerPeer::clearInstancePool();
             // rename for clarity
             $criteria = clone $values;
-        } elseif ($values instanceof ScoreTournament) { // it's a model object
+        } elseif ($values instanceof GamePlayer) { // it's a model object
             // invalidate the cache for this single object
-            ScoreTournamentPeer::removeInstanceFromPool($values);
+            GamePlayerPeer::removeInstanceFromPool($values);
             // create criteria based on pk values
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
-            $criteria = new Criteria(ScoreTournamentPeer::DATABASE_NAME);
+            $criteria = new Criteria(GamePlayerPeer::DATABASE_NAME);
             // primary key is composite; we therefore, expect
             // the primary key passed to be an array of pkey values
             if (count($values) == count($values, COUNT_RECURSIVE)) {
@@ -1284,16 +1643,17 @@ abstract class BaseScoreTournamentPeer
                 $values = array($values);
             }
             foreach ($values as $value) {
-                $criterion = $criteria->getNewCriterion(ScoreTournamentPeer::IDTOURNAMENT, $value[0]);
-                $criterion->addAnd($criteria->getNewCriterion(ScoreTournamentPeer::IDPLAYER, $value[1]));
+                $criterion = $criteria->getNewCriterion(GamePlayerPeer::GAME_ID, $value[0]);
+                $criterion->addAnd($criteria->getNewCriterion(GamePlayerPeer::PLAYER_ID, $value[1]));
+                $criterion->addAnd($criteria->getNewCriterion(GamePlayerPeer::BONUS_ID, $value[2]));
                 $criteria->addOr($criterion);
                 // we can invalidate the cache for this single PK
-                ScoreTournamentPeer::removeInstanceFromPool($value);
+                GamePlayerPeer::removeInstanceFromPool($value);
             }
         }
 
         // Set the correct dbName
-        $criteria->setDbName(ScoreTournamentPeer::DATABASE_NAME);
+        $criteria->setDbName(GamePlayerPeer::DATABASE_NAME);
 
         $affectedRows = 0; // initialize var to track total num of affected rows
 
@@ -1303,7 +1663,7 @@ abstract class BaseScoreTournamentPeer
             $con->beginTransaction();
 
             $affectedRows += BasePeer::doDelete($criteria, $con);
-            ScoreTournamentPeer::clearRelatedInstancePool();
+            GamePlayerPeer::clearRelatedInstancePool();
             $con->commit();
 
             return $affectedRows;
@@ -1314,13 +1674,13 @@ abstract class BaseScoreTournamentPeer
     }
 
     /**
-     * Validates all modified columns of given ScoreTournament object.
+     * Validates all modified columns of given GamePlayer object.
      * If parameter $columns is either a single column name or an array of column names
      * than only those columns are validated.
      *
      * NOTICE: This does not apply to primary or foreign keys for now.
      *
-     * @param      ScoreTournament $obj The object to validate.
+     * @param      GamePlayer $obj The object to validate.
      * @param      mixed $cols Column name or array of column names.
      *
      * @return mixed TRUE if all columns are valid or the error message of the first invalid column.
@@ -1330,8 +1690,8 @@ abstract class BaseScoreTournamentPeer
         $columns = array();
 
         if ($cols) {
-            $dbMap = Propel::getDatabaseMap(ScoreTournamentPeer::DATABASE_NAME);
-            $tableMap = $dbMap->getTable(ScoreTournamentPeer::TABLE_NAME);
+            $dbMap = Propel::getDatabaseMap(GamePlayerPeer::DATABASE_NAME);
+            $tableMap = $dbMap->getTable(GamePlayerPeer::TABLE_NAME);
 
             if (! is_array($cols)) {
                 $cols = array($cols);
@@ -1347,35 +1707,37 @@ abstract class BaseScoreTournamentPeer
 
         }
 
-        return BasePeer::doValidate(ScoreTournamentPeer::DATABASE_NAME, ScoreTournamentPeer::TABLE_NAME, $columns);
+        return BasePeer::doValidate(GamePlayerPeer::DATABASE_NAME, GamePlayerPeer::TABLE_NAME, $columns);
     }
 
     /**
      * Retrieve object using using composite pkey values.
-     * @param   int $idtournament
-     * @param   int $idplayer
+     * @param   int $game_id
+     * @param   int $player_id
+     * @param   int $bonus_id
      * @param      PropelPDO $con
-     * @return   ScoreTournament
+     * @return   GamePlayer
      */
-    public static function retrieveByPK($idtournament, $idplayer, PropelPDO $con = null) {
-        $_instancePoolKey = serialize(array((string) $idtournament, (string) $idplayer));
-         if (null !== ($obj = ScoreTournamentPeer::getInstanceFromPool($_instancePoolKey))) {
+    public static function retrieveByPK($game_id, $player_id, $bonus_id, PropelPDO $con = null) {
+        $_instancePoolKey = serialize(array((string) $game_id, (string) $player_id, (string) $bonus_id));
+         if (null !== ($obj = GamePlayerPeer::getInstanceFromPool($_instancePoolKey))) {
              return $obj;
         }
 
         if ($con === null) {
-            $con = Propel::getConnection(ScoreTournamentPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+            $con = Propel::getConnection(GamePlayerPeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
-        $criteria = new Criteria(ScoreTournamentPeer::DATABASE_NAME);
-        $criteria->add(ScoreTournamentPeer::IDTOURNAMENT, $idtournament);
-        $criteria->add(ScoreTournamentPeer::IDPLAYER, $idplayer);
-        $v = ScoreTournamentPeer::doSelect($criteria, $con);
+        $criteria = new Criteria(GamePlayerPeer::DATABASE_NAME);
+        $criteria->add(GamePlayerPeer::GAME_ID, $game_id);
+        $criteria->add(GamePlayerPeer::PLAYER_ID, $player_id);
+        $criteria->add(GamePlayerPeer::BONUS_ID, $bonus_id);
+        $v = GamePlayerPeer::doSelect($criteria, $con);
 
         return !empty($v) ? $v[0] : null;
     }
-} // BaseScoreTournamentPeer
+} // BaseGamePlayerPeer
 
 // This is the static code needed to register the TableMap for this table with the main Propel class.
 //
-BaseScoreTournamentPeer::buildTableMap();
+BaseGamePlayerPeer::buildTableMap();
 

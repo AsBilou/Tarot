@@ -1,62 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <database name="tarot" defaultIdMethod="native">
-    <table name="Player" phpName="Player">
+    <table name="player" phpName="Player">
         <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
-        <column name="namePlayer" type="varchar" size="255" required="true" />
-        <column name="mailPlayer" type="varchar" size="255" required="true" />
+        <column name="name" type="varchar" size="255" required="true" />
+        <column name="mail" type="varchar" size="255" required="true" />
     </table>
-    <table name="Bonus" phpName="Bonus">
+    <table name="bonus" phpName="Bonus">
         <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
-        <column name="nameBonus" type="varchar" size="255" required="true" />
-        <column name="valueBonus" type="integer" required="true" />
+        <column name="name" type="varchar" size="255" required="true" />
+        <column name="value" type="integer" required="true" />
     </table>
-    <table name="Tournament" phpName="Tournament">
+    <table name="tournament" phpName="Tournament">
         <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
-        <column name="dateStart" type="timestamp" required="true" />
+        <column name="start" type="timestamp" required="true" />
         <column name="active" type="boolean" required="true" />
-        <column name="idWinner" type="integer" />
-        <foreign-key foreignTable="Player" onDelete="CASCADE">
-            <reference local="idWinner" foreign="id"/>
-        </foreign-key>
+        <column name="winner_id" type="integer" />
     </table>
-    <table name="Game" phpName="Game" isCrossRef="true">
+    <table name="game" phpName="Game">
         <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
-        <column name="idCall" type="integer" required="true" />
-        <column name="idCalled" type="integer" />
-        <column name="idTournament" type="integer" required="true" />
+        <column name="call_id" type="integer" required="true" />
+        <column name="called_id" type="integer" />
+        <column name="tournament_id" type="integer" required="true" />
         <column name="bids" type="varchar" size="255" required="true" />
         <column name="score" type="integer" required="true" />
-        <foreign-key foreignTable="Tournament" onDelete="CASCADE">
-            <reference local="idTournament" foreign="id"/>
+        <foreign-key foreignTable="tournament" onDelete="CASCADE">
+            <reference local="tournament_id" foreign="id"/>
         </foreign-key>
-        <foreign-key foreignTable="Player" onDelete="CASCADE">
-            <reference local="idCall" foreign="id"/>
-            <reference local="idCalled" foreign="id"/>
+        <foreign-key phpName="caller" refPhpName="pCaller" foreignTable="player" onDelete="CASCADE">
+            <reference local="call_id" foreign="id"/>
         </foreign-key>
-    </table>
-    <table name="Game_List" phpName="GameList" isCrossRef="true">
-        <column name="idGame" type="integer" required="true" primaryKey="true" />
-        <column name="idPlayer" type="integer" required="true" primaryKey="true" />
-        <column name="idBonus" type="integer" required="true" primaryKey="true" />
-        <foreign-key foreignTable="Bonus" onDelete="CASCADE">
-            <reference local="idBonus" foreign="id"/>
-        </foreign-key>
-        <foreign-key foreignTable="Player" onDelete="CASCADE">
-            <reference local="idPlayer" foreign="id"/>
-        </foreign-key>
-        <foreign-key foreignTable="Game" onDelete="CASCADE">
-            <reference local="idGame" foreign="id"/>
+        <foreign-key phpName="called" refPhpName="pCalled" foreignTable="player" onDelete="CASCADE">
+            <reference local="called_id" foreign="id"/>
         </foreign-key>
     </table>
-    <table name="Score_Tournament" phpName="ScoreTournament" isCrossRef="true">
-        <column name="idTournament" type="integer" required="true" primaryKey="true" />
-        <column name="idPlayer" type="integer" required="true" primaryKey="true" />
+    <table name="game_player" phpName="GamePlayer" isCrossRef="true">
+        <column name="game_id" type="integer" required="true" primaryKey="true" />
+        <column name="player_id" type="integer" required="true" primaryKey="true" />
+        <column name="bonus_id" type="integer" required="true" primaryKey="true" />
+        <column name="type" type="varchar" size="255" required="true" />
+        <foreign-key foreignTable="bonus" onDelete="CASCADE">
+            <reference local="bonus_id" foreign="id"/>
+        </foreign-key>
+        <foreign-key foreignTable="player" onDelete="CASCADE">
+            <reference local="player_id" foreign="id"/>
+        </foreign-key>
+        <foreign-key foreignTable="game" onDelete="CASCADE">
+            <reference local="game_id" foreign="id"/>
+        </foreign-key>
+    </table>
+    <table name="tournament_player" phpName="TournamentPlayer" isCrossRef="true">
+        <column name="tournament_id" type="integer" required="true" primaryKey="true" />
+        <column name="player_id" type="integer" required="true" primaryKey="true" />
         <column name="score" type="integer" required="true" defaultValue="0"/>
-        <foreign-key foreignTable="Tournament" onDelete="CASCADE">
-            <reference local="idTournament" foreign="id"/>
+        <foreign-key foreignTable="tournament" onDelete="CASCADE">
+            <reference local="tournament_id" foreign="id"/>
         </foreign-key>
-        <foreign-key foreignTable="Player" onDelete="CASCADE">
-            <reference local="idPlayer" foreign="id"/>
+        <foreign-key foreignTable="player" onDelete="CASCADE">
+            <reference local="player_id" foreign="id"/>
         </foreign-key>
     </table>
 </database>

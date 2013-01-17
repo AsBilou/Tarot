@@ -3,7 +3,7 @@
 
 
 /**
- * This class defines the structure of the 'Player' table.
+ * This class defines the structure of the 'player' table.
  *
  *
  *
@@ -32,15 +32,15 @@ class PlayerTableMap extends TableMap
     public function initialize()
     {
         // attributes
-        $this->setName('Player');
+        $this->setName('player');
         $this->setPhpName('Player');
         $this->setClassname('Player');
         $this->setPackage('tarot');
         $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
-        $this->addColumn('namePlayer', 'Nameplayer', 'VARCHAR', true, 255, null);
-        $this->addColumn('mailPlayer', 'Mailplayer', 'VARCHAR', true, 255, null);
+        $this->addColumn('name', 'Name', 'VARCHAR', true, 255, null);
+        $this->addColumn('mail', 'Mail', 'VARCHAR', true, 255, null);
         // validators
     } // initialize()
 
@@ -49,11 +49,10 @@ class PlayerTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('Tournament', 'Tournament', RelationMap::ONE_TO_MANY, array('id' => 'idWinner', ), 'CASCADE', null, 'Tournaments');
-        $this->addRelation('Game', 'Game', RelationMap::ONE_TO_MANY, array('id' => 'idCalled', ), 'CASCADE', null, 'Games');
-        $this->addRelation('GameList', 'GameList', RelationMap::ONE_TO_MANY, array('id' => 'idPlayer', ), 'CASCADE', null, 'GameLists');
-        $this->addRelation('ScoreTournament', 'ScoreTournament', RelationMap::ONE_TO_MANY, array('id' => 'idPlayer', ), 'CASCADE', null, 'ScoreTournaments');
-        $this->addRelation('Tournament', 'Tournament', RelationMap::MANY_TO_MANY, array(), 'CASCADE', null, 'Tournaments');
+        $this->addRelation('pCaller', 'Game', RelationMap::ONE_TO_MANY, array('id' => 'call_id', ), 'CASCADE', null, 'pCallers');
+        $this->addRelation('pCalled', 'Game', RelationMap::ONE_TO_MANY, array('id' => 'called_id', ), 'CASCADE', null, 'pCalleds');
+        $this->addRelation('GamePlayer', 'GamePlayer', RelationMap::ONE_TO_MANY, array('id' => 'player_id', ), 'CASCADE', null, 'GamePlayers');
+        $this->addRelation('TournamentPlayer', 'TournamentPlayer', RelationMap::ONE_TO_MANY, array('id' => 'player_id', ), 'CASCADE', null, 'TournamentPlayers');
         $this->addRelation('Bonus', 'Bonus', RelationMap::MANY_TO_MANY, array(), 'CASCADE', null, 'Bonuses');
         $this->addRelation('Game', 'Game', RelationMap::MANY_TO_MANY, array(), 'CASCADE', null, 'Games');
         $this->addRelation('Tournament', 'Tournament', RelationMap::MANY_TO_MANY, array(), 'CASCADE', null, 'Tournaments');

@@ -4,128 +4,129 @@
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ---------------------------------------------------------------------
--- Player
+-- player
 -- ---------------------------------------------------------------------
 
-DROP TABLE IF EXISTS `Player`;
+DROP TABLE IF EXISTS `player`;
 
-CREATE TABLE `Player`
+CREATE TABLE `player`
 (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `namePlayer` VARCHAR(255) NOT NULL,
-    `mailPlayer` VARCHAR(255) NOT NULL,
+    `name` VARCHAR(255) NOT NULL,
+    `mail` VARCHAR(255) NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
 
 -- ---------------------------------------------------------------------
--- Bonus
+-- bonus
 -- ---------------------------------------------------------------------
 
-DROP TABLE IF EXISTS `Bonus`;
+DROP TABLE IF EXISTS `bonus`;
 
-CREATE TABLE `Bonus`
+CREATE TABLE `bonus`
 (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `nameBonus` VARCHAR(255) NOT NULL,
-    `valueBonus` INTEGER NOT NULL,
+    `name` VARCHAR(255) NOT NULL,
+    `value` INTEGER NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
 
 -- ---------------------------------------------------------------------
--- Tournament
+-- tournament
 -- ---------------------------------------------------------------------
 
-DROP TABLE IF EXISTS `Tournament`;
+DROP TABLE IF EXISTS `tournament`;
 
-CREATE TABLE `Tournament`
+CREATE TABLE `tournament`
 (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `dateStart` DATETIME NOT NULL,
+    `start` DATETIME NOT NULL,
     `active` TINYINT(1) NOT NULL,
-    `idWinner` INTEGER,
-    PRIMARY KEY (`id`),
-    INDEX `Tournament_FI_1` (`idWinner`),
-    CONSTRAINT `Tournament_FK_1`
-        FOREIGN KEY (`idWinner`)
-        REFERENCES `Player` (`id`)
-        ON DELETE CASCADE
+    `winner_id` INTEGER,
+    PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
 
 -- ---------------------------------------------------------------------
--- Game
+-- game
 -- ---------------------------------------------------------------------
 
-DROP TABLE IF EXISTS `Game`;
+DROP TABLE IF EXISTS `game`;
 
-CREATE TABLE `Game`
+CREATE TABLE `game`
 (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `idCall` INTEGER NOT NULL,
-    `idCalled` INTEGER,
-    `idTournament` INTEGER NOT NULL,
+    `call_id` INTEGER NOT NULL,
+    `called_id` INTEGER,
+    `tournament_id` INTEGER NOT NULL,
     `bids` VARCHAR(255) NOT NULL,
     `score` INTEGER NOT NULL,
     PRIMARY KEY (`id`),
-    INDEX `Game_FI_1` (`idTournament`),
-    INDEX `Game_FI_2` (`idCall`, `idCalled`),
-    CONSTRAINT `Game_FK_1`
-        FOREIGN KEY (`idTournament`)
-        REFERENCES `Tournament` (`id`)
+    INDEX `game_FI_1` (`tournament_id`),
+    INDEX `game_FI_2` (`call_id`),
+    INDEX `game_FI_3` (`called_id`),
+    CONSTRAINT `game_FK_1`
+        FOREIGN KEY (`tournament_id`)
+        REFERENCES `tournament` (`id`)
         ON DELETE CASCADE,
-    CONSTRAINT `Game_FK_2`
-        FOREIGN KEY (`idCall`,`idCalled`)
-        REFERENCES `Player` (`id`,`id`)
+    CONSTRAINT `game_FK_2`
+        FOREIGN KEY (`call_id`)
+        REFERENCES `player` (`id`)
+        ON DELETE CASCADE,
+    CONSTRAINT `game_FK_3`
+        FOREIGN KEY (`called_id`)
+        REFERENCES `player` (`id`)
         ON DELETE CASCADE
 ) ENGINE=MyISAM;
 
 -- ---------------------------------------------------------------------
--- Game_List
+-- game_player
 -- ---------------------------------------------------------------------
 
-DROP TABLE IF EXISTS `Game_List`;
+DROP TABLE IF EXISTS `game_player`;
 
-CREATE TABLE `Game_List`
+CREATE TABLE `game_player`
 (
-    `idGame` INTEGER NOT NULL,
-    `idPlayer` INTEGER NOT NULL,
-    `idBonus` INTEGER NOT NULL,
-    PRIMARY KEY (`idGame`,`idPlayer`,`idBonus`),
-    INDEX `Game_List_FI_1` (`idBonus`),
-    INDEX `Game_List_FI_2` (`idPlayer`),
-    CONSTRAINT `Game_List_FK_1`
-        FOREIGN KEY (`idBonus`)
-        REFERENCES `Bonus` (`id`)
+    `game_id` INTEGER NOT NULL,
+    `player_id` INTEGER NOT NULL,
+    `bonus_id` INTEGER NOT NULL,
+    `type` VARCHAR(255) NOT NULL,
+    PRIMARY KEY (`game_id`,`player_id`,`bonus_id`),
+    INDEX `game_player_FI_1` (`bonus_id`),
+    INDEX `game_player_FI_2` (`player_id`),
+    CONSTRAINT `game_player_FK_1`
+        FOREIGN KEY (`bonus_id`)
+        REFERENCES `bonus` (`id`)
         ON DELETE CASCADE,
-    CONSTRAINT `Game_List_FK_2`
-        FOREIGN KEY (`idPlayer`)
-        REFERENCES `Player` (`id`)
+    CONSTRAINT `game_player_FK_2`
+        FOREIGN KEY (`player_id`)
+        REFERENCES `player` (`id`)
         ON DELETE CASCADE,
-    CONSTRAINT `Game_List_FK_3`
-        FOREIGN KEY (`idGame`)
-        REFERENCES `Game` (`id`)
+    CONSTRAINT `game_player_FK_3`
+        FOREIGN KEY (`game_id`)
+        REFERENCES `game` (`id`)
         ON DELETE CASCADE
 ) ENGINE=MyISAM;
 
 -- ---------------------------------------------------------------------
--- Score_Tournament
+-- tournament_player
 -- ---------------------------------------------------------------------
 
-DROP TABLE IF EXISTS `Score_Tournament`;
+DROP TABLE IF EXISTS `tournament_player`;
 
-CREATE TABLE `Score_Tournament`
+CREATE TABLE `tournament_player`
 (
-    `idTournament` INTEGER NOT NULL,
-    `idPlayer` INTEGER NOT NULL,
+    `tournament_id` INTEGER NOT NULL,
+    `player_id` INTEGER NOT NULL,
     `score` INTEGER DEFAULT 0 NOT NULL,
-    PRIMARY KEY (`idTournament`,`idPlayer`),
-    INDEX `Score_Tournament_FI_2` (`idPlayer`),
-    CONSTRAINT `Score_Tournament_FK_1`
-        FOREIGN KEY (`idTournament`)
-        REFERENCES `Tournament` (`id`)
+    PRIMARY KEY (`tournament_id`,`player_id`),
+    INDEX `tournament_player_FI_2` (`player_id`),
+    CONSTRAINT `tournament_player_FK_1`
+        FOREIGN KEY (`tournament_id`)
+        REFERENCES `tournament` (`id`)
         ON DELETE CASCADE,
-    CONSTRAINT `Score_Tournament_FK_2`
-        FOREIGN KEY (`idPlayer`)
-        REFERENCES `Player` (`id`)
+    CONSTRAINT `tournament_player_FK_2`
+        FOREIGN KEY (`player_id`)
+        REFERENCES `player` (`id`)
         ON DELETE CASCADE
 ) ENGINE=MyISAM;
 

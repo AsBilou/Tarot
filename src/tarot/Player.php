@@ -3,7 +3,7 @@
 
 
 /**
- * Skeleton subclass for representing a row from the 'Player' table.
+ * Skeleton subclass for representing a row from the 'player' table.
  *
  *
  *
