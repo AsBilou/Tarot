@@ -37,11 +37,11 @@ class TournamentTableMap extends TableMap
         $this->setClassname('Tournament');
         $this->setPackage('tarot');
         $this->setUseIdGenerator(true);
-        $this->setIsCrossRef(true);
         // columns
-        $this->addPrimaryKey('idTournament', 'Idtournament', 'INTEGER', true, null, null);
+        $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
         $this->addColumn('dateStart', 'Datestart', 'TIMESTAMP', true, null, null);
         $this->addColumn('active', 'Active', 'BOOLEAN', true, 1, null);
+        $this->addForeignKey('idWinner', 'Idwinner', 'INTEGER', 'Player', 'id', false, null, null);
         // validators
     } // initialize()
 
@@ -50,6 +50,11 @@ class TournamentTableMap extends TableMap
      */
     public function buildRelations()
     {
+        $this->addRelation('Player', 'Player', RelationMap::MANY_TO_ONE, array('idWinner' => 'id', ), 'CASCADE', null);
+        $this->addRelation('Game', 'Game', RelationMap::ONE_TO_MANY, array('id' => 'idTournament', ), 'CASCADE', null, 'Games');
+        $this->addRelation('ScoreTournament', 'ScoreTournament', RelationMap::ONE_TO_MANY, array('id' => 'idTournament', ), 'CASCADE', null, 'ScoreTournaments');
+        $this->addRelation('Player', 'Player', RelationMap::MANY_TO_MANY, array(), 'CASCADE', null, 'Players');
+        $this->addRelation('Player', 'Player', RelationMap::MANY_TO_MANY, array(), 'CASCADE', null, 'Players');
     } // buildRelations()
 
 } // TournamentTableMap

@@ -35,10 +35,12 @@ $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
 
 //Appel le fichier twig en fonction de la page
 $app->get('/', function () use ($app) {
-//Affiche tous les tournois actif
-$tournaments = TournamentQuery::create()
-    ->filterByActive(true)
-    ->find();
+    //Affiche tous les tournois actif
+    $tournaments = TournamentQuery::create()
+        ->filterByActive(true)
+        ->find();
+    
+    //Récuperer tous les tournois
     
     //var_dump($tournaments);
 

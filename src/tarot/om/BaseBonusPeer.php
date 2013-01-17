@@ -32,8 +32,8 @@ abstract class BaseBonusPeer
     /** The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS) */
     const NUM_HYDRATE_COLUMNS = 3;
 
-    /** the column name for the idBonus field */
-    const IDBONUS = 'Bonus.idBonus';
+    /** the column name for the id field */
+    const ID = 'Bonus.id';
 
     /** the column name for the nameBonus field */
     const NAMEBONUS = 'Bonus.nameBonus';
@@ -60,11 +60,11 @@ abstract class BaseBonusPeer
      * e.g. BonusPeer::$fieldNames[BonusPeer::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        BasePeer::TYPE_PHPNAME => array ('Idbonus', 'Namebonus', 'Valuebonus', ),
-        BasePeer::TYPE_STUDLYPHPNAME => array ('idbonus', 'namebonus', 'valuebonus', ),
-        BasePeer::TYPE_COLNAME => array (BonusPeer::IDBONUS, BonusPeer::NAMEBONUS, BonusPeer::VALUEBONUS, ),
-        BasePeer::TYPE_RAW_COLNAME => array ('IDBONUS', 'NAMEBONUS', 'VALUEBONUS', ),
-        BasePeer::TYPE_FIELDNAME => array ('idBonus', 'nameBonus', 'valueBonus', ),
+        BasePeer::TYPE_PHPNAME => array ('Id', 'Namebonus', 'Valuebonus', ),
+        BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'namebonus', 'valuebonus', ),
+        BasePeer::TYPE_COLNAME => array (BonusPeer::ID, BonusPeer::NAMEBONUS, BonusPeer::VALUEBONUS, ),
+        BasePeer::TYPE_RAW_COLNAME => array ('ID', 'NAMEBONUS', 'VALUEBONUS', ),
+        BasePeer::TYPE_FIELDNAME => array ('id', 'nameBonus', 'valueBonus', ),
         BasePeer::TYPE_NUM => array (0, 1, 2, )
     );
 
@@ -75,11 +75,11 @@ abstract class BaseBonusPeer
      * e.g. BonusPeer::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        BasePeer::TYPE_PHPNAME => array ('Idbonus' => 0, 'Namebonus' => 1, 'Valuebonus' => 2, ),
-        BasePeer::TYPE_STUDLYPHPNAME => array ('idbonus' => 0, 'namebonus' => 1, 'valuebonus' => 2, ),
-        BasePeer::TYPE_COLNAME => array (BonusPeer::IDBONUS => 0, BonusPeer::NAMEBONUS => 1, BonusPeer::VALUEBONUS => 2, ),
-        BasePeer::TYPE_RAW_COLNAME => array ('IDBONUS' => 0, 'NAMEBONUS' => 1, 'VALUEBONUS' => 2, ),
-        BasePeer::TYPE_FIELDNAME => array ('idBonus' => 0, 'nameBonus' => 1, 'valueBonus' => 2, ),
+        BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Namebonus' => 1, 'Valuebonus' => 2, ),
+        BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'namebonus' => 1, 'valuebonus' => 2, ),
+        BasePeer::TYPE_COLNAME => array (BonusPeer::ID => 0, BonusPeer::NAMEBONUS => 1, BonusPeer::VALUEBONUS => 2, ),
+        BasePeer::TYPE_RAW_COLNAME => array ('ID' => 0, 'NAMEBONUS' => 1, 'VALUEBONUS' => 2, ),
+        BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'nameBonus' => 1, 'valueBonus' => 2, ),
         BasePeer::TYPE_NUM => array (0, 1, 2, )
     );
 
@@ -154,11 +154,11 @@ abstract class BaseBonusPeer
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(BonusPeer::IDBONUS);
+            $criteria->addSelectColumn(BonusPeer::ID);
             $criteria->addSelectColumn(BonusPeer::NAMEBONUS);
             $criteria->addSelectColumn(BonusPeer::VALUEBONUS);
         } else {
-            $criteria->addSelectColumn($alias . '.idBonus');
+            $criteria->addSelectColumn($alias . '.id');
             $criteria->addSelectColumn($alias . '.nameBonus');
             $criteria->addSelectColumn($alias . '.valueBonus');
         }
@@ -287,7 +287,7 @@ abstract class BaseBonusPeer
     {
         if (Propel::isInstancePoolingEnabled()) {
             if ($key === null) {
-                $key = (string) $obj->getIdbonus();
+                $key = (string) $obj->getId();
             } // if key === null
             BonusPeer::$instances[$key] = $obj;
         }
@@ -310,7 +310,7 @@ abstract class BaseBonusPeer
     {
         if (Propel::isInstancePoolingEnabled() && $value !== null) {
             if (is_object($value) && $value instanceof Bonus) {
-                $key = (string) $value->getIdbonus();
+                $key = (string) $value->getId();
             } elseif (is_scalar($value)) {
                 // assume we've been passed a primary key
                 $key = (string) $value;
@@ -521,8 +521,8 @@ abstract class BaseBonusPeer
             $criteria = $values->buildCriteria(); // build Criteria from Bonus object
         }
 
-        if ($criteria->containsKey(BonusPeer::IDBONUS) && $criteria->keyContainsValue(BonusPeer::IDBONUS) ) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key ('.BonusPeer::IDBONUS.')');
+        if ($criteria->containsKey(BonusPeer::ID) && $criteria->keyContainsValue(BonusPeer::ID) ) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key ('.BonusPeer::ID.')');
         }
 
 
@@ -563,10 +563,10 @@ abstract class BaseBonusPeer
         if ($values instanceof Criteria) {
             $criteria = clone $values; // rename for clarity
 
-            $comparison = $criteria->getComparison(BonusPeer::IDBONUS);
-            $value = $criteria->remove(BonusPeer::IDBONUS);
+            $comparison = $criteria->getComparison(BonusPeer::ID);
+            $value = $criteria->remove(BonusPeer::ID);
             if ($value) {
-                $selectCriteria->add(BonusPeer::IDBONUS, $value, $comparison);
+                $selectCriteria->add(BonusPeer::ID, $value, $comparison);
             } else {
                 $selectCriteria->setPrimaryTableName(BonusPeer::TABLE_NAME);
             }
@@ -640,7 +640,7 @@ abstract class BaseBonusPeer
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
             $criteria = new Criteria(BonusPeer::DATABASE_NAME);
-            $criteria->add(BonusPeer::IDBONUS, (array) $values, Criteria::IN);
+            $criteria->add(BonusPeer::ID, (array) $values, Criteria::IN);
         }
 
         // Set the correct dbName
@@ -707,7 +707,7 @@ abstract class BaseBonusPeer
             // delete related GameList objects
             $criteria = new Criteria(GameListPeer::DATABASE_NAME);
 
-            $criteria->add(GameListPeer::IDBONUS, $obj->getIdbonus());
+            $criteria->add(GameListPeer::IDBONUS, $obj->getId());
             $affectedRows += GameListPeer::doDelete($criteria, $con);
         }
 
@@ -770,7 +770,7 @@ abstract class BaseBonusPeer
         }
 
         $criteria = new Criteria(BonusPeer::DATABASE_NAME);
-        $criteria->add(BonusPeer::IDBONUS, $pk);
+        $criteria->add(BonusPeer::ID, $pk);
 
         $v = BonusPeer::doSelect($criteria, $con);
 
@@ -797,7 +797,7 @@ abstract class BaseBonusPeer
             $objs = array();
         } else {
             $criteria = new Criteria(BonusPeer::DATABASE_NAME);
-            $criteria->add(BonusPeer::IDBONUS, $pks, Criteria::IN);
+            $criteria->add(BonusPeer::ID, $pks, Criteria::IN);
             $objs = BonusPeer::doSelect($criteria, $con);
         }
 

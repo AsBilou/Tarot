@@ -6,11 +6,11 @@
  *
  *
  *
- * @method BonusQuery orderByIdbonus($order = Criteria::ASC) Order by the idBonus column
+ * @method BonusQuery orderById($order = Criteria::ASC) Order by the id column
  * @method BonusQuery orderByNamebonus($order = Criteria::ASC) Order by the nameBonus column
  * @method BonusQuery orderByValuebonus($order = Criteria::ASC) Order by the valueBonus column
  *
- * @method BonusQuery groupByIdbonus() Group by the idBonus column
+ * @method BonusQuery groupById() Group by the id column
  * @method BonusQuery groupByNamebonus() Group by the nameBonus column
  * @method BonusQuery groupByValuebonus() Group by the valueBonus column
  *
@@ -28,7 +28,7 @@
  * @method Bonus findOneByNamebonus(string $nameBonus) Return the first Bonus filtered by the nameBonus column
  * @method Bonus findOneByValuebonus(int $valueBonus) Return the first Bonus filtered by the valueBonus column
  *
- * @method array findByIdbonus(int $idBonus) Return Bonus objects filtered by the idBonus column
+ * @method array findById(int $id) Return Bonus objects filtered by the id column
  * @method array findByNamebonus(string $nameBonus) Return Bonus objects filtered by the nameBonus column
  * @method array findByValuebonus(int $valueBonus) Return Bonus objects filtered by the valueBonus column
  *
@@ -117,7 +117,7 @@ abstract class BaseBonusQuery extends ModelCriteria
      * @return                 Bonus A model object, or null if the key is not found
      * @throws PropelException
      */
-     public function findOneByIdbonus($key, $con = null)
+     public function findOneById($key, $con = null)
      {
         return $this->findPk($key, $con);
      }
@@ -134,7 +134,7 @@ abstract class BaseBonusQuery extends ModelCriteria
      */
     protected function findPkSimple($key, $con)
     {
-        $sql = 'SELECT `idBonus`, `nameBonus`, `valueBonus` FROM `Bonus` WHERE `idBonus` = :p0';
+        $sql = 'SELECT `id`, `nameBonus`, `valueBonus` FROM `Bonus` WHERE `id` = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -207,7 +207,7 @@ abstract class BaseBonusQuery extends ModelCriteria
     public function filterByPrimaryKey($key)
     {
 
-        return $this->addUsingAlias(BonusPeer::IDBONUS, $key, Criteria::EQUAL);
+        return $this->addUsingAlias(BonusPeer::ID, $key, Criteria::EQUAL);
     }
 
     /**
@@ -220,21 +220,21 @@ abstract class BaseBonusQuery extends ModelCriteria
     public function filterByPrimaryKeys($keys)
     {
 
-        return $this->addUsingAlias(BonusPeer::IDBONUS, $keys, Criteria::IN);
+        return $this->addUsingAlias(BonusPeer::ID, $keys, Criteria::IN);
     }
 
     /**
-     * Filter the query on the idBonus column
+     * Filter the query on the id column
      *
      * Example usage:
      * <code>
-     * $query->filterByIdbonus(1234); // WHERE idBonus = 1234
-     * $query->filterByIdbonus(array(12, 34)); // WHERE idBonus IN (12, 34)
-     * $query->filterByIdbonus(array('min' => 12)); // WHERE idBonus >= 12
-     * $query->filterByIdbonus(array('max' => 12)); // WHERE idBonus <= 12
+     * $query->filterById(1234); // WHERE id = 1234
+     * $query->filterById(array(12, 34)); // WHERE id IN (12, 34)
+     * $query->filterById(array('min' => 12)); // WHERE id >= 12
+     * $query->filterById(array('max' => 12)); // WHERE id <= 12
      * </code>
      *
-     * @param     mixed $idbonus The value to use as filter.
+     * @param     mixed $id The value to use as filter.
      *              Use scalar values for equality.
      *              Use array values for in_array() equivalent.
      *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
@@ -242,16 +242,16 @@ abstract class BaseBonusQuery extends ModelCriteria
      *
      * @return BonusQuery The current query, for fluid interface
      */
-    public function filterByIdbonus($idbonus = null, $comparison = null)
+    public function filterById($id = null, $comparison = null)
     {
-        if (is_array($idbonus)) {
+        if (is_array($id)) {
             $useMinMax = false;
-            if (isset($idbonus['min'])) {
-                $this->addUsingAlias(BonusPeer::IDBONUS, $idbonus['min'], Criteria::GREATER_EQUAL);
+            if (isset($id['min'])) {
+                $this->addUsingAlias(BonusPeer::ID, $id['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
-            if (isset($idbonus['max'])) {
-                $this->addUsingAlias(BonusPeer::IDBONUS, $idbonus['max'], Criteria::LESS_EQUAL);
+            if (isset($id['max'])) {
+                $this->addUsingAlias(BonusPeer::ID, $id['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -262,7 +262,7 @@ abstract class BaseBonusQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(BonusPeer::IDBONUS, $idbonus, $comparison);
+        return $this->addUsingAlias(BonusPeer::ID, $id, $comparison);
     }
 
     /**
@@ -349,7 +349,7 @@ abstract class BaseBonusQuery extends ModelCriteria
     {
         if ($gameList instanceof GameList) {
             return $this
-                ->addUsingAlias(BonusPeer::IDBONUS, $gameList->getIdbonus(), $comparison);
+                ->addUsingAlias(BonusPeer::ID, $gameList->getIdbonus(), $comparison);
         } elseif ($gameList instanceof PropelObjectCollection) {
             return $this
                 ->useGameListQuery()
@@ -436,11 +436,11 @@ abstract class BaseBonusQuery extends ModelCriteria
      *
      * @return   BonusQuery The current query, for fluid interface
      */
-    public function filterByGameRelatedByIdgame($game, $comparison = Criteria::EQUAL)
+    public function filterByGame($game, $comparison = Criteria::EQUAL)
     {
         return $this
             ->useGameListQuery()
-            ->filterByGameRelatedByIdgame($game, $comparison)
+            ->filterByGame($game, $comparison)
             ->endUse();
     }
 
@@ -454,7 +454,7 @@ abstract class BaseBonusQuery extends ModelCriteria
     public function prune($bonus = null)
     {
         if ($bonus) {
-            $this->addUsingAlias(BonusPeer::IDBONUS, $bonus->getIdbonus(), Criteria::NOT_EQUAL);
+            $this->addUsingAlias(BonusPeer::ID, $bonus->getId(), Criteria::NOT_EQUAL);
         }
 
         return $this;

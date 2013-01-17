@@ -30,10 +30,10 @@ abstract class BaseBonus extends BaseObject implements Persistent
     protected $startCopy = false;
 
     /**
-     * The value for the idbonus field.
+     * The value for the id field.
      * @var        int
      */
-    protected $idbonus;
+    protected $id;
 
     /**
      * The value for the namebonus field.
@@ -61,7 +61,7 @@ abstract class BaseBonus extends BaseObject implements Persistent
     /**
      * @var        PropelObjectCollection|Game[] Collection to store aggregation of Game objects.
      */
-    protected $collGamesRelatedByIdgame;
+    protected $collGames;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -93,7 +93,7 @@ abstract class BaseBonus extends BaseObject implements Persistent
      * An array of objects scheduled for deletion.
      * @var		PropelObjectCollection
      */
-    protected $gamesRelatedByIdgameScheduledForDeletion = null;
+    protected $gamesScheduledForDeletion = null;
 
     /**
      * An array of objects scheduled for deletion.
@@ -102,13 +102,13 @@ abstract class BaseBonus extends BaseObject implements Persistent
     protected $gameListsScheduledForDeletion = null;
 
     /**
-     * Get the [idbonus] column value.
+     * Get the [id] column value.
      *
      * @return int
      */
-    public function getIdbonus()
+    public function getId()
     {
-        return $this->idbonus;
+        return $this->id;
     }
 
     /**
@@ -132,25 +132,25 @@ abstract class BaseBonus extends BaseObject implements Persistent
     }
 
     /**
-     * Set the value of [idbonus] column.
+     * Set the value of [id] column.
      *
      * @param int $v new value
      * @return Bonus The current object (for fluent API support)
      */
-    public function setIdbonus($v)
+    public function setId($v)
     {
         if ($v !== null && is_numeric($v)) {
             $v = (int) $v;
         }
 
-        if ($this->idbonus !== $v) {
-            $this->idbonus = $v;
-            $this->modifiedColumns[] = BonusPeer::IDBONUS;
+        if ($this->id !== $v) {
+            $this->id = $v;
+            $this->modifiedColumns[] = BonusPeer::ID;
         }
 
 
         return $this;
-    } // setIdbonus()
+    } // setId()
 
     /**
      * Set the value of [namebonus] column.
@@ -226,7 +226,7 @@ abstract class BaseBonus extends BaseObject implements Persistent
     {
         try {
 
-            $this->idbonus = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
+            $this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
             $this->namebonus = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
             $this->valuebonus = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
             $this->resetModified();
@@ -302,7 +302,7 @@ abstract class BaseBonus extends BaseObject implements Persistent
             $this->collGameLists = null;
 
             $this->collPlayers = null;
-            $this->collGamesRelatedByIdgame = null;
+            $this->collGames = null;
         } // if (deep)
     }
 
@@ -453,28 +453,28 @@ abstract class BaseBonus extends BaseObject implements Persistent
                 }
             }
 
-            if ($this->gamesRelatedByIdgameScheduledForDeletion !== null) {
-                if (!$this->gamesRelatedByIdgameScheduledForDeletion->isEmpty()) {
+            if ($this->gamesScheduledForDeletion !== null) {
+                if (!$this->gamesScheduledForDeletion->isEmpty()) {
                     $pks = array();
                     $pk = $this->getPrimaryKey();
-                    foreach ($this->gamesRelatedByIdgameScheduledForDeletion->getPrimaryKeys(false) as $remotePk) {
+                    foreach ($this->gamesScheduledForDeletion->getPrimaryKeys(false) as $remotePk) {
                         $pks[] = array($pk, $remotePk);
                     }
                     GameListQuery::create()
                         ->filterByPrimaryKeys($pks)
                         ->delete($con);
-                    $this->gamesRelatedByIdgameScheduledForDeletion = null;
+                    $this->gamesScheduledForDeletion = null;
                 }
 
-                foreach ($this->getGamesRelatedByIdgame() as $gameRelatedByIdgame) {
-                    if ($gameRelatedByIdgame->isModified()) {
-                        $gameRelatedByIdgame->save($con);
+                foreach ($this->getGames() as $game) {
+                    if ($game->isModified()) {
+                        $game->save($con);
                     }
                 }
-            } elseif ($this->collGamesRelatedByIdgame) {
-                foreach ($this->collGamesRelatedByIdgame as $gameRelatedByIdgame) {
-                    if ($gameRelatedByIdgame->isModified()) {
-                        $gameRelatedByIdgame->save($con);
+            } elseif ($this->collGames) {
+                foreach ($this->collGames as $game) {
+                    if ($game->isModified()) {
+                        $game->save($con);
                     }
                 }
             }
@@ -516,14 +516,14 @@ abstract class BaseBonus extends BaseObject implements Persistent
         $modifiedColumns = array();
         $index = 0;
 
-        $this->modifiedColumns[] = BonusPeer::IDBONUS;
-        if (null !== $this->idbonus) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key (' . BonusPeer::IDBONUS . ')');
+        $this->modifiedColumns[] = BonusPeer::ID;
+        if (null !== $this->id) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key (' . BonusPeer::ID . ')');
         }
 
          // check the columns in natural order for more readable SQL queries
-        if ($this->isColumnModified(BonusPeer::IDBONUS)) {
-            $modifiedColumns[':p' . $index++]  = '`idBonus`';
+        if ($this->isColumnModified(BonusPeer::ID)) {
+            $modifiedColumns[':p' . $index++]  = '`id`';
         }
         if ($this->isColumnModified(BonusPeer::NAMEBONUS)) {
             $modifiedColumns[':p' . $index++]  = '`nameBonus`';
@@ -542,8 +542,8 @@ abstract class BaseBonus extends BaseObject implements Persistent
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case '`idBonus`':
-                        $stmt->bindValue($identifier, $this->idbonus, PDO::PARAM_INT);
+                    case '`id`':
+                        $stmt->bindValue($identifier, $this->id, PDO::PARAM_INT);
                         break;
                     case '`nameBonus`':
                         $stmt->bindValue($identifier, $this->namebonus, PDO::PARAM_STR);
@@ -564,7 +564,7 @@ abstract class BaseBonus extends BaseObject implements Persistent
         } catch (Exception $e) {
             throw new PropelException('Unable to get autoincrement id.', $e);
         }
-        $this->setIdbonus($pk);
+        $this->setId($pk);
 
         $this->setNew(false);
     }
@@ -694,7 +694,7 @@ abstract class BaseBonus extends BaseObject implements Persistent
     {
         switch ($pos) {
             case 0:
-                return $this->getIdbonus();
+                return $this->getId();
                 break;
             case 1:
                 return $this->getNamebonus();
@@ -731,7 +731,7 @@ abstract class BaseBonus extends BaseObject implements Persistent
         $alreadyDumpedObjects['Bonus'][$this->getPrimaryKey()] = true;
         $keys = BonusPeer::getFieldNames($keyType);
         $result = array(
-            $keys[0] => $this->getIdbonus(),
+            $keys[0] => $this->getId(),
             $keys[1] => $this->getNamebonus(),
             $keys[2] => $this->getValuebonus(),
         );
@@ -774,7 +774,7 @@ abstract class BaseBonus extends BaseObject implements Persistent
     {
         switch ($pos) {
             case 0:
-                $this->setIdbonus($value);
+                $this->setId($value);
                 break;
             case 1:
                 $this->setNamebonus($value);
@@ -806,7 +806,7 @@ abstract class BaseBonus extends BaseObject implements Persistent
     {
         $keys = BonusPeer::getFieldNames($keyType);
 
-        if (array_key_exists($keys[0], $arr)) $this->setIdbonus($arr[$keys[0]]);
+        if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
         if (array_key_exists($keys[1], $arr)) $this->setNamebonus($arr[$keys[1]]);
         if (array_key_exists($keys[2], $arr)) $this->setValuebonus($arr[$keys[2]]);
     }
@@ -820,7 +820,7 @@ abstract class BaseBonus extends BaseObject implements Persistent
     {
         $criteria = new Criteria(BonusPeer::DATABASE_NAME);
 
-        if ($this->isColumnModified(BonusPeer::IDBONUS)) $criteria->add(BonusPeer::IDBONUS, $this->idbonus);
+        if ($this->isColumnModified(BonusPeer::ID)) $criteria->add(BonusPeer::ID, $this->id);
         if ($this->isColumnModified(BonusPeer::NAMEBONUS)) $criteria->add(BonusPeer::NAMEBONUS, $this->namebonus);
         if ($this->isColumnModified(BonusPeer::VALUEBONUS)) $criteria->add(BonusPeer::VALUEBONUS, $this->valuebonus);
 
@@ -838,7 +838,7 @@ abstract class BaseBonus extends BaseObject implements Persistent
     public function buildPkeyCriteria()
     {
         $criteria = new Criteria(BonusPeer::DATABASE_NAME);
-        $criteria->add(BonusPeer::IDBONUS, $this->idbonus);
+        $criteria->add(BonusPeer::ID, $this->id);
 
         return $criteria;
     }
@@ -849,18 +849,18 @@ abstract class BaseBonus extends BaseObject implements Persistent
      */
     public function getPrimaryKey()
     {
-        return $this->getIdbonus();
+        return $this->getId();
     }
 
     /**
-     * Generic method to set the primary key (idbonus column).
+     * Generic method to set the primary key (id column).
      *
      * @param  int $key Primary key.
      * @return void
      */
     public function setPrimaryKey($key)
     {
-        $this->setIdbonus($key);
+        $this->setId($key);
     }
 
     /**
@@ -870,7 +870,7 @@ abstract class BaseBonus extends BaseObject implements Persistent
     public function isPrimaryKeyNull()
     {
 
-        return null === $this->getIdbonus();
+        return null === $this->getId();
     }
 
     /**
@@ -908,7 +908,7 @@ abstract class BaseBonus extends BaseObject implements Persistent
 
         if ($makeNew) {
             $copyObj->setNew(true);
-            $copyObj->setIdbonus(NULL); // this is a auto-increment column, so set to default value
+            $copyObj->setId(NULL); // this is a auto-increment column, so set to default value
         }
     }
 
@@ -1228,10 +1228,10 @@ abstract class BaseBonus extends BaseObject implements Persistent
      * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
      * @return PropelObjectCollection|GameList[] List of GameList objects
      */
-    public function getGameListsJoinGameRelatedByIdgame($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    public function getGameListsJoinGame($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
     {
         $query = GameListQuery::create(null, $criteria);
-        $query->joinWith('GameRelatedByIdgame', $join_behavior);
+        $query->joinWith('Game', $join_behavior);
 
         return $this->getGameLists($query, $con);
     }
@@ -1414,35 +1414,35 @@ abstract class BaseBonus extends BaseObject implements Persistent
     }
 
     /**
-     * Clears out the collGamesRelatedByIdgame collection
+     * Clears out the collGames collection
      *
      * This does not modify the database; however, it will remove any associated objects, causing
      * them to be refetched by subsequent calls to accessor method.
      *
      * @return Bonus The current object (for fluent API support)
-     * @see        addGamesRelatedByIdgame()
+     * @see        addGames()
      */
-    public function clearGamesRelatedByIdgame()
+    public function clearGames()
     {
-        $this->collGamesRelatedByIdgame = null; // important to set this to null since that means it is uninitialized
-        $this->collGamesRelatedByIdgamePartial = null;
+        $this->collGames = null; // important to set this to null since that means it is uninitialized
+        $this->collGamesPartial = null;
 
         return $this;
     }
 
     /**
-     * Initializes the collGamesRelatedByIdgame collection.
+     * Initializes the collGames collection.
      *
-     * By default this just sets the collGamesRelatedByIdgame collection to an empty collection (like clearGamesRelatedByIdgame());
+     * By default this just sets the collGames collection to an empty collection (like clearGames());
      * however, you may wish to override this method in your stub class to provide setting appropriate
      * to your application -- for example, setting the initial array to the values stored in database.
      *
      * @return void
      */
-    public function initGamesRelatedByIdgame()
+    public function initGames()
     {
-        $this->collGamesRelatedByIdgame = new PropelObjectCollection();
-        $this->collGamesRelatedByIdgame->setModel('Game');
+        $this->collGames = new PropelObjectCollection();
+        $this->collGames->setModel('Game');
     }
 
     /**
@@ -1460,24 +1460,24 @@ abstract class BaseBonus extends BaseObject implements Persistent
      *
      * @return PropelObjectCollection|Game[] List of Game objects
      */
-    public function getGamesRelatedByIdgame($criteria = null, PropelPDO $con = null)
+    public function getGames($criteria = null, PropelPDO $con = null)
     {
-        if (null === $this->collGamesRelatedByIdgame || null !== $criteria) {
-            if ($this->isNew() && null === $this->collGamesRelatedByIdgame) {
+        if (null === $this->collGames || null !== $criteria) {
+            if ($this->isNew() && null === $this->collGames) {
                 // return empty collection
-                $this->initGamesRelatedByIdgame();
+                $this->initGames();
             } else {
-                $collGamesRelatedByIdgame = GameQuery::create(null, $criteria)
+                $collGames = GameQuery::create(null, $criteria)
                     ->filterByBonus($this)
                     ->find($con);
                 if (null !== $criteria) {
-                    return $collGamesRelatedByIdgame;
+                    return $collGames;
                 }
-                $this->collGamesRelatedByIdgame = $collGamesRelatedByIdgame;
+                $this->collGames = $collGames;
             }
         }
 
-        return $this->collGamesRelatedByIdgame;
+        return $this->collGames;
     }
 
     /**
@@ -1486,24 +1486,24 @@ abstract class BaseBonus extends BaseObject implements Persistent
      * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
      * and new objects from the given Propel collection.
      *
-     * @param PropelCollection $gamesRelatedByIdgame A Propel collection.
+     * @param PropelCollection $games A Propel collection.
      * @param PropelPDO $con Optional connection object
      * @return Bonus The current object (for fluent API support)
      */
-    public function setGamesRelatedByIdgame(PropelCollection $gamesRelatedByIdgame, PropelPDO $con = null)
+    public function setGames(PropelCollection $games, PropelPDO $con = null)
     {
-        $this->clearGamesRelatedByIdgame();
-        $currentGamesRelatedByIdgame = $this->getGamesRelatedByIdgame();
+        $this->clearGames();
+        $currentGames = $this->getGames();
 
-        $this->gamesRelatedByIdgameScheduledForDeletion = $currentGamesRelatedByIdgame->diff($gamesRelatedByIdgame);
+        $this->gamesScheduledForDeletion = $currentGames->diff($games);
 
-        foreach ($gamesRelatedByIdgame as $gameRelatedByIdgame) {
-            if (!$currentGamesRelatedByIdgame->contains($gameRelatedByIdgame)) {
-                $this->doAddGameRelatedByIdgame($gameRelatedByIdgame);
+        foreach ($games as $game) {
+            if (!$currentGames->contains($game)) {
+                $this->doAddGame($game);
             }
         }
 
-        $this->collGamesRelatedByIdgame = $gamesRelatedByIdgame;
+        $this->collGames = $games;
 
         return $this;
     }
@@ -1518,10 +1518,10 @@ abstract class BaseBonus extends BaseObject implements Persistent
      *
      * @return int the number of related Game objects
      */
-    public function countGamesRelatedByIdgame($criteria = null, $distinct = false, PropelPDO $con = null)
+    public function countGames($criteria = null, $distinct = false, PropelPDO $con = null)
     {
-        if (null === $this->collGamesRelatedByIdgame || null !== $criteria) {
-            if ($this->isNew() && null === $this->collGamesRelatedByIdgame) {
+        if (null === $this->collGames || null !== $criteria) {
+            if ($this->isNew() && null === $this->collGames) {
                 return 0;
             } else {
                 $query = GameQuery::create(null, $criteria);
@@ -1534,7 +1534,7 @@ abstract class BaseBonus extends BaseObject implements Persistent
                     ->count($con);
             }
         } else {
-            return count($this->collGamesRelatedByIdgame);
+            return count($this->collGames);
         }
     }
 
@@ -1545,27 +1545,27 @@ abstract class BaseBonus extends BaseObject implements Persistent
      * @param  Game $game The GameList object to relate
      * @return Bonus The current object (for fluent API support)
      */
-    public function addGameRelatedByIdgame(Game $game)
+    public function addGame(Game $game)
     {
-        if ($this->collGamesRelatedByIdgame === null) {
-            $this->initGamesRelatedByIdgame();
+        if ($this->collGames === null) {
+            $this->initGames();
         }
-        if (!$this->collGamesRelatedByIdgame->contains($game)) { // only add it if the **same** object is not already associated
-            $this->doAddGameRelatedByIdgame($game);
+        if (!$this->collGames->contains($game)) { // only add it if the **same** object is not already associated
+            $this->doAddGame($game);
 
-            $this->collGamesRelatedByIdgame[]= $game;
+            $this->collGames[]= $game;
         }
 
         return $this;
     }
 
     /**
-     * @param	GameRelatedByIdgame $gameRelatedByIdgame The gameRelatedByIdgame object to add.
+     * @param	Game $game The game object to add.
      */
-    protected function doAddGameRelatedByIdgame($gameRelatedByIdgame)
+    protected function doAddGame($game)
     {
         $gameList = new GameList();
-        $gameList->setGameRelatedByIdgame($gameRelatedByIdgame);
+        $gameList->setGame($game);
         $this->addGameList($gameList);
     }
 
@@ -1576,15 +1576,15 @@ abstract class BaseBonus extends BaseObject implements Persistent
      * @param Game $game The GameList object to relate
      * @return Bonus The current object (for fluent API support)
      */
-    public function removeGameRelatedByIdgame(Game $game)
+    public function removeGame(Game $game)
     {
-        if ($this->getGamesRelatedByIdgame()->contains($game)) {
-            $this->collGamesRelatedByIdgame->remove($this->collGamesRelatedByIdgame->search($game));
-            if (null === $this->gamesRelatedByIdgameScheduledForDeletion) {
-                $this->gamesRelatedByIdgameScheduledForDeletion = clone $this->collGamesRelatedByIdgame;
-                $this->gamesRelatedByIdgameScheduledForDeletion->clear();
+        if ($this->getGames()->contains($game)) {
+            $this->collGames->remove($this->collGames->search($game));
+            if (null === $this->gamesScheduledForDeletion) {
+                $this->gamesScheduledForDeletion = clone $this->collGames;
+                $this->gamesScheduledForDeletion->clear();
             }
-            $this->gamesRelatedByIdgameScheduledForDeletion[]= $game;
+            $this->gamesScheduledForDeletion[]= $game;
         }
 
         return $this;
@@ -1595,7 +1595,7 @@ abstract class BaseBonus extends BaseObject implements Persistent
      */
     public function clear()
     {
-        $this->idbonus = null;
+        $this->id = null;
         $this->namebonus = null;
         $this->valuebonus = null;
         $this->alreadyInSave = false;
@@ -1630,8 +1630,8 @@ abstract class BaseBonus extends BaseObject implements Persistent
                     $o->clearAllReferences($deep);
                 }
             }
-            if ($this->collGamesRelatedByIdgame) {
-                foreach ($this->collGamesRelatedByIdgame as $o) {
+            if ($this->collGames) {
+                foreach ($this->collGames as $o) {
                     $o->clearAllReferences($deep);
                 }
             }
@@ -1647,10 +1647,10 @@ abstract class BaseBonus extends BaseObject implements Persistent
             $this->collPlayers->clearIterator();
         }
         $this->collPlayers = null;
-        if ($this->collGamesRelatedByIdgame instanceof PropelCollection) {
-            $this->collGamesRelatedByIdgame->clearIterator();
+        if ($this->collGames instanceof PropelCollection) {
+            $this->collGames->clearIterator();
         }
-        $this->collGamesRelatedByIdgame = null;
+        $this->collGames = null;
     }
 
     /**

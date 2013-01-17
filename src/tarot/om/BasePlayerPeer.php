@@ -32,8 +32,8 @@ abstract class BasePlayerPeer
     /** The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS) */
     const NUM_HYDRATE_COLUMNS = 3;
 
-    /** the column name for the idPlayer field */
-    const IDPLAYER = 'Player.idPlayer';
+    /** the column name for the id field */
+    const ID = 'Player.id';
 
     /** the column name for the namePlayer field */
     const NAMEPLAYER = 'Player.namePlayer';
@@ -60,11 +60,11 @@ abstract class BasePlayerPeer
      * e.g. PlayerPeer::$fieldNames[PlayerPeer::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        BasePeer::TYPE_PHPNAME => array ('Idplayer', 'Nameplayer', 'Mailplayer', ),
-        BasePeer::TYPE_STUDLYPHPNAME => array ('idplayer', 'nameplayer', 'mailplayer', ),
-        BasePeer::TYPE_COLNAME => array (PlayerPeer::IDPLAYER, PlayerPeer::NAMEPLAYER, PlayerPeer::MAILPLAYER, ),
-        BasePeer::TYPE_RAW_COLNAME => array ('IDPLAYER', 'NAMEPLAYER', 'MAILPLAYER', ),
-        BasePeer::TYPE_FIELDNAME => array ('idPlayer', 'namePlayer', 'mailPlayer', ),
+        BasePeer::TYPE_PHPNAME => array ('Id', 'Nameplayer', 'Mailplayer', ),
+        BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'nameplayer', 'mailplayer', ),
+        BasePeer::TYPE_COLNAME => array (PlayerPeer::ID, PlayerPeer::NAMEPLAYER, PlayerPeer::MAILPLAYER, ),
+        BasePeer::TYPE_RAW_COLNAME => array ('ID', 'NAMEPLAYER', 'MAILPLAYER', ),
+        BasePeer::TYPE_FIELDNAME => array ('id', 'namePlayer', 'mailPlayer', ),
         BasePeer::TYPE_NUM => array (0, 1, 2, )
     );
 
@@ -75,11 +75,11 @@ abstract class BasePlayerPeer
      * e.g. PlayerPeer::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        BasePeer::TYPE_PHPNAME => array ('Idplayer' => 0, 'Nameplayer' => 1, 'Mailplayer' => 2, ),
-        BasePeer::TYPE_STUDLYPHPNAME => array ('idplayer' => 0, 'nameplayer' => 1, 'mailplayer' => 2, ),
-        BasePeer::TYPE_COLNAME => array (PlayerPeer::IDPLAYER => 0, PlayerPeer::NAMEPLAYER => 1, PlayerPeer::MAILPLAYER => 2, ),
-        BasePeer::TYPE_RAW_COLNAME => array ('IDPLAYER' => 0, 'NAMEPLAYER' => 1, 'MAILPLAYER' => 2, ),
-        BasePeer::TYPE_FIELDNAME => array ('idPlayer' => 0, 'namePlayer' => 1, 'mailPlayer' => 2, ),
+        BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Nameplayer' => 1, 'Mailplayer' => 2, ),
+        BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'nameplayer' => 1, 'mailplayer' => 2, ),
+        BasePeer::TYPE_COLNAME => array (PlayerPeer::ID => 0, PlayerPeer::NAMEPLAYER => 1, PlayerPeer::MAILPLAYER => 2, ),
+        BasePeer::TYPE_RAW_COLNAME => array ('ID' => 0, 'NAMEPLAYER' => 1, 'MAILPLAYER' => 2, ),
+        BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'namePlayer' => 1, 'mailPlayer' => 2, ),
         BasePeer::TYPE_NUM => array (0, 1, 2, )
     );
 
@@ -154,11 +154,11 @@ abstract class BasePlayerPeer
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(PlayerPeer::IDPLAYER);
+            $criteria->addSelectColumn(PlayerPeer::ID);
             $criteria->addSelectColumn(PlayerPeer::NAMEPLAYER);
             $criteria->addSelectColumn(PlayerPeer::MAILPLAYER);
         } else {
-            $criteria->addSelectColumn($alias . '.idPlayer');
+            $criteria->addSelectColumn($alias . '.id');
             $criteria->addSelectColumn($alias . '.namePlayer');
             $criteria->addSelectColumn($alias . '.mailPlayer');
         }
@@ -287,7 +287,7 @@ abstract class BasePlayerPeer
     {
         if (Propel::isInstancePoolingEnabled()) {
             if ($key === null) {
-                $key = (string) $obj->getIdplayer();
+                $key = (string) $obj->getId();
             } // if key === null
             PlayerPeer::$instances[$key] = $obj;
         }
@@ -310,7 +310,7 @@ abstract class BasePlayerPeer
     {
         if (Propel::isInstancePoolingEnabled() && $value !== null) {
             if (is_object($value) && $value instanceof Player) {
-                $key = (string) $value->getIdplayer();
+                $key = (string) $value->getId();
             } elseif (is_scalar($value)) {
                 // assume we've been passed a primary key
                 $key = (string) $value;
@@ -367,12 +367,18 @@ abstract class BasePlayerPeer
      */
     public static function clearRelatedInstancePool()
     {
+        // Invalidate objects in TournamentPeer instance pool,
+        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
+        TournamentPeer::clearInstancePool();
         // Invalidate objects in GamePeer instance pool,
         // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
         GamePeer::clearInstancePool();
         // Invalidate objects in GameListPeer instance pool,
         // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
         GameListPeer::clearInstancePool();
+        // Invalidate objects in ScoreTournamentPeer instance pool,
+        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
+        ScoreTournamentPeer::clearInstancePool();
     }
 
     /**
@@ -524,8 +530,8 @@ abstract class BasePlayerPeer
             $criteria = $values->buildCriteria(); // build Criteria from Player object
         }
 
-        if ($criteria->containsKey(PlayerPeer::IDPLAYER) && $criteria->keyContainsValue(PlayerPeer::IDPLAYER) ) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key ('.PlayerPeer::IDPLAYER.')');
+        if ($criteria->containsKey(PlayerPeer::ID) && $criteria->keyContainsValue(PlayerPeer::ID) ) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key ('.PlayerPeer::ID.')');
         }
 
 
@@ -566,10 +572,10 @@ abstract class BasePlayerPeer
         if ($values instanceof Criteria) {
             $criteria = clone $values; // rename for clarity
 
-            $comparison = $criteria->getComparison(PlayerPeer::IDPLAYER);
-            $value = $criteria->remove(PlayerPeer::IDPLAYER);
+            $comparison = $criteria->getComparison(PlayerPeer::ID);
+            $value = $criteria->remove(PlayerPeer::ID);
             if ($value) {
-                $selectCriteria->add(PlayerPeer::IDPLAYER, $value, $comparison);
+                $selectCriteria->add(PlayerPeer::ID, $value, $comparison);
             } else {
                 $selectCriteria->setPrimaryTableName(PlayerPeer::TABLE_NAME);
             }
@@ -643,7 +649,7 @@ abstract class BasePlayerPeer
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
             $criteria = new Criteria(PlayerPeer::DATABASE_NAME);
-            $criteria->add(PlayerPeer::IDPLAYER, (array) $values, Criteria::IN);
+            $criteria->add(PlayerPeer::ID, (array) $values, Criteria::IN);
         }
 
         // Set the correct dbName
@@ -707,18 +713,30 @@ abstract class BasePlayerPeer
         foreach ($objects as $obj) {
 
 
+            // delete related Tournament objects
+            $criteria = new Criteria(TournamentPeer::DATABASE_NAME);
+
+            $criteria->add(TournamentPeer::IDWINNER, $obj->getId());
+            $affectedRows += TournamentPeer::doDelete($criteria, $con);
+
             // delete related Game objects
             $criteria = new Criteria(GamePeer::DATABASE_NAME);
 
-            $criteria->add(GamePeer::IDCALL, $obj->getIdplayer());
-            $criteria->add(GamePeer::IDCALLED, $obj->getIdplayer());
+            $criteria->add(GamePeer::IDCALL, $obj->getId());
+            $criteria->add(GamePeer::IDCALLED, $obj->getId());
             $affectedRows += GamePeer::doDelete($criteria, $con);
 
             // delete related GameList objects
             $criteria = new Criteria(GameListPeer::DATABASE_NAME);
 
-            $criteria->add(GameListPeer::IDPLAYER, $obj->getIdplayer());
+            $criteria->add(GameListPeer::IDPLAYER, $obj->getId());
             $affectedRows += GameListPeer::doDelete($criteria, $con);
+
+            // delete related ScoreTournament objects
+            $criteria = new Criteria(ScoreTournamentPeer::DATABASE_NAME);
+
+            $criteria->add(ScoreTournamentPeer::IDPLAYER, $obj->getId());
+            $affectedRows += ScoreTournamentPeer::doDelete($criteria, $con);
         }
 
         return $affectedRows;
@@ -780,7 +798,7 @@ abstract class BasePlayerPeer
         }
 
         $criteria = new Criteria(PlayerPeer::DATABASE_NAME);
-        $criteria->add(PlayerPeer::IDPLAYER, $pk);
+        $criteria->add(PlayerPeer::ID, $pk);
 
         $v = PlayerPeer::doSelect($criteria, $con);
 
@@ -807,7 +825,7 @@ abstract class BasePlayerPeer
             $objs = array();
         } else {
             $criteria = new Criteria(PlayerPeer::DATABASE_NAME);
-            $criteria->add(PlayerPeer::IDPLAYER, $pks, Criteria::IN);
+            $criteria->add(PlayerPeer::ID, $pks, Criteria::IN);
             $objs = PlayerPeer::doSelect($criteria, $con);
         }
 

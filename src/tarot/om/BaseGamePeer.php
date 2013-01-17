@@ -32,8 +32,8 @@ abstract class BaseGamePeer
     /** The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS) */
     const NUM_HYDRATE_COLUMNS = 6;
 
-    /** the column name for the idGame field */
-    const IDGAME = 'Game.idGame';
+    /** the column name for the id field */
+    const ID = 'Game.id';
 
     /** the column name for the idCall field */
     const IDCALL = 'Game.idCall';
@@ -69,11 +69,11 @@ abstract class BaseGamePeer
      * e.g. GamePeer::$fieldNames[GamePeer::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        BasePeer::TYPE_PHPNAME => array ('Idgame', 'Idcall', 'Idcalled', 'Idtournament', 'Bids', 'Score', ),
-        BasePeer::TYPE_STUDLYPHPNAME => array ('idgame', 'idcall', 'idcalled', 'idtournament', 'bids', 'score', ),
-        BasePeer::TYPE_COLNAME => array (GamePeer::IDGAME, GamePeer::IDCALL, GamePeer::IDCALLED, GamePeer::IDTOURNAMENT, GamePeer::BIDS, GamePeer::SCORE, ),
-        BasePeer::TYPE_RAW_COLNAME => array ('IDGAME', 'IDCALL', 'IDCALLED', 'IDTOURNAMENT', 'BIDS', 'SCORE', ),
-        BasePeer::TYPE_FIELDNAME => array ('idGame', 'idCall', 'idCalled', 'idTournament', 'bids', 'score', ),
+        BasePeer::TYPE_PHPNAME => array ('Id', 'Idcall', 'Idcalled', 'Idtournament', 'Bids', 'Score', ),
+        BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'idcall', 'idcalled', 'idtournament', 'bids', 'score', ),
+        BasePeer::TYPE_COLNAME => array (GamePeer::ID, GamePeer::IDCALL, GamePeer::IDCALLED, GamePeer::IDTOURNAMENT, GamePeer::BIDS, GamePeer::SCORE, ),
+        BasePeer::TYPE_RAW_COLNAME => array ('ID', 'IDCALL', 'IDCALLED', 'IDTOURNAMENT', 'BIDS', 'SCORE', ),
+        BasePeer::TYPE_FIELDNAME => array ('id', 'idCall', 'idCalled', 'idTournament', 'bids', 'score', ),
         BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
     );
 
@@ -84,11 +84,11 @@ abstract class BaseGamePeer
      * e.g. GamePeer::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        BasePeer::TYPE_PHPNAME => array ('Idgame' => 0, 'Idcall' => 1, 'Idcalled' => 2, 'Idtournament' => 3, 'Bids' => 4, 'Score' => 5, ),
-        BasePeer::TYPE_STUDLYPHPNAME => array ('idgame' => 0, 'idcall' => 1, 'idcalled' => 2, 'idtournament' => 3, 'bids' => 4, 'score' => 5, ),
-        BasePeer::TYPE_COLNAME => array (GamePeer::IDGAME => 0, GamePeer::IDCALL => 1, GamePeer::IDCALLED => 2, GamePeer::IDTOURNAMENT => 3, GamePeer::BIDS => 4, GamePeer::SCORE => 5, ),
-        BasePeer::TYPE_RAW_COLNAME => array ('IDGAME' => 0, 'IDCALL' => 1, 'IDCALLED' => 2, 'IDTOURNAMENT' => 3, 'BIDS' => 4, 'SCORE' => 5, ),
-        BasePeer::TYPE_FIELDNAME => array ('idGame' => 0, 'idCall' => 1, 'idCalled' => 2, 'idTournament' => 3, 'bids' => 4, 'score' => 5, ),
+        BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Idcall' => 1, 'Idcalled' => 2, 'Idtournament' => 3, 'Bids' => 4, 'Score' => 5, ),
+        BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'idcall' => 1, 'idcalled' => 2, 'idtournament' => 3, 'bids' => 4, 'score' => 5, ),
+        BasePeer::TYPE_COLNAME => array (GamePeer::ID => 0, GamePeer::IDCALL => 1, GamePeer::IDCALLED => 2, GamePeer::IDTOURNAMENT => 3, GamePeer::BIDS => 4, GamePeer::SCORE => 5, ),
+        BasePeer::TYPE_RAW_COLNAME => array ('ID' => 0, 'IDCALL' => 1, 'IDCALLED' => 2, 'IDTOURNAMENT' => 3, 'BIDS' => 4, 'SCORE' => 5, ),
+        BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'idCall' => 1, 'idCalled' => 2, 'idTournament' => 3, 'bids' => 4, 'score' => 5, ),
         BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
     );
 
@@ -163,14 +163,14 @@ abstract class BaseGamePeer
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(GamePeer::IDGAME);
+            $criteria->addSelectColumn(GamePeer::ID);
             $criteria->addSelectColumn(GamePeer::IDCALL);
             $criteria->addSelectColumn(GamePeer::IDCALLED);
             $criteria->addSelectColumn(GamePeer::IDTOURNAMENT);
             $criteria->addSelectColumn(GamePeer::BIDS);
             $criteria->addSelectColumn(GamePeer::SCORE);
         } else {
-            $criteria->addSelectColumn($alias . '.idGame');
+            $criteria->addSelectColumn($alias . '.id');
             $criteria->addSelectColumn($alias . '.idCall');
             $criteria->addSelectColumn($alias . '.idCalled');
             $criteria->addSelectColumn($alias . '.idTournament');
@@ -302,7 +302,7 @@ abstract class BaseGamePeer
     {
         if (Propel::isInstancePoolingEnabled()) {
             if ($key === null) {
-                $key = (string) $obj->getIdgame();
+                $key = (string) $obj->getId();
             } // if key === null
             GamePeer::$instances[$key] = $obj;
         }
@@ -325,7 +325,7 @@ abstract class BaseGamePeer
     {
         if (Propel::isInstancePoolingEnabled() && $value !== null) {
             if (is_object($value) && $value instanceof Game) {
-                $key = (string) $value->getIdgame();
+                $key = (string) $value->getId();
             } elseif (is_scalar($value)) {
                 // assume we've been passed a primary key
                 $key = (string) $value;
@@ -483,7 +483,7 @@ abstract class BaseGamePeer
 
 
     /**
-     * Returns the number of rows matching criteria, joining the related GameListRelatedByIdgame table
+     * Returns the number of rows matching criteria, joining the related Tournament table
      *
      * @param      Criteria $criteria
      * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
@@ -491,7 +491,7 @@ abstract class BaseGamePeer
      * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
      * @return int Number of matching rows.
      */
-    public static function doCountJoinGameListRelatedByIdgame(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    public static function doCountJoinTournament(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
     {
         // we're going to modify criteria, so copy it first
         $criteria = clone $criteria;
@@ -518,7 +518,7 @@ abstract class BaseGamePeer
             $con = Propel::getConnection(GamePeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
 
-        $criteria->addJoin(GamePeer::IDGAME, GameListPeer::IDGAME, $join_behavior);
+        $criteria->addJoin(GamePeer::IDTOURNAMENT, TournamentPeer::ID, $join_behavior);
 
         $stmt = BasePeer::doCount($criteria, $con);
 
@@ -570,8 +570,8 @@ abstract class BaseGamePeer
         }
 
         $criteria->addMultipleJoin(array(
-        array(GamePeer::IDCALL, PlayerPeer::IDPLAYER),
-        array(GamePeer::IDCALLED, PlayerPeer::IDPLAYER),
+        array(GamePeer::IDCALL, PlayerPeer::ID),
+        array(GamePeer::IDCALLED, PlayerPeer::ID),
       ), $join_behavior);
 
         $stmt = BasePeer::doCount($criteria, $con);
@@ -588,7 +588,7 @@ abstract class BaseGamePeer
 
 
     /**
-     * Selects a collection of Game objects pre-filled with their GameList objects.
+     * Selects a collection of Game objects pre-filled with their Tournament objects.
      * @param      Criteria  $criteria
      * @param      PropelPDO $con
      * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
@@ -596,7 +596,7 @@ abstract class BaseGamePeer
      * @throws PropelException Any exceptions caught during processing will be
      *		 rethrown wrapped into a PropelException.
      */
-    public static function doSelectJoinGameListRelatedByIdgame(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    public static function doSelectJoinTournament(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
     {
         $criteria = clone $criteria;
 
@@ -607,9 +607,9 @@ abstract class BaseGamePeer
 
         GamePeer::addSelectColumns($criteria);
         $startcol = GamePeer::NUM_HYDRATE_COLUMNS;
-        GameListPeer::addSelectColumns($criteria);
+        TournamentPeer::addSelectColumns($criteria);
 
-        $criteria->addJoin(GamePeer::IDGAME, GameListPeer::IDGAME, $join_behavior);
+        $criteria->addJoin(GamePeer::IDTOURNAMENT, TournamentPeer::ID, $join_behavior);
 
         $stmt = BasePeer::doSelect($criteria, $con);
         $results = array();
@@ -629,21 +629,20 @@ abstract class BaseGamePeer
                 GamePeer::addInstanceToPool($obj1, $key1);
             } // if $obj1 already loaded
 
-            $key2 = GameListPeer::getPrimaryKeyHashFromRow($row, $startcol);
+            $key2 = TournamentPeer::getPrimaryKeyHashFromRow($row, $startcol);
             if ($key2 !== null) {
-                $obj2 = GameListPeer::getInstanceFromPool($key2);
+                $obj2 = TournamentPeer::getInstanceFromPool($key2);
                 if (!$obj2) {
 
-                    $cls = GameListPeer::getOMClass();
+                    $cls = TournamentPeer::getOMClass();
 
                     $obj2 = new $cls();
                     $obj2->hydrate($row, $startcol);
-                    GameListPeer::addInstanceToPool($obj2, $key2);
+                    TournamentPeer::addInstanceToPool($obj2, $key2);
                 } // if obj2 already loaded
 
-                // Add the $obj1 (Game) to $obj2 (GameList)
-                // one to one relationship
-                $obj1->setGameList($obj2);
+                // Add the $obj1 (Game) to $obj2 (Tournament)
+                $obj2->addGame($obj1);
 
             } // if joined row was not null
 
@@ -678,8 +677,8 @@ abstract class BaseGamePeer
         PlayerPeer::addSelectColumns($criteria);
 
         $criteria->addMultipleJoin(array(
-        array(GamePeer::IDCALL, PlayerPeer::IDPLAYER),
-        array(GamePeer::IDCALLED, PlayerPeer::IDPLAYER),
+        array(GamePeer::IDCALL, PlayerPeer::ID),
+        array(GamePeer::IDCALLED, PlayerPeer::ID),
       ), $join_behavior);
 
         $stmt = BasePeer::doSelect($criteria, $con);
@@ -761,11 +760,11 @@ abstract class BaseGamePeer
             $con = Propel::getConnection(GamePeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
 
-        $criteria->addJoin(GamePeer::IDGAME, GameListPeer::IDGAME, $join_behavior);
+        $criteria->addJoin(GamePeer::IDTOURNAMENT, TournamentPeer::ID, $join_behavior);
 
         $criteria->addMultipleJoin(array(
-        array(GamePeer::IDCALL, PlayerPeer::IDPLAYER),
-        array(GamePeer::IDCALLED, PlayerPeer::IDPLAYER),
+        array(GamePeer::IDCALL, PlayerPeer::ID),
+        array(GamePeer::IDCALLED, PlayerPeer::ID),
       ), $join_behavior);
 
         $stmt = BasePeer::doCount($criteria, $con);
@@ -802,17 +801,17 @@ abstract class BaseGamePeer
         GamePeer::addSelectColumns($criteria);
         $startcol2 = GamePeer::NUM_HYDRATE_COLUMNS;
 
-        GameListPeer::addSelectColumns($criteria);
-        $startcol3 = $startcol2 + GameListPeer::NUM_HYDRATE_COLUMNS;
+        TournamentPeer::addSelectColumns($criteria);
+        $startcol3 = $startcol2 + TournamentPeer::NUM_HYDRATE_COLUMNS;
 
         PlayerPeer::addSelectColumns($criteria);
         $startcol4 = $startcol3 + PlayerPeer::NUM_HYDRATE_COLUMNS;
 
-        $criteria->addJoin(GamePeer::IDGAME, GameListPeer::IDGAME, $join_behavior);
+        $criteria->addJoin(GamePeer::IDTOURNAMENT, TournamentPeer::ID, $join_behavior);
 
         $criteria->addMultipleJoin(array(
-        array(GamePeer::IDCALL, PlayerPeer::IDPLAYER),
-        array(GamePeer::IDCALLED, PlayerPeer::IDPLAYER),
+        array(GamePeer::IDCALL, PlayerPeer::ID),
+        array(GamePeer::IDCALLED, PlayerPeer::ID),
       ), $join_behavior);
 
         $stmt = BasePeer::doSelect($criteria, $con);
@@ -832,22 +831,22 @@ abstract class BaseGamePeer
                 GamePeer::addInstanceToPool($obj1, $key1);
             } // if obj1 already loaded
 
-            // Add objects for joined GameList rows
+            // Add objects for joined Tournament rows
 
-            $key2 = GameListPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+            $key2 = TournamentPeer::getPrimaryKeyHashFromRow($row, $startcol2);
             if ($key2 !== null) {
-                $obj2 = GameListPeer::getInstanceFromPool($key2);
+                $obj2 = TournamentPeer::getInstanceFromPool($key2);
                 if (!$obj2) {
 
-                    $cls = GameListPeer::getOMClass();
+                    $cls = TournamentPeer::getOMClass();
 
                     $obj2 = new $cls();
                     $obj2->hydrate($row, $startcol2);
-                    GameListPeer::addInstanceToPool($obj2, $key2);
+                    TournamentPeer::addInstanceToPool($obj2, $key2);
                 } // if obj2 loaded
 
-                // Add the $obj1 (Game) to the collection in $obj2 (GameList)
-                $obj1->setGameList($obj2);
+                // Add the $obj1 (Game) to the collection in $obj2 (Tournament)
+                $obj2->addGame($obj1);
             } // if joined row not null
 
             // Add objects for joined Player rows
@@ -877,7 +876,7 @@ abstract class BaseGamePeer
 
 
     /**
-     * Returns the number of rows matching criteria, joining the related GameListRelatedByIdgame table
+     * Returns the number of rows matching criteria, joining the related Tournament table
      *
      * @param      Criteria $criteria
      * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
@@ -885,7 +884,7 @@ abstract class BaseGamePeer
      * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
      * @return int Number of matching rows.
      */
-    public static function doCountJoinAllExceptGameListRelatedByIdgame(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    public static function doCountJoinAllExceptTournament(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
     {
         // we're going to modify criteria, so copy it first
         $criteria = clone $criteria;
@@ -913,8 +912,8 @@ abstract class BaseGamePeer
         }
 
         $criteria->addMultipleJoin(array(
-        array(GamePeer::IDCALL, PlayerPeer::IDPLAYER),
-        array(GamePeer::IDCALLED, PlayerPeer::IDPLAYER),
+        array(GamePeer::IDCALL, PlayerPeer::ID),
+        array(GamePeer::IDCALLED, PlayerPeer::ID),
       ), $join_behavior);
 
         $stmt = BasePeer::doCount($criteria, $con);
@@ -966,7 +965,7 @@ abstract class BaseGamePeer
             $con = Propel::getConnection(GamePeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
 
-        $criteria->addJoin(GamePeer::IDGAME, GameListPeer::IDGAME, $join_behavior);
+        $criteria->addJoin(GamePeer::IDTOURNAMENT, TournamentPeer::ID, $join_behavior);
 
         $stmt = BasePeer::doCount($criteria, $con);
 
@@ -982,7 +981,7 @@ abstract class BaseGamePeer
 
 
     /**
-     * Selects a collection of Game objects pre-filled with all related objects except GameListRelatedByIdgame.
+     * Selects a collection of Game objects pre-filled with all related objects except Tournament.
      *
      * @param      Criteria  $criteria
      * @param      PropelPDO $con
@@ -991,7 +990,7 @@ abstract class BaseGamePeer
      * @throws PropelException Any exceptions caught during processing will be
      *		 rethrown wrapped into a PropelException.
      */
-    public static function doSelectJoinAllExceptGameListRelatedByIdgame(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    public static function doSelectJoinAllExceptTournament(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
     {
         $criteria = clone $criteria;
 
@@ -1009,8 +1008,8 @@ abstract class BaseGamePeer
         $startcol3 = $startcol2 + PlayerPeer::NUM_HYDRATE_COLUMNS;
 
         $criteria->addMultipleJoin(array(
-        array(GamePeer::IDCALL, PlayerPeer::IDPLAYER),
-        array(GamePeer::IDCALLED, PlayerPeer::IDPLAYER),
+        array(GamePeer::IDCALL, PlayerPeer::ID),
+        array(GamePeer::IDCALLED, PlayerPeer::ID),
       ), $join_behavior);
 
 
@@ -1082,10 +1081,10 @@ abstract class BaseGamePeer
         GamePeer::addSelectColumns($criteria);
         $startcol2 = GamePeer::NUM_HYDRATE_COLUMNS;
 
-        GameListPeer::addSelectColumns($criteria);
-        $startcol3 = $startcol2 + GameListPeer::NUM_HYDRATE_COLUMNS;
+        TournamentPeer::addSelectColumns($criteria);
+        $startcol3 = $startcol2 + TournamentPeer::NUM_HYDRATE_COLUMNS;
 
-        $criteria->addJoin(GamePeer::IDGAME, GameListPeer::IDGAME, $join_behavior);
+        $criteria->addJoin(GamePeer::IDTOURNAMENT, TournamentPeer::ID, $join_behavior);
 
 
         $stmt = BasePeer::doSelect($criteria, $con);
@@ -1105,22 +1104,22 @@ abstract class BaseGamePeer
                 GamePeer::addInstanceToPool($obj1, $key1);
             } // if obj1 already loaded
 
-                // Add objects for joined GameList rows
+                // Add objects for joined Tournament rows
 
-                $key2 = GameListPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+                $key2 = TournamentPeer::getPrimaryKeyHashFromRow($row, $startcol2);
                 if ($key2 !== null) {
-                    $obj2 = GameListPeer::getInstanceFromPool($key2);
+                    $obj2 = TournamentPeer::getInstanceFromPool($key2);
                     if (!$obj2) {
 
-                        $cls = GameListPeer::getOMClass();
+                        $cls = TournamentPeer::getOMClass();
 
                     $obj2 = new $cls();
                     $obj2->hydrate($row, $startcol2);
-                    GameListPeer::addInstanceToPool($obj2, $key2);
+                    TournamentPeer::addInstanceToPool($obj2, $key2);
                 } // if $obj2 already loaded
 
-                // Add the $obj1 (Game) to the collection in $obj2 (GameList)
-                $obj1->setGameList($obj2);
+                // Add the $obj1 (Game) to the collection in $obj2 (Tournament)
+                $obj2->addGame($obj1);
 
             } // if joined row is not null
 
@@ -1186,8 +1185,8 @@ abstract class BaseGamePeer
             $criteria = $values->buildCriteria(); // build Criteria from Game object
         }
 
-        if ($criteria->containsKey(GamePeer::IDGAME) && $criteria->keyContainsValue(GamePeer::IDGAME) ) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key ('.GamePeer::IDGAME.')');
+        if ($criteria->containsKey(GamePeer::ID) && $criteria->keyContainsValue(GamePeer::ID) ) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key ('.GamePeer::ID.')');
         }
 
 
@@ -1228,10 +1227,10 @@ abstract class BaseGamePeer
         if ($values instanceof Criteria) {
             $criteria = clone $values; // rename for clarity
 
-            $comparison = $criteria->getComparison(GamePeer::IDGAME);
-            $value = $criteria->remove(GamePeer::IDGAME);
+            $comparison = $criteria->getComparison(GamePeer::ID);
+            $value = $criteria->remove(GamePeer::ID);
             if ($value) {
-                $selectCriteria->add(GamePeer::IDGAME, $value, $comparison);
+                $selectCriteria->add(GamePeer::ID, $value, $comparison);
             } else {
                 $selectCriteria->setPrimaryTableName(GamePeer::TABLE_NAME);
             }
@@ -1305,7 +1304,7 @@ abstract class BaseGamePeer
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
             $criteria = new Criteria(GamePeer::DATABASE_NAME);
-            $criteria->add(GamePeer::IDGAME, (array) $values, Criteria::IN);
+            $criteria->add(GamePeer::ID, (array) $values, Criteria::IN);
         }
 
         // Set the correct dbName
@@ -1372,7 +1371,7 @@ abstract class BaseGamePeer
             // delete related GameList objects
             $criteria = new Criteria(GameListPeer::DATABASE_NAME);
 
-            $criteria->add(GameListPeer::IDGAME, $obj->getIdgame());
+            $criteria->add(GameListPeer::IDGAME, $obj->getId());
             $affectedRows += GameListPeer::doDelete($criteria, $con);
         }
 
@@ -1435,7 +1434,7 @@ abstract class BaseGamePeer
         }
 
         $criteria = new Criteria(GamePeer::DATABASE_NAME);
-        $criteria->add(GamePeer::IDGAME, $pk);
+        $criteria->add(GamePeer::ID, $pk);
 
         $v = GamePeer::doSelect($criteria, $con);
 
@@ -1462,7 +1461,7 @@ abstract class BaseGamePeer
             $objs = array();
         } else {
             $criteria = new Criteria(GamePeer::DATABASE_NAME);
-            $criteria->add(GamePeer::IDGAME, $pks, Criteria::IN);
+            $criteria->add(GamePeer::ID, $pks, Criteria::IN);
             $objs = GamePeer::doSelect($criteria, $con);
         }
 
