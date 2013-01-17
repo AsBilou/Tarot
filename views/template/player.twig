@@ -1,0 +1,7 @@
+{%extends 'layout/base.twig'%}
+{%block content%}
+    {%for player in players%}
+        id Player : {{player.idPlayer}}</br>
+        Nom : {{player.namePlayer}}</br></br>
+    {%endfor%}
+{%endblock%}

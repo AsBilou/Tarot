@@ -1,4 +1,7 @@
 {%extends 'layout/base.twig'%}
 {%block content%}
-    template {{name}}
+    {%for tournament in tournaments%}
+        tournament : {{tournament.idtournament}}</br>
+        active : {{tournament.active}}</br></br>
+    {%endfor%}
 {%endblock%}
