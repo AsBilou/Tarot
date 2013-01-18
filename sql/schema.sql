@@ -90,6 +90,7 @@ CREATE TABLE `game_player`
     `player_id` INTEGER NOT NULL,
     `bonus_id` INTEGER NOT NULL,
     `type` VARCHAR(255) NOT NULL,
+    `score` INTEGER(255) NOT NULL,
     PRIMARY KEY (`game_id`,`player_id`,`bonus_id`),
     INDEX `game_player_FI_1` (`bonus_id`),
     INDEX `game_player_FI_2` (`player_id`),

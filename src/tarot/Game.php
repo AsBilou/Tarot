@@ -16,4 +16,41 @@
 class Game extends BaseGame
 {
 
+
+      public function getScoreAfterBids() {
+        $new_score = 0;
+        $bids = $this->getBids();
+        $score = $this->getScore();
+        switch ($bids) {
+        case 'prise':
+            if($score < 0){
+                $new_score = ($score - 25)*1;
+            }elseif($score >=0){
+                $new_score = ($score + 25)*1;
+            }
+            break;
+        case 'garde':
+            if($score < 0){
+                $new_score = ($score - 25)*2;
+            }elseif($score >=0){
+                $new_score = ($score + 25)*2;
+            }
+            break;
+        case 'garde_sans':
+            if($score < 0){
+                $new_score = ($score - 25)*4;
+            }elseif($score >=0){
+                $new_score = ($score + 25)*4;
+            }
+            break;
+        case 'garde_contre':
+            if($score < 0){
+                $new_score = ($score - 25)*8;
+            }elseif($score >=0){
+                $new_score = ($score + 25)*8;
+            }
+            break;
+        }
+        return $new_score;
+      }
 }

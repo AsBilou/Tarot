@@ -43,6 +43,7 @@ class GamePlayerTableMap extends TableMap
         $this->addForeignPrimaryKey('player_id', 'PlayerId', 'INTEGER' , 'player', 'id', true, null, null);
         $this->addForeignPrimaryKey('bonus_id', 'BonusId', 'INTEGER' , 'bonus', 'id', true, null, null);
         $this->addColumn('type', 'Type', 'VARCHAR', true, 255, null);
+        $this->addColumn('score', 'Score', 'INTEGER', true, 255, null);
         // validators
     } // initialize()
 

@@ -17,7 +17,10 @@ class Tournament extends BaseTournament
 {
     public function getOrderedPlayers() {
         $query = PlayerQuery::create()
-            ->orderByName();
+            ->join('GamePlayer', Criteria::LEFT_JOIN)
+            ->groupById()
+            ->orderById();
+            
         return parent::getPlayers($query);
     }
 }

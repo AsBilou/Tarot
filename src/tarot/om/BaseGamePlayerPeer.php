@@ -24,13 +24,13 @@ abstract class BaseGamePlayerPeer
     const TM_CLASS = 'GamePlayerTableMap';
 
     /** The total number of columns. */
-    const NUM_COLUMNS = 4;
+    const NUM_COLUMNS = 5;
 
     /** The number of lazy-loaded columns. */
     const NUM_LAZY_LOAD_COLUMNS = 0;
 
     /** The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS) */
-    const NUM_HYDRATE_COLUMNS = 4;
+    const NUM_HYDRATE_COLUMNS = 5;
 
     /** the column name for the game_id field */
     const GAME_ID = 'game_player.game_id';
@@ -43,6 +43,9 @@ abstract class BaseGamePlayerPeer
 
     /** the column name for the type field */
     const TYPE = 'game_player.type';
+
+    /** the column name for the score field */
+    const SCORE = 'game_player.score';
 
     /** The default string format for model objects of the related table **/
     const DEFAULT_STRING_FORMAT = 'YAML';
@@ -63,12 +66,12 @@ abstract class BaseGamePlayerPeer
      * e.g. GamePlayerPeer::$fieldNames[GamePlayerPeer::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        BasePeer::TYPE_PHPNAME => array ('GameId', 'PlayerId', 'BonusId', 'Type', ),
-        BasePeer::TYPE_STUDLYPHPNAME => array ('gameId', 'playerId', 'bonusId', 'type', ),
-        BasePeer::TYPE_COLNAME => array (GamePlayerPeer::GAME_ID, GamePlayerPeer::PLAYER_ID, GamePlayerPeer::BONUS_ID, GamePlayerPeer::TYPE, ),
-        BasePeer::TYPE_RAW_COLNAME => array ('GAME_ID', 'PLAYER_ID', 'BONUS_ID', 'TYPE', ),
-        BasePeer::TYPE_FIELDNAME => array ('game_id', 'player_id', 'bonus_id', 'type', ),
-        BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
+        BasePeer::TYPE_PHPNAME => array ('GameId', 'PlayerId', 'BonusId', 'Type', 'Score', ),
+        BasePeer::TYPE_STUDLYPHPNAME => array ('gameId', 'playerId', 'bonusId', 'type', 'score', ),
+        BasePeer::TYPE_COLNAME => array (GamePlayerPeer::GAME_ID, GamePlayerPeer::PLAYER_ID, GamePlayerPeer::BONUS_ID, GamePlayerPeer::TYPE, GamePlayerPeer::SCORE, ),
+        BasePeer::TYPE_RAW_COLNAME => array ('GAME_ID', 'PLAYER_ID', 'BONUS_ID', 'TYPE', 'SCORE', ),
+        BasePeer::TYPE_FIELDNAME => array ('game_id', 'player_id', 'bonus_id', 'type', 'score', ),
+        BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
     );
 
     /**
@@ -78,12 +81,12 @@ abstract class BaseGamePlayerPeer
      * e.g. GamePlayerPeer::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        BasePeer::TYPE_PHPNAME => array ('GameId' => 0, 'PlayerId' => 1, 'BonusId' => 2, 'Type' => 3, ),
-        BasePeer::TYPE_STUDLYPHPNAME => array ('gameId' => 0, 'playerId' => 1, 'bonusId' => 2, 'type' => 3, ),
-        BasePeer::TYPE_COLNAME => array (GamePlayerPeer::GAME_ID => 0, GamePlayerPeer::PLAYER_ID => 1, GamePlayerPeer::BONUS_ID => 2, GamePlayerPeer::TYPE => 3, ),
-        BasePeer::TYPE_RAW_COLNAME => array ('GAME_ID' => 0, 'PLAYER_ID' => 1, 'BONUS_ID' => 2, 'TYPE' => 3, ),
-        BasePeer::TYPE_FIELDNAME => array ('game_id' => 0, 'player_id' => 1, 'bonus_id' => 2, 'type' => 3, ),
-        BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
+        BasePeer::TYPE_PHPNAME => array ('GameId' => 0, 'PlayerId' => 1, 'BonusId' => 2, 'Type' => 3, 'Score' => 4, ),
+        BasePeer::TYPE_STUDLYPHPNAME => array ('gameId' => 0, 'playerId' => 1, 'bonusId' => 2, 'type' => 3, 'score' => 4, ),
+        BasePeer::TYPE_COLNAME => array (GamePlayerPeer::GAME_ID => 0, GamePlayerPeer::PLAYER_ID => 1, GamePlayerPeer::BONUS_ID => 2, GamePlayerPeer::TYPE => 3, GamePlayerPeer::SCORE => 4, ),
+        BasePeer::TYPE_RAW_COLNAME => array ('GAME_ID' => 0, 'PLAYER_ID' => 1, 'BONUS_ID' => 2, 'TYPE' => 3, 'SCORE' => 4, ),
+        BasePeer::TYPE_FIELDNAME => array ('game_id' => 0, 'player_id' => 1, 'bonus_id' => 2, 'type' => 3, 'score' => 4, ),
+        BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
     );
 
     /**
@@ -161,11 +164,13 @@ abstract class BaseGamePlayerPeer
             $criteria->addSelectColumn(GamePlayerPeer::PLAYER_ID);
             $criteria->addSelectColumn(GamePlayerPeer::BONUS_ID);
             $criteria->addSelectColumn(GamePlayerPeer::TYPE);
+            $criteria->addSelectColumn(GamePlayerPeer::SCORE);
         } else {
             $criteria->addSelectColumn($alias . '.game_id');
             $criteria->addSelectColumn($alias . '.player_id');
             $criteria->addSelectColumn($alias . '.bonus_id');
             $criteria->addSelectColumn($alias . '.type');
+            $criteria->addSelectColumn($alias . '.score');
         }
     }
 

@@ -35,16 +35,67 @@ $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
 
 //Appel le fichier twig en fonction de la page
 $app->get('/', function () use ($app) {
-    //Affiche tous les tournois actif
+    //Tableau de données
+    $array_game = array();
+    $array_player = array();
+    //Recupere le tournois actif
     $tournaments = TournamentQuery::create()
         ->filterByActive(true)
         ->find();
-    //Recupere les game de tous les tournois actif.
+    //Recuperer les player du tournois
+    $player_tournament = TournamentPlayerQuery::create()
+        ->filterByTournamentId($tournaments[0]->getId())
+        ->find();
+    //Recupere les games du tournois
+    $games = GameQuery::create()
+        ->filterByTournamentId($tournaments[0]->getId())
+        ->find();
+    //recupere les player de la game
+    foreach($games as $game){
+        $gameId = $game->getId();
+        //recupération des joueurs
+        $player_game[$gameId] = GamePlayerQuery::create()
+        ->filterByGame($game)
+        ->find();
+    }
+    //Comparaison des deux
+    //Parcour de chaque game
+    foreach($games as $game){
+        $game_id=$game->getId();
+        $array_game['game_'.$game_id]['id_game'] = $game_id;
+        $game_bids = $game->getBids();
+        $array_game['game_'.$game_id]['bids'] = $game_bids;
+        $game_score = $game->getScore();
+        $array_game['game_'.$game_id]['score'] = $game_score;
+        foreach($player_tournament as $player){
+            $player_id_tournament = $player->getPlayerId();
+            $array_game['game_'.$game_id]['players'][$player_id_tournament]['score'] = 'OUT';
+            $array_game['game_'.$game_id]['players'][$player_id_tournament]['type'] = 'OUT';
+            foreach($player_game[$game->getId()] as $player){
+                 $player_id_game = $player->getPlayerId();
+                if($player_id_tournament == $player_id_game){
+                    $array_game['game_'.$game_id]['players'][$player_id_tournament]['score'] = $player->getScore();
+                    $array_game['game_'.$game_id]['players'][$player_id_tournament]['type'] = $player->getType();
+                }
+            }
+        }
+    }
 
+    foreach($player_tournament as $player_in_game){
+        $array_player['player_'.$player_in_game->getPlayerId()]['id']=$player_in_game->getPlayerId();
+        $array_player['player_'.$player_in_game->getPlayerId()]['score']=$player_in_game->getScore();
+        $array_player['player_'.$player_in_game->getPlayerId()]['name']=$player_in_game->getPlayer()->getName();
+    }
+    
+     echo '<pre>';
+        print_r($array_game);
+    echo '</pre>';
     return $app['twig']->render('template/index.twig', array(
-        'tournaments' => $tournaments,
-        scor
+        'array' => $array_game,
+        'players' => $array_player,
+        'id_tournament'=>$tournaments[0]->getId()
     ));
+
     //Récuperer tous les tournois
     
     //var_dump($tournaments);

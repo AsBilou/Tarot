@@ -38,6 +38,7 @@
         <column name="player_id" type="integer" required="true" primaryKey="true" />
         <column name="bonus_id" type="integer" required="true" primaryKey="true" />
         <column name="type" type="varchar" size="255" required="true" />
+        <column name="score" type="integer" size="255" required="true" />
         <foreign-key foreignTable="bonus" onDelete="CASCADE">
             <reference local="bonus_id" foreign="id"/>
         </foreign-key>

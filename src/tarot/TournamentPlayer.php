@@ -15,4 +15,7 @@
  */
 class TournamentPlayer extends BaseTournamentPlayer
 {
+    public function getPlayerId(){
+        return $this->player_id;
+    }
 }

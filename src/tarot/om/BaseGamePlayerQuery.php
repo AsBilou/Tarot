@@ -10,11 +10,13 @@
  * @method GamePlayerQuery orderByPlayerId($order = Criteria::ASC) Order by the player_id column
  * @method GamePlayerQuery orderByBonusId($order = Criteria::ASC) Order by the bonus_id column
  * @method GamePlayerQuery orderByType($order = Criteria::ASC) Order by the type column
+ * @method GamePlayerQuery orderByScore($order = Criteria::ASC) Order by the score column
  *
  * @method GamePlayerQuery groupByGameId() Group by the game_id column
  * @method GamePlayerQuery groupByPlayerId() Group by the player_id column
  * @method GamePlayerQuery groupByBonusId() Group by the bonus_id column
  * @method GamePlayerQuery groupByType() Group by the type column
+ * @method GamePlayerQuery groupByScore() Group by the score column
  *
  * @method GamePlayerQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method GamePlayerQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -39,11 +41,13 @@
  * @method GamePlayer findOneByPlayerId(int $player_id) Return the first GamePlayer filtered by the player_id column
  * @method GamePlayer findOneByBonusId(int $bonus_id) Return the first GamePlayer filtered by the bonus_id column
  * @method GamePlayer findOneByType(string $type) Return the first GamePlayer filtered by the type column
+ * @method GamePlayer findOneByScore(int $score) Return the first GamePlayer filtered by the score column
  *
  * @method array findByGameId(int $game_id) Return GamePlayer objects filtered by the game_id column
  * @method array findByPlayerId(int $player_id) Return GamePlayer objects filtered by the player_id column
  * @method array findByBonusId(int $bonus_id) Return GamePlayer objects filtered by the bonus_id column
  * @method array findByType(string $type) Return GamePlayer objects filtered by the type column
+ * @method array findByScore(int $score) Return GamePlayer objects filtered by the score column
  *
  * @package    propel.generator.tarot.om
  */
@@ -134,7 +138,7 @@ abstract class BaseGamePlayerQuery extends ModelCriteria
      */
     protected function findPkSimple($key, $con)
     {
-        $sql = 'SELECT `game_id`, `player_id`, `bonus_id`, `type` FROM `game_player` WHERE `game_id` = :p0 AND `player_id` = :p1 AND `bonus_id` = :p2';
+        $sql = 'SELECT `game_id`, `player_id`, `bonus_id`, `type`, `score` FROM `game_player` WHERE `game_id` = :p0 AND `player_id` = :p1 AND `bonus_id` = :p2';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);
@@ -398,6 +402,48 @@ abstract class BaseGamePlayerQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(GamePlayerPeer::TYPE, $type, $comparison);
+    }
+
+    /**
+     * Filter the query on the score column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByScore(1234); // WHERE score = 1234
+     * $query->filterByScore(array(12, 34)); // WHERE score IN (12, 34)
+     * $query->filterByScore(array('min' => 12)); // WHERE score >= 12
+     * $query->filterByScore(array('max' => 12)); // WHERE score <= 12
+     * </code>
+     *
+     * @param     mixed $score The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return GamePlayerQuery The current query, for fluid interface
+     */
+    public function filterByScore($score = null, $comparison = null)
+    {
+        if (is_array($score)) {
+            $useMinMax = false;
+            if (isset($score['min'])) {
+                $this->addUsingAlias(GamePlayerPeer::SCORE, $score['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($score['max'])) {
+                $this->addUsingAlias(GamePlayerPeer::SCORE, $score['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(GamePlayerPeer::SCORE, $score, $comparison);
     }
 
     /**

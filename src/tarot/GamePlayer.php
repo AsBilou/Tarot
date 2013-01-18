@@ -15,4 +15,7 @@
  */
 class GamePlayer extends BaseGamePlayer
 {
+    public function getPlayerId(){
+        return $this->player_id;
+    }
 }

@@ -54,6 +54,12 @@ abstract class BaseGamePlayer extends BaseObject implements Persistent
     protected $type;
 
     /**
+     * The value for the score field.
+     * @var        int
+     */
+    protected $score;
+
+    /**
      * @var        Bonus
      */
     protected $aBonus;
@@ -126,6 +132,16 @@ abstract class BaseGamePlayer extends BaseObject implements Persistent
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * Get the [score] column value.
+     *
+     * @return int
+     */
+    public function getScore()
+    {
+        return $this->score;
     }
 
     /**
@@ -225,6 +241,27 @@ abstract class BaseGamePlayer extends BaseObject implements Persistent
     } // setType()
 
     /**
+     * Set the value of [score] column.
+     *
+     * @param int $v new value
+     * @return GamePlayer The current object (for fluent API support)
+     */
+    public function setScore($v)
+    {
+        if ($v !== null && is_numeric($v)) {
+            $v = (int) $v;
+        }
+
+        if ($this->score !== $v) {
+            $this->score = $v;
+            $this->modifiedColumns[] = GamePlayerPeer::SCORE;
+        }
+
+
+        return $this;
+    } // setScore()
+
+    /**
      * Indicates whether the columns in this object are only set to default values.
      *
      * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -260,6 +297,7 @@ abstract class BaseGamePlayer extends BaseObject implements Persistent
             $this->player_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
             $this->bonus_id = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
             $this->type = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
+            $this->score = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -268,7 +306,7 @@ abstract class BaseGamePlayer extends BaseObject implements Persistent
                 $this->ensureConsistency();
             }
             $this->postHydrate($row, $startcol, $rehydrate);
-            return $startcol + 4; // 4 = GamePlayerPeer::NUM_HYDRATE_COLUMNS.
+            return $startcol + 5; // 5 = GamePlayerPeer::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException("Error populating GamePlayer object", $e);
@@ -526,6 +564,9 @@ abstract class BaseGamePlayer extends BaseObject implements Persistent
         if ($this->isColumnModified(GamePlayerPeer::TYPE)) {
             $modifiedColumns[':p' . $index++]  = '`type`';
         }
+        if ($this->isColumnModified(GamePlayerPeer::SCORE)) {
+            $modifiedColumns[':p' . $index++]  = '`score`';
+        }
 
         $sql = sprintf(
             'INSERT INTO `game_player` (%s) VALUES (%s)',
@@ -548,6 +589,9 @@ abstract class BaseGamePlayer extends BaseObject implements Persistent
                         break;
                     case '`type`':
                         $stmt->bindValue($identifier, $this->type, PDO::PARAM_STR);
+                        break;
+                    case '`score`':
+                        $stmt->bindValue($identifier, $this->score, PDO::PARAM_INT);
                         break;
                 }
             }
@@ -712,6 +756,9 @@ abstract class BaseGamePlayer extends BaseObject implements Persistent
             case 3:
                 return $this->getType();
                 break;
+            case 4:
+                return $this->getScore();
+                break;
             default:
                 return null;
                 break;
@@ -745,6 +792,7 @@ abstract class BaseGamePlayer extends BaseObject implements Persistent
             $keys[1] => $this->getPlayerId(),
             $keys[2] => $this->getBonusId(),
             $keys[3] => $this->getType(),
+            $keys[4] => $this->getScore(),
         );
         if ($includeForeignObjects) {
             if (null !== $this->aBonus) {
@@ -802,6 +850,9 @@ abstract class BaseGamePlayer extends BaseObject implements Persistent
             case 3:
                 $this->setType($value);
                 break;
+            case 4:
+                $this->setScore($value);
+                break;
         } // switch()
     }
 
@@ -830,6 +881,7 @@ abstract class BaseGamePlayer extends BaseObject implements Persistent
         if (array_key_exists($keys[1], $arr)) $this->setPlayerId($arr[$keys[1]]);
         if (array_key_exists($keys[2], $arr)) $this->setBonusId($arr[$keys[2]]);
         if (array_key_exists($keys[3], $arr)) $this->setType($arr[$keys[3]]);
+        if (array_key_exists($keys[4], $arr)) $this->setScore($arr[$keys[4]]);
     }
 
     /**
@@ -845,6 +897,7 @@ abstract class BaseGamePlayer extends BaseObject implements Persistent
         if ($this->isColumnModified(GamePlayerPeer::PLAYER_ID)) $criteria->add(GamePlayerPeer::PLAYER_ID, $this->player_id);
         if ($this->isColumnModified(GamePlayerPeer::BONUS_ID)) $criteria->add(GamePlayerPeer::BONUS_ID, $this->bonus_id);
         if ($this->isColumnModified(GamePlayerPeer::TYPE)) $criteria->add(GamePlayerPeer::TYPE, $this->type);
+        if ($this->isColumnModified(GamePlayerPeer::SCORE)) $criteria->add(GamePlayerPeer::SCORE, $this->score);
 
         return $criteria;
     }
@@ -922,6 +975,7 @@ abstract class BaseGamePlayer extends BaseObject implements Persistent
         $copyObj->setPlayerId($this->getPlayerId());
         $copyObj->setBonusId($this->getBonusId());
         $copyObj->setType($this->getType());
+        $copyObj->setScore($this->getScore());
 
         if ($deepCopy && !$this->startCopy) {
             // important: temporarily setNew(false) because this affects the behavior of
@@ -1144,6 +1198,7 @@ abstract class BaseGamePlayer extends BaseObject implements Persistent
         $this->player_id = null;
         $this->bonus_id = null;
         $this->type = null;
+        $this->score = null;
         $this->alreadyInSave = false;
         $this->alreadyInValidation = false;
         $this->alreadyInClearAllReferencesDeep = false;

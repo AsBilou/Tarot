@@ -1,32 +1,27 @@
 {%extends 'layout/base.twig'%}
 {%block content%}
-    {% for tournament in tournaments %}
-        <table class="table">
-            <h2>tournament : {{tournament.id}}</h2>
-            <thead>
-                <tr>
-                    <th>
-                        #
-                    </th>
-                    {%for player in tournament.orderedPlayers%}
-                         <th>
-                            {{player.name}}
-                         </th>
-                    {%endfor%}
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        total
-                    </td>
-                    {%for player in tournament.TournamentPlayers%}
-                        <td>
-                            {{player.score}}
-                        </td>
-                    {%endfor%}
-                </tr>
-            </tbody>
-        </table>
-    {%endfor%}
+    <table class="table table-bordered">
+        <tr class="success">
+            <td>#</td>
+            {% for player in players %}
+                <td>{{player.name}}</td>
+            {%endfor%}
+        </tr>
+        {% for data in array %}
+        <tr>
+            <td>{{data.bids}} de {{data.score}}</td>
+            {% for player in data['players'] %}
+                <td class="{{player.type}}">{{player.score}}</td>
+            {%endfor%}
+        </tr>
+        {%endfor%}
+        <tr class="info">
+            <td>Total</td>
+            {% for player in players %}
+                <td>{{player.score}}</td>
+            {%endfor%}
+        </tr>
+    </table>
+    <a class="btn" href="game/new/{{id_tournament}}">Nouvelle partie</a>
+    <a class="btn" href="">Partie terminé</a>
 {%endblock%}
