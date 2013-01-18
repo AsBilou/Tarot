@@ -215,6 +215,26 @@ $app->match('/addPlayer', function (Request $request) use ($app) {
 })
 ->bind('form_send');
 
+//Ajout d'une nouvelle game au tournois
+$app->get('/game/new/{id_tournament}', function ($id_tournament) use ($app) {
+    //Insert un nouveau tournoi
+    $tournament = new Tournament();
+    $tournament->setActive(false);
+    $tournament->setDatestart(time());
+    $tournament->save();
+    try{
+        return $app['twig']->render('template/tournamentCreate.twig');
+    }catch(Exception $e){
+        if('Twig_Error_Loader'==get_class($e)){
+            $app->abort(404,'Twig template does not exist.');
+        }
+        else
+        {
+            throw $e;
+        }
+    }
+});
+
 $app->run();
 
 ?>
