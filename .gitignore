@@ -1,1 +1,5 @@
 vendor/
+.DS_Store
+src/.DS_Store
+views/.DS_Store
+web/.DS_Store
