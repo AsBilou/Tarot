@@ -151,7 +151,22 @@ $app->get('/player/create', function () use ($app) {
 });
 */
 
-$app->get('/new/game', function (Request $request) use ($app) {
+$app->match('/new/game', function (Request $request) use ($app) {
+	//On récupère la liste des joueurs
+	$players = PlayerQuery::create()
+        ->find();
+        
+    //Recupere le tournois actif
+    $tournaments = TournamentQuery::create()
+        ->filterByActive(true)
+        ->find();
+     
+    $player_array = array();
+      
+	  foreach($players as $player){
+	      $player_array[$player->getId()]=$player->getName();
+	  }
+       
     //creation du form
     $form = $app['form.factory']->createBuilder('form')
         ->add('player_id_took', 'choice', array(
@@ -168,7 +183,7 @@ $app->get('/new/game', function (Request $request) use ($app) {
         'required' => true,
         'multiple' => false,
         'expanded' => false,
-        'choices' => array('1' => 'Petite', '2' => 'Garde', '4' => 'Garde-sans', '8' => 'Garde-contre')
+        'choices' => array('prise' => 'Prise', 'garde' => 'Garde', 'garde_sans' => 'Garde-sans', 'garde_contre' => 'Garde-contre')
     ))
         ->add('player_id_called' , 'choice', array(
         'label' => 'Le joueur qui a été appelé :',
@@ -185,15 +200,6 @@ $app->get('/new/game', function (Request $request) use ($app) {
         'expanded' => false,
         'choices' => $player_array
     ))
-        ->add('nbOudlers' , 'text', array(
-        'label' => 'Nombre de bout (*):',
-        'required' => true,
-        'constraints' => array(
-            new Assert\NotBlank(),
-            new Assert\Min(0),
-            new Assert\Max(3)
-        )
-    ))
         ->add('nbPoint' , 'text', array(
         'label' => 'Nombre de points du preneur (*):',
         'required' => true,
@@ -208,8 +214,22 @@ $app->get('/new/game', function (Request $request) use ($app) {
         if ('POST' == $request->getMethod()) {
 	        $form->bind($request);
 	        
-	        if ($form->isValid()) {
-	           echo 'kjsdqhflkqjshfkjqsh';
+	        if ($form->isValid()) {    
+	        	$caller = $_POST['form']['player_id_took'];
+	        	$called = $_POST['form']['player_id_called'];
+	        	$bet = $_POST['form']['bet'];
+	        	$score = $_POST['form']['nbPoint'];
+
+	        	foreach($_POST['form']['player_id_def'] as $key=>$value){
+	        	}
+	        
+	            $game = new Game();
+	            $game->setCallId($caller);
+	            $game->setCalledId($called);
+	            $game->setBids($bet);
+	            $game->setScore($score);
+	            $game->setTournamentId($tournaments[0]->getId());
+	            $game->save();
 	        }
     	}
 
