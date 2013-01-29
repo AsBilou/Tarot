@@ -1,1 +1,8 @@
-Test newGame
+{%extends 'layout/base.twig'%}
+{%block content%}
+<form novalidate action="{{ path('form_game') }}" method="post">
+    {{ form_widget(form) }}
+
+    <input type="submit" name="submit" />
+</form>
+{%endblock%}

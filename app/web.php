@@ -151,90 +151,73 @@ $app->get('/player/create', function () use ($app) {
 });
 */
 
-$app->match('/addPlayer', function (Request $request) use ($app) {
-    // some default data for when the form is displayed the first time
-    
+$app->get('/new/game', function (Request $request) use ($app) {
+    //creation du form
     $form = $app['form.factory']->createBuilder('form')
-        ->add('name')
-        ->add('email', 'email', array(
-            'label' => 'Your Email',
-            'required' => true,
-            'constraints' => array(
-                new Assert\NotBlank(array('message' => 'Don\'t leave blank')),
-                new Assert\Email(array('message' => 'Invalid email address'))
-            ),
-            'attr' => array(
-            'placeholder' => 'email@example.com'
-            )
-        ))
+        ->add('player_id_took', 'choice', array(
+        'label'   => 'Le joueur qui a pris (*):',
+        'attr'  => array('placeholder' => 'click here'),
+        'required' => true,
+        'multiple' => false,
+        'expanded' => false,
+        'choices' => $player_array,
+    ))
+        ->add('bet', 'choice', array(
+        'label'   => 'Le joueur a pris une (*):',
+        'attr'  => array('placeholder' => 'click here'),
+        'required' => true,
+        'multiple' => false,
+        'expanded' => false,
+        'choices' => array('1' => 'Petite', '2' => 'Garde', '4' => 'Garde-sans', '8' => 'Garde-contre')
+    ))
+        ->add('player_id_called' , 'choice', array(
+        'label' => 'Le joueur qui a été appelé :',
+        'attr' => array('placeholder' => 'optionnel'),
+        'multiple' => false,
+        'expanded' => false,
+        'required' => false,
+        'choices' => $player_array,
+    ))
+        ->add('player_id_def' , 'choice', array(
+        'label' => 'Les joueur qui defendent (*):',
+        'required' => true,
+        'multiple' => true,
+        'expanded' => false,
+        'choices' => $player_array
+    ))
+        ->add('nbOudlers' , 'text', array(
+        'label' => 'Nombre de bout (*):',
+        'required' => true,
+        'constraints' => array(
+            new Assert\NotBlank(),
+            new Assert\Min(0),
+            new Assert\Max(3)
+        )
+    ))
+        ->add('nbPoint' , 'text', array(
+        'label' => 'Nombre de points du preneur (*):',
+        'required' => true,
+        'constraints' => array(
+            new Assert\NotBlank(),
+            new Assert\Min(0),
+            new Assert\Max(91)
+        )
+    ))
         ->getForm();
         
         if ('POST' == $request->getMethod()) {
-        $form->bind($request);
-        
-        if ($form->isValid()) {
-            $data = $form->getData();
-            
-            var_dump($data);
-            // do something with the data
-            $player = new Player();
-            $player->setNameplayer($data['name']);
-            $player->setMailplayer($data['email']);
-            $player->save();
-            // redirect somewhere
-            return $app->redirect($app['url_generator']->generate('form_send'));
-        }
-    }
+	        $form->bind($request);
+	        
+	        if ($form->isValid()) {
+	           echo 'kjsdqhflkqjshfkjqsh';
+	        }
+    	}
 
-    
-    // display the form
-    return $app['twig']->render('template/form.twig', array('form' => $form->createView()));
-})
-->bind('form_send');
-
-//Ajout d'une nouvelle game au tournois
-$app->match('/game/new/{id_tournament}', function ($id_tournament) use ($app) {
-    //Récupere l'id du tournament
-    $id_tournament;
-    //On affiche un formulaire a remplire
-    $form = $app['form.factory']->createBuilder('form')
-        ->add('name')
-        ->add('email', 'email', array(
-            'label' => 'Your Email',
-            'required' => true,
-            'constraints' => array(
-                new Assert\NotBlank(array('message' => 'Don\'t leave blank')),
-                new Assert\Email(array('message' => 'Invalid email address'))
-            ),
-            'attr' => array(
-            'placeholder' => 'email@example.com'
-            )
-        ))
-        ->getForm();
-        
-        if ('POST' == $request->getMethod()) {
-        $form->bind($request);
-        
-        if ($form->isValid()) {
-            $data = $form->getData();
-            
-            var_dump($data);
-            // do something with the data
-            $player = new Player();
-            $player->setNameplayer($data['name']);
-            $player->setMailplayer($data['email']);
-            $player->save();
-            // redirect somewhere
-            return $app->redirect($app['url_generator']->generate('form_send'));
-        }
-    }
     
     // display the form
     return $app['twig']->render('template/newGame.twig', array('form' => $form->createView()));
-    //On recupere les player du tournois
-    
-});
-
+})
+->bind('form_game');
 return $app;
 
 ?>
