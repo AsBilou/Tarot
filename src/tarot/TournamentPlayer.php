@@ -18,4 +18,8 @@ class TournamentPlayer extends BaseTournamentPlayer
     public function getPlayerId(){
         return $this->player_id;
     }
+    
+    public function updateScore($score){
+	    $this->setScore($this->getScore()+$score);
+    }
 }
