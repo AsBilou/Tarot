@@ -154,7 +154,7 @@ $app->get('/player', function () use ($app) {
         ));
 });
 
-/*
+
 $app->get('/player/create', function () use ($app) {
     //Insert un nouveau tournoi
     $player = new Player();
@@ -173,7 +173,6 @@ $app->get('/player/create', function () use ($app) {
         }
     }
 });
-*/
 
 $app->match('/new/game', function (Request $request) use ($app) {
 	//On récupère la liste des joueurs
