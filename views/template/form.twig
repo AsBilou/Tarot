@@ -1,5 +1,9 @@
-<form novalidate action="{{ path('form_send') }}" method="post">
-    {{ form_widget(form) }}
+{%extends 'layout/base.twig'%}
+{%block content%}
+    <a class="btn" href="{{ path('index') }}">Retour</a>
+    <form novalidate action="{{ path('form_send') }}" method="post">
+        {{ form_widget(form) }}
 
-    <input type="submit" name="submit" />
-</form>
+        <input type="submit" name="submit" />
+    </form>
+{% endblock %}

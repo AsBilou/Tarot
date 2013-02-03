@@ -24,6 +24,7 @@ $app->get('/', function () use ($app) {
       
     if(empty($tournaments[0])){
     	$emptyTournament = true;
+        $emptyGames = true;
     }else{
     	$emptyTournament = false;
     	//Recuperer les player du tournois
@@ -37,7 +38,7 @@ $app->get('/', function () use ($app) {
 	    if(empty($games[0])){
 		     $emptyGames = true;   
 	    }else{
-		    $emptyGames = false;
+		     $emptyGames = false;
 	    }
 	    //recupere les player de la game
 	    foreach($games as $game){
@@ -92,7 +93,8 @@ $app->get('/', function () use ($app) {
     
     //var_dump($tournaments);
     
-});
+})
+->bind('index');
 
 $app->get('/tournament', function () use ($app) {
 //Affiche tous les tournois actif
@@ -155,24 +157,45 @@ $app->get('/player', function () use ($app) {
 });
 
 
-$app->get('/player/create', function () use ($app) {
-    //Insert un nouveau tournoi
-    $player = new Player();
-    $player->setNameplayer('Aurelien');
-    $player->setMailplayer('aurelien@yopmail.com');
-    $player->save();
-    try{
-        return $app['twig']->render('template/playerCreate.twig');
-    }catch(Exception $e){
-        if('Twig_Error_Loader'==get_class($e)){
-            $app->abort(404,'Twig template does not exist.');
-        }
-        else
-        {
-            throw $e;
+$app->match('/player/create', function (Request $request) use ($app) {
+    // some default data for when the form is displayed the first time
+
+    $form = $app['form.factory']->createBuilder('form')
+        ->add('name')
+        ->add('email', 'email', array(
+        'label' => 'Your Email',
+        'required' => true,
+        'constraints' => array(
+            new Assert\NotBlank(array('message' => 'Don\'t leave blank')),
+            new Assert\Email(array('message' => 'Invalid email address'))
+        ),
+        'attr' => array(
+            'placeholder' => 'email@example.com'
+        )
+    ))
+        ->getForm();
+
+    if ('POST' == $request->getMethod()) {
+        $form->bind($request);
+
+        if ($form->isValid()) {
+            $data = $form->getData();
+
+            // do something with the data
+            $player = new Player();
+            $player->setName($data['name']);
+            $player->setMail($data['email']);
+            $player->save();
+            // redirect somewhere
+            return $app->redirect($app['url_generator']->generate('form_send'));
         }
     }
-});
+
+
+    // display the form
+    return $app['twig']->render('template/form.twig', array('form' => $form->createView()));
+})
+    ->bind('form_send');
 
 $app->match('/new/game', function (Request $request) use ($app) {
 	//On récupère la liste des joueurs

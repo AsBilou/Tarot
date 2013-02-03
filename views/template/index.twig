@@ -4,35 +4,36 @@
 		<h1>Pas de tournament actif : </h1>
 		<a class="btn" href="tournament/create">Créer tournament</a>
 	{% else %}
-	{%if isGame %}
-		<h1>Pas de game : </h1>
-		<a class="btn" href="new/game">Enregistrer une partie</a>
-	{% else %}
-    <table class="table table-bordered">
-        <tr class="success">
-            <td>#</td>
-            {% for player in players %}
-                <td>{{player.name}}</td>
+        {%if isGame %}
+            <h1>Pas de game : </h1>
+            <a class="btn" href="new/game">Enregistrer une partie</a>
+            <a class="btn" href="player/create">Créer un joueur</a>
+        {% else %}
+        <table class="table table-bordered">
+            <tr class="success">
+                <td>#</td>
+                {% for player in players %}
+                    <td>{{player.name}}</td>
+                {%endfor%}
+            </tr>
+            {% for data in array %}
+            <tr>
+                <td>{{data.bids}} de {{data.score}}</td>
+                {% for player in data['players'] %}
+                    <td class="{{player.type}}">{{player.score}}</td>
+                {%endfor%}
+            </tr>
             {%endfor%}
-        </tr>
-        {% for data in array %}
-        <tr>
-            <td>{{data.bids}} de {{data.score}}</td>
-            {% for player in data['players'] %}
-                <td class="{{player.type}}">{{player.score}}</td>
-            {%endfor%}
-        </tr>
-        {%endfor%}
-        <tr class="info">
-            <td>Total</td>
-            {% for player in players %}
-                <td>{{player.score}}</td>
-            {%endfor%}
-        </tr>
-    </table>
-    <a class="btn" href="new/game">Enregistrer une partie</a>
-    <a class="btn" href="tournament/create">Tournois terminé</a><!-- Désactive le tournois en cours et en crée un nouveau -->
-    <a class="btn" href="player/create">Créer un joueur</a>
-    {% endif %}
+            <tr class="info">
+                <td>Total</td>
+                {% for player in players %}
+                    <td>{{player.score}}</td>
+                {%endfor%}
+            </tr>
+        </table>
+        <a class="btn" href="new/game">Enregistrer une partie</a>
+        <a class="btn" href="tournament/create">Tournois terminé</a><!-- Désactive le tournois en cours et en crée un nouveau -->
+        <a class="btn" href="player/create">Créer un joueur</a>
+        {% endif %}
     {% endif %}
 {%endblock%}
