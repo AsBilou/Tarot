@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4bc9508d-00b4-4c5c-8dde-d994d8b6eb46" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/web.php" afterPath="$PROJECT_DIR$/app/web.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/template/form.twig" afterPath="$PROJECT_DIR$/views/template/form.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/template/index.twig" afterPath="$PROJECT_DIR$/views/template/index.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/template/tournamentCreate.twig" afterPath="$PROJECT_DIR$/views/template/tournamentCreate.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/template/newGame.twig" afterPath="$PROJECT_DIR$/views/template/newGame.twig" />
     </list>
     <ignored path="tarot.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -26,15 +22,6 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="style.css" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/css/style.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="1" column="28" selection-start="31" selection-end="31" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="web.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/web.php">
           <provider selected="true" editor-type-id="text-editor">
@@ -62,19 +49,28 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="form.twig" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="form.twig" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/template/form.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="39" selection-start="88" selection-end="88" vertical-scroll-proportion="0.03995006">
+            <state line="2" column="39" selection-start="88" selection-end="88" vertical-scroll-proportion="-1.28">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="tournamentCreate.twig" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="newGame.twig" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/template/newGame.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="2" column="52" selection-start="101" selection-end="101" vertical-scroll-proportion="-1.28">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="tournamentCreate.twig" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/views/template/tournamentCreate.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="40" selection-start="91" selection-end="91" vertical-scroll-proportion="-1.28">
+            <state line="2" column="40" selection-start="91" selection-end="91" vertical-scroll-proportion="0.03995006">
               <folding />
             </state>
           </provider>
@@ -134,6 +130,7 @@
         <option value="$PROJECT_DIR$/app/web.php" />
         <option value="$PROJECT_DIR$/views/template/index.twig" />
         <option value="$PROJECT_DIR$/views/template/form.twig" />
+        <option value="$PROJECT_DIR$/views/template/newGame.twig" />
       </list>
     </option>
   </component>
@@ -342,13 +339,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/web/css/select2.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/css/style.css">
       <provider selected="true" editor-type-id="text-editor">
         <state line="1" column="28" selection-start="31" selection-end="31" vertical-scroll-proportion="0.0">
@@ -426,13 +416,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/template/tournamentCreate.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="40" selection-start="91" selection-end="91" vertical-scroll-proportion="-1.28">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/web.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="26" column="27" selection-start="660" selection-end="660" vertical-scroll-proportion="-8.32">
@@ -449,7 +432,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/views/template/form.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="39" selection-start="88" selection-end="88" vertical-scroll-proportion="0.03995006">
+        <state line="2" column="39" selection-start="88" selection-end="88" vertical-scroll-proportion="-1.28">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/template/newGame.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="52" selection-start="101" selection-end="101" vertical-scroll-proportion="-1.28">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/template/tournamentCreate.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="40" selection-start="91" selection-end="91" vertical-scroll-proportion="0.03995006">
           <folding />
         </state>
       </provider>

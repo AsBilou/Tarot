@@ -1,5 +1,6 @@
 {%extends 'layout/base.twig'%}
 {%block content%}
+    <a class="btn" href="{{ path('index') }}">Retour</a>
 <form novalidate action="{{ path('form_game') }}" method="post">
     {{ form_widget(form) }}
 
