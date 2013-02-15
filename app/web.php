@@ -1,8 +1,8 @@
 <?php
 /*
 *TODO :
-*	- Faire le Cron
-*	- Voir pour le probleme de CSS
+*   - Faire le Cron
+*   - Voir pour le probleme de CSS
 */
 use Silex\Provider\FormServiceProvider;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,59 +23,59 @@ $app->get('/', function () use ($app) {
         ->find();
       
     if(empty($tournaments[0])){
-    	$emptyTournament = true;
+        $emptyTournament = true;
         $emptyGames = true;
     }else{
-    	$emptyTournament = false;
-    	//Recuperer les player du tournois
-    	$player_tournament = TournamentPlayerQuery::create()
-    	    ->filterByTournamentId($tournaments[0]->getId())
-    	    ->find();
-	    //Recupere les games du tournois
-	    $games = GameQuery::create()
-	        ->filterByTournamentId($tournaments[0]->getId())
-	        ->find();
-	    if(empty($games[0])){
-		     $emptyGames = true;   
-	    }else{
-		     $emptyGames = false;
-	    }
-	    //recupere les player de la game
-	    foreach($games as $game){
-	        $gameId = $game->getId();
-	        //recupération des joueurs
-	        $player_game[$gameId] = GamePlayerQuery::create()
-	        ->filterByGame($game)
-	        ->find();
-	    }
-	    //Comparaison des deux
-	    //Parcour de chaque game
-	    foreach($games as $game){
-	        $game_id=$game->getId();
-	        $array_game['game_'.$game_id]['id_game'] = $game_id;
-	        $game_bids = $game->getBids();
-	        $array_game['game_'.$game_id]['bids'] = $game_bids;
-	        $game_score = $game->getScore();
-	        $array_game['game_'.$game_id]['score'] = $game_score;
-	        foreach($player_tournament as $player){
-	            $player_id_tournament = $player->getPlayerId();
-	            $array_game['game_'.$game_id]['players'][$player_id_tournament]['score'] = 'OUT';
-	            $array_game['game_'.$game_id]['players'][$player_id_tournament]['type'] = 'OUT';
-	            foreach($player_game[$game->getId()] as $player){
-	                 $player_id_game = $player->getPlayerId();
-	                if($player_id_tournament == $player_id_game){
-	                    $array_game['game_'.$game_id]['players'][$player_id_tournament]['score'] = $player->getScore();
-	                    $array_game['game_'.$game_id]['players'][$player_id_tournament]['type'] = $player->getType();
-	                }
-	            }
-	        }
-	    }
+        $emptyTournament = false;
+        //Recuperer les player du tournois
+        $player_tournament = TournamentPlayerQuery::create()
+            ->filterByTournamentId($tournaments[0]->getId())
+            ->find();
+        //Recupere les games du tournois
+        $games = GameQuery::create()
+            ->filterByTournamentId($tournaments[0]->getId())
+            ->find();
+        if(empty($games[0])){
+             $emptyGames = true;   
+        }else{
+             $emptyGames = false;
+        }
+        //recupere les player de la game
+        foreach($games as $game){
+            $gameId = $game->getId();
+            //recupération des joueurs
+            $player_game[$gameId] = GamePlayerQuery::create()
+            ->filterByGame($game)
+            ->find();
+        }
+        //Comparaison des deux
+        //Parcour de chaque game
+        foreach($games as $game){
+            $game_id=$game->getId();
+            $array_game['game_'.$game_id]['id_game'] = $game_id;
+            $game_bids = $game->getBids();
+            $array_game['game_'.$game_id]['bids'] = $game_bids;
+            $game_score = $game->getScore();
+            $array_game['game_'.$game_id]['score'] = $game_score;
+            foreach($player_tournament as $player){
+                $player_id_tournament = $player->getPlayerId();
+                $array_game['game_'.$game_id]['players'][$player_id_tournament]['score'] = 'OUT';
+                $array_game['game_'.$game_id]['players'][$player_id_tournament]['type'] = 'OUT';
+                foreach($player_game[$game->getId()] as $player){
+                     $player_id_game = $player->getPlayerId();
+                    if($player_id_tournament == $player_id_game){
+                        $array_game['game_'.$game_id]['players'][$player_id_tournament]['score'] = $player->getScore();
+                        $array_game['game_'.$game_id]['players'][$player_id_tournament]['type'] = $player->getType();
+                    }
+                }
+            }
+        }
 
-	    foreach($player_tournament as $player_in_game){
-	        $array_player['player_'.$player_in_game->getPlayerId()]['id']=$player_in_game->getPlayerId();
-	        $array_player['player_'.$player_in_game->getPlayerId()]['score']=$player_in_game->getScore();
-	        $array_player['player_'.$player_in_game->getPlayerId()]['name']=$player_in_game->getPlayer()->getName();
-	    }
+        foreach($player_tournament as $player_in_game){
+            $array_player['player_'.$player_in_game->getPlayerId()]['id']=$player_in_game->getPlayerId();
+            $array_player['player_'.$player_in_game->getPlayerId()]['score']=$player_in_game->getScore();
+            $array_player['player_'.$player_in_game->getPlayerId()]['name']=$player_in_game->getPlayer()->getName();
+        }
     }
      /*
     echo '<pre>';
@@ -119,7 +119,7 @@ $tournaments = TournamentQuery::create()
 });
 
 $app->get('/tournament/create', function () use ($app) {
-	//Recupere les games du tournois
+    //Recupere les games du tournois
     $tournaments = TournamentQuery::create()
         ->find();
     //recupere les player de la game
@@ -198,8 +198,8 @@ $app->match('/player/create', function (Request $request) use ($app) {
     ->bind('form_send');
 
 $app->match('/new/game', function (Request $request) use ($app) {
-	//On récupère la liste des joueurs
-	$players = PlayerQuery::create()
+    //On récupère la liste des joueurs
+    $players = PlayerQuery::create()
         ->find();
         
     //Recupere le tournois actif
@@ -209,9 +209,9 @@ $app->match('/new/game', function (Request $request) use ($app) {
      
     $player_array = array();
       
-	  foreach($players as $player){
-	      $player_array[$player->getId()]=$player->getName();
-	  }
+      foreach($players as $player){
+          $player_array[$player->getId()]=$player->getName();
+      }
        
     //creation du form
     $form = $app['form.factory']->createBuilder('form')
@@ -258,117 +258,117 @@ $app->match('/new/game', function (Request $request) use ($app) {
         ->getForm();
         
         if ('POST' == $request->getMethod()) {
-	        $form->bind($request);
-	        
-	        if ($form->isValid()) {    
-	        	$caller = $_POST['form']['player_id_took'];
-	        	$called = $_POST['form']['player_id_called'];
-	        	$bet = $_POST['form']['bet'];
-	        	$score = $_POST['form']['nbPoint'];
-	        	
-	        	//On enregistre la game
-	            $game = new Game();
-	            $game->setCallId($caller);
-	            $game->setCalledId($called);
-	            $game->setBids($bet);
-	            $game->setScore($score);
-	            $game->setTournamentId($tournaments[0]->getId());
-	            $game->save();
-	            
-	            //Récupère l'id de la game créée
-	            $gameId = $game->getId();
-	            
-	            $scoreGame = $game->getScoreAfterBids();
-	            
-	            //insert caller
-	            $game_player = new GamePlayer();
-	            $game_player->setGameId($gameId);
-	            $game_player->setPlayerId($caller);
-	            $game_player->setType('caller');
-	            $game_player->setBonusId(0);
-	            $game_player->setScore($scoreGame);
-	            $game_player->save();
-	            
-	            //récupère le score actuel dans le tournois pour le joueur appelant
-	            $TournamentCaller = TournamentPlayerQuery::create()
-	            	->filterByTournamentId($tournaments[0]->getId())
-	            	->filterByPlayerId($caller)
-	            	->find();
-				//Si c'est la premiere game
-				if(!empty($TournamentCaller[0])){
-					$TournamentCaller[0]->updateScore($scoreGame);
-		            $TournamentCaller[0]->save();
-				}else{         	
-		            $TournamentCaller= new TournamentPlayer();
-		            $TournamentCaller->setScore($scoreGame);
-		            $TournamentCaller->setTournamentId($tournaments[0]->getId());
-		            $TournamentCaller->setPlayerId($caller);
-		            $TournamentCaller->save();
-	            }
-	            
-	            print_r($TournamentCaller);
-	            
-	             //insert called
-	            $game_player = new GamePlayer();
-	            $game_player->setGameId($gameId);
-	            $game_player->setPlayerId($called);
-	            $game_player->setType('called');
-	            $game_player->setBonusId(0);
-	            $game_player->setScore($scoreGame/2);
-	            $game_player->save();
-	            
-	            //récupère le score actuel dans le tournois pour le joueur appelé
-	            $TournamentCaller = TournamentPlayerQuery::create()
-	            	->filterByTournamentId($tournaments[0]->getId())
-	            	->filterByPlayerId($called)
-	            	->find();
-	            	
-	            //Si c'est la premiere game
-				if(!empty($TournamentCaller[0])){
-					$TournamentCaller[0]->updateScore($scoreGame/2);
-		            $TournamentCaller[0]->save();
-				}else{         	
-		            $TournamentCaller= new TournamentPlayer();
-		            $TournamentCaller->setScore($scoreGame/2);
-		            $TournamentCaller->setTournamentId($tournaments[0]->getId());
-		            $TournamentCaller->setPlayerId($called);
-		            $TournamentCaller->save();
-	            }
-	            
-	            //insert defender
-	            foreach($_POST['form']['player_id_def'] as $key=>$value){
-	            
-	            	//echo $value.'<br/>';
-	            	$game_player = new GamePlayer();
-		            $game_player->setGameId($gameId);
-		            $game_player->setPlayerId($value);
-		            $game_player->setType('player');
-		            $game_player->setBonusId(0);
-		            $game_player->setScore(($scoreGame/2)*-1);
-		            $game_player->save();
-		            
-		            //récupère le score actuel dans le tournois pour les défendeurs
-		            $TournamentCaller = TournamentPlayerQuery::create()
-		            	->filterByTournamentId($tournaments[0]->getId())
-		            	->filterByPlayerId($value)
-		            	->find();
-		            	
-		            //Si c'est la premiere game
-					if(!empty($TournamentCaller[0])){
-						$TournamentCaller[0]->updateScore(($scoreGame/2)*-1);
-			            $TournamentCaller[0]->save();
-					}else{         	
-			            $TournamentCaller= new TournamentPlayer();
-			            $TournamentCaller->setScore(($scoreGame/2)*-1);
-			            $TournamentCaller->setTournamentId($tournaments[0]->getId());
-			            $TournamentCaller->setPlayerId($value);
-			            $TournamentCaller->save();
-		            }
+            $form->bind($request);
+            
+            if ($form->isValid()) {    
+                $caller = $_POST['form']['player_id_took'];
+                $called = $_POST['form']['player_id_called'];
+                $bet = $_POST['form']['bet'];
+                $score = $_POST['form']['nbPoint'];
+                
+                //On enregistre la game
+                $game = new Game();
+                $game->setCallId($caller);
+                $game->setCalledId($called);
+                $game->setBids($bet);
+                $game->setScore($score);
+                $game->setTournamentId($tournaments[0]->getId());
+                $game->save();
+                
+                //Récupère l'id de la game créée
+                $gameId = $game->getId();
+                
+                $scoreGame = $game->getScoreAfterBids();
+                
+                //insert caller
+                $game_player = new GamePlayer();
+                $game_player->setGameId($gameId);
+                $game_player->setPlayerId($caller);
+                $game_player->setType('caller');
+                $game_player->setBonusId(0);
+                $game_player->setScore($scoreGame);
+                $game_player->save();
+                
+                //récupère le score actuel dans le tournois pour le joueur appelant
+                $TournamentCaller = TournamentPlayerQuery::create()
+                    ->filterByTournamentId($tournaments[0]->getId())
+                    ->filterByPlayerId($caller)
+                    ->find();
+                //Si c'est la premiere game
+                if(!empty($TournamentCaller[0])){
+                    $TournamentCaller[0]->updateScore($scoreGame);
+                    $TournamentCaller[0]->save();
+                }else{          
+                    $TournamentCaller= new TournamentPlayer();
+                    $TournamentCaller->setScore($scoreGame);
+                    $TournamentCaller->setTournamentId($tournaments[0]->getId());
+                    $TournamentCaller->setPlayerId($caller);
+                    $TournamentCaller->save();
+                }
+                
+                print_r($TournamentCaller);
+                
+                 //insert called
+                $game_player = new GamePlayer();
+                $game_player->setGameId($gameId);
+                $game_player->setPlayerId($called);
+                $game_player->setType('called');
+                $game_player->setBonusId(0);
+                $game_player->setScore($scoreGame/2);
+                $game_player->save();
+                
+                //récupère le score actuel dans le tournois pour le joueur appelé
+                $TournamentCaller = TournamentPlayerQuery::create()
+                    ->filterByTournamentId($tournaments[0]->getId())
+                    ->filterByPlayerId($called)
+                    ->find();
+                    
+                //Si c'est la premiere game
+                if(!empty($TournamentCaller[0])){
+                    $TournamentCaller[0]->updateScore($scoreGame/2);
+                    $TournamentCaller[0]->save();
+                }else{          
+                    $TournamentCaller= new TournamentPlayer();
+                    $TournamentCaller->setScore($scoreGame/2);
+                    $TournamentCaller->setTournamentId($tournaments[0]->getId());
+                    $TournamentCaller->setPlayerId($called);
+                    $TournamentCaller->save();
+                }
+                
+                //insert defender
+                foreach($_POST['form']['player_id_def'] as $key=>$value){
+                
+                    //echo $value.'<br/>';
+                    $game_player = new GamePlayer();
+                    $game_player->setGameId($gameId);
+                    $game_player->setPlayerId($value);
+                    $game_player->setType('player');
+                    $game_player->setBonusId(0);
+                    $game_player->setScore(($scoreGame/2)*-1);
+                    $game_player->save();
+                    
+                    //récupère le score actuel dans le tournois pour les défendeurs
+                    $TournamentCaller = TournamentPlayerQuery::create()
+                        ->filterByTournamentId($tournaments[0]->getId())
+                        ->filterByPlayerId($value)
+                        ->find();
+                        
+                    //Si c'est la premiere game
+                    if(!empty($TournamentCaller[0])){
+                        $TournamentCaller[0]->updateScore(($scoreGame/2)*-1);
+                        $TournamentCaller[0]->save();
+                    }else{          
+                        $TournamentCaller= new TournamentPlayer();
+                        $TournamentCaller->setScore(($scoreGame/2)*-1);
+                        $TournamentCaller->setTournamentId($tournaments[0]->getId());
+                        $TournamentCaller->setPlayerId($value);
+                        $TournamentCaller->save();
+                    }
 
-	            
-	        	}
-	        }
-    	}
+                
+                }
+            }
+        }
 
     
     // display the form
