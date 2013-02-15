@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <database name="tarot" defaultIdMethod="native">
+    <table name="stats" phpName="Stats">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
+        <column name="nb_caller" type="integer" required="true" />
+        <column name="nb_called" type="integer" required="true" />
+        <column name="nb_game" type="integer" required="true" />
+        <column name="avg_points" type="integer" required="true" />
+    </table>
     <table name="player" phpName="Player">
         <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
         <column name="name" type="varchar" size="255" required="true" />
         <column name="mail" type="varchar" size="255" required="true" />
+        <column name="id_stat" type="integer" />
+        <foreign-key foreignTable="stats" onDelete="CASCADE">
+            <reference local="id_stat" foreign="id"/>
+        </foreign-key>
     </table>
     <table name="bonus" phpName="Bonus">
         <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
@@ -59,5 +70,11 @@
         <foreign-key foreignTable="player" onDelete="CASCADE">
             <reference local="player_id" foreign="id"/>
         </foreign-key>
+    </table>
+    <table name="tournament" phpName="Tournament">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
+        <column name="start" type="timestamp" required="true" />
+        <column name="active" type="boolean" required="true" />
+        <column name="winner_id" type="integer" />
     </table>
 </database>

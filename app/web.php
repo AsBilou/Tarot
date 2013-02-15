@@ -375,6 +375,14 @@ $app->match('/new/game', function (Request $request) use ($app) {
     return $app['twig']->render('template/newGame.twig', array('form' => $form->createView()));
 })
 ->bind('form_game');
+
+$app->get('/stat/{id}', function ($id) use ($app) {
+
+    return $app['twig']->render('template/stat.twig', array(
+        'player_id' => $id,
+    ));
+});
+
 return $app;
 
 ?>
